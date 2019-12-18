@@ -25,6 +25,10 @@ class User
         $this->id = $id;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
     public function getFirstName()
     {
         return $this->first_name;
@@ -46,5 +50,9 @@ class User
         return $this->password;
     }
 
+    public function setPassword($password): void
+    {
+        $this->password = $password;
+    }
 
 }

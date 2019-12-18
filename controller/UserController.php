@@ -22,9 +22,10 @@ function register() {
             $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
             $user = new User($_POST["first_name"], $_POST["last_name"], $_POST["email"], $password );
             UserDAO::addUser($user);
-            $_SESSION["logged_user"] = $user;
+            $arrayUser = (array) $user;
+            $_SESSION["logged_user"] = $arrayUser;
             $msg = "Successful registration.";
-            //header("Location: index.php?view=main");
+            include_once "index.php?view=main";
         }
         else{
             $msg= 'Unsuccessful';
@@ -60,17 +61,31 @@ function login() {
 function edit()
 {
     if (isset($_POST['edit'])) {
-       
+        if (!isset($_SESSION["logged_user"])) {
+            header("Location: index.php");
+        }
+        if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['new_password'])) {
+            $user = new User($_POST["first_name"], $_POST["last_name"],$_POST['email'] ,$_POST['new_password']);
+            $user_id = $user->getId();
+        }
+        UserDAO::editUser($user, $user_id);
+        $arrayUser = (array) $user;
+        $_SESSION['logged_user'] = $user;
+        echo "Profile changed successfully.";
+//            header("Location: index.php?action=main");
+    } else {
+        echo "Something went wrong.";
+    }
 
    }
-}
+
 
 function logout() {
     unset($_SESSION);
     session_destroy();
     echo "Session destroyed successfully!";
     include_once "index.php";
-    //header("Location: ../index.php");
+    header("Location: index.php?view=login");
     exit;
 }
 

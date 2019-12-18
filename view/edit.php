@@ -11,7 +11,7 @@
     <title>Edit Profile</title>
 </head>
 <body>
-<form action="../index.php?target=user&action=edit" method="post">
+<form action="index.php?target=user&action=edit" method="post">
     <label>First name:</label><br>
     <input type="text" name="first_name" value="<?php $_SESSION['logged_user']['first_name']?>" required><br>
     <label>Last name:</label><br>
@@ -21,7 +21,7 @@
     <label>Current password:</label><br>
     <input type="password" name="password" placeholder="Enter password" required><br>
     <label>New password:</label><br>
-    <input type="password" name="password" placeholder="Enter new password" required><br>
+    <input type="password" name="new_password" placeholder="Enter new password" required><br>
     <label>Verify password:</label><br>
     <input type="password"  name="verifyPass" placeholder="Verify password" required><br>
     <input type="submit" name="edit" value="Edit" ><br>

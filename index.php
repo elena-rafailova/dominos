@@ -19,6 +19,7 @@ $view           = isset($_GET["view"]) ? $_GET["view"] : "main";
 if (!isset($_SESSION["logged_user"])) {
     $view = "login";
 }
+
 $controllerClassName = "\\controller\\" . ucfirst($controllerName) . "Controller";
 
 if (class_exists($controllerClassName)){
