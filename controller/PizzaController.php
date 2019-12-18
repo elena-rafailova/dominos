@@ -8,6 +8,6 @@ class PizzaController
 {
     function show() {
         $pizzas = getPizzas();
-        include_once "View/pizzas.php";
+        include_once "view/pizzas.php";
     }
 }

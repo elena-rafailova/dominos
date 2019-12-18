@@ -13,22 +13,23 @@ spl_autoload_register(function ($class){
 session_start();
 
 $fileNotFoundFlag = false;
-$controllerName = isset($_GET["target"]) ? $_GET["target"] : "base";
-$methodName     = isset($_GET["action"]) ? $_GET["action"] : "baseFunction";
-$controllerClassName = "\\Controller\\" . ucfirst($controllerName) . "Controller";
+$controllerName = isset($_GET["target"]) ? $_GET["target"] : "view";
+$methodName     = isset($_GET["action"]) ? $_GET["action"] : "viewRouter";
+$view     = isset($_GET["view"]) ? $_GET["view"] : "main";
+$controllerClassName = "\\controller\\" . ucfirst($controllerName) . "Controller";
 
 if (class_exists($controllerClassName)){
     $controller = new $controllerClassName();
-    if($controllerName == "base" && $methodName == "baseFunction"){
+    if($controllerName == "view"){
         try{
-            $controller->$methodName();
+            $controller->$methodName($view);
             die();
         }catch (Exception $exception){
             echo "error -> " . $exception->getMessage();
             die();
         }
     }
-    if (method_exists($controller,$methodName)){
+    else if (method_exists($controller,$methodName)){
 //        if (!($controllerName == "user" && in_array($methodName,array("login","registration")))){
 //            if (!isset($_SESSION["logged_user"])){
 //                header("HTTP/1.0 401 Not Authorized");

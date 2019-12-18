@@ -24,11 +24,11 @@ function register() {
             UserDAO::addUser($user);
             $_SESSION["logged_user"] = $user;
             $msg = "Successful registration.";
-            //header("Location: View/main.php");
+            //header("Location: view/main.php");
         }
         else{
             $msg= 'Unsuccessful';
-            //include_once "View/register.html";
+            //include_once "view/register.php";
         }
         echo $msg;
     }
@@ -47,7 +47,7 @@ function login() {
                 if(password_verify($password, $user["password"])) {
                     $_SESSION['logged_user'] = $user;
                     echo "Successful login! <br>";
-                    include_once "View/main.php";
+                    include_once "view/main.php";
                 }
                 else {
                     echo 'Invalid email or password.Try again.';
