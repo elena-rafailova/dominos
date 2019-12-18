@@ -3,17 +3,17 @@
 
 namespace controller;
 
-
 use model\DAO\UserDAO;
 use model\User;
 
 class UserController
 {
-//TODO login, logout, register, edit
+//TODO edit
 function register() {
     if(isset($_POST["register"])){
         $err = false;
         $msg = "";
+        //TODO validate password!!! And more validations to be added
         if(UserDAO::checkUser($_POST["email"])){
             $msg =  "User already exists";
             $err = true;
@@ -23,7 +23,6 @@ function register() {
             $user = new User($_POST["first_name"], $_POST["last_name"], $_POST["email"], $password );
             UserDAO::addUser($user);
             $_SESSION["logged_user"] = $user;
-            print_r($_SESSION["logged_user"]);
             $msg = "Successful registration.";
             //header("Location: View/main.php");
         }
@@ -34,6 +33,7 @@ function register() {
         echo $msg;
     }
 }
+
 function login() {
     if(isset($_POST['login'])) {
         if(isset($_POST['email']) && isset($_POST['password'])) {
@@ -46,8 +46,7 @@ function login() {
             else {
                 if(password_verify($password, $user["password"])) {
                     $_SESSION['logged_user'] = $user;
-                    print_r($_SESSION["logged_user"]);
-                    echo "Successful login!";
+                    echo "Successful login! <br>";
                     include_once "View/main.php";
                 }
                 else {
@@ -58,4 +57,24 @@ function login() {
     }
 }
 
+function edit()
+{
+    if (isset($_POST['edit'])) {
+       
+
+   }
 }
+
+function logout() {
+    unset($_SESSION);
+    session_destroy();
+    echo "Session destroyed successfully!";
+    include_once "index.php";
+    //header("Location: ../index.php");
+    exit;
+}
+
+
+
+}
+

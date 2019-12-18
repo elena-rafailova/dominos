@@ -3,6 +3,7 @@
 
 namespace model\DAO;
 
+include_once "DBConnector.php";
 use model\User;
 use PDO;
 use PDOException;
@@ -51,4 +52,7 @@ class UserDAO
             echo "Something went wrong". $e->getMessage();
         }
     }
+    static function editUser(){
+
+}
 }
