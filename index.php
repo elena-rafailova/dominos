@@ -1,5 +1,9 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 //AUTOCOMPLETE
 spl_autoload_register(function ($class){
     $class = str_replace("\\", DIRECTORY_SEPARATOR, $class) . ".php";
@@ -25,12 +29,12 @@ if (class_exists($controllerClassName)){
         }
     }
     if (method_exists($controller,$methodName)){
-        if (!($controllerName == "user" && in_array($methodName,array("login","registration")))){
-            if (!isset($_SESSION["logged_user"])){
-                header("HTTP/1.0 401 Not Authorized");
-                die();
-            }
-        }
+//        if (!($controllerName == "user" && in_array($methodName,array("login","registration")))){
+//            if (!isset($_SESSION["logged_user"])){
+//                header("HTTP/1.0 401 Not Authorized");
+//                die();
+//            }
+//        }
         try{
             $controller->$methodName();
         }catch (Exception $exception){
