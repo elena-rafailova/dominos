@@ -1,6 +1,9 @@
 INSERT INTO sizes(name, price) VALUES ('Medium', 6.5), ('Large', 8.9), ('Jumbo', 10.5);
+
 INSERT INTO doughs(name, price) VALUES ('Traditional', 0), ('Italian', 0), ('With Philadelphia', 2.25);
+
 INSERT INTO categories(name) VALUES ('Sauses'), ('Spices'), ('Cheeses'), ('Meats'), ('Vegetables'), ('Mixed');
+
 INSERT INTO ingredients(name, category_id, price) VALUES 
 ('Tomato Sauce', 1, 0),
 ('BBQ Sauce', 1, 0),
@@ -55,4 +58,5 @@ INSERT INTO pizzas_have_ingredients VALUES
 (3, 22),
 (3, 20),
 (3, 9),
-(3, 30)
+(3, 30);
+
