@@ -5,7 +5,7 @@
     <title>Register</title>
 </head>
 <body>
-        <form action="../index.php?target=user&action=register" method="post">
+        <form action="index.php?target=user&action=register" method="post">
             <label>First name:</label><br>
             <input type="text" name="first_name" placeholder="Enter first name" required><br>
             <label>Last name:</label><br>

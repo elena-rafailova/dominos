@@ -15,13 +15,12 @@ class UserDAO
         $last_name  = $user->getLastName();
         $email      = $user->getEmail();
         $password   = $user->getPassword();
-        $date = date('Y-m-d H:i:s');
         try{
             $pdo = getPDO();
-            $sql ="INSERT INTO users (first_name,  last_name, email, password, date_created)
-                   VALUES (?, ?, ?, ?, ?)";
+            $sql ="INSERT INTO users (first_name,  last_name, email, password)
+                   VALUES (?, ?, ?, ?)";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute(array($first_name, $last_name, $email, $password, $date));
+            $stmt->execute(array($first_name, $last_name, $email, $password));
             $user->setId($pdo->lastInsertId());
                 if($pdo->lastInsertId() > 0){
                     return true;
@@ -32,7 +31,7 @@ class UserDAO
             }
         catch (PDOException $e) {
             echo "Something went wrong". $e->getMessage();
-            }
+        }
     }
     static function checkUser($email)
     {

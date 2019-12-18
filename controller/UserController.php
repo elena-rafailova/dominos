@@ -24,7 +24,7 @@ function register() {
             UserDAO::addUser($user);
             $_SESSION["logged_user"] = $user;
             $msg = "Successful registration.";
-            //header("Location: view/main.php");
+            //header("Location: index.php?view=main");
         }
         else{
             $msg= 'Unsuccessful';
