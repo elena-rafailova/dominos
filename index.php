@@ -15,7 +15,7 @@ session_start();
 $fileNotFoundFlag = false;
 $controllerName = isset($_GET["target"]) ? $_GET["target"] : "view";
 $methodName     = isset($_GET["action"]) ? $_GET["action"] : "viewRouter";
-$view     = isset($_GET["view"]) ? $_GET["view"] : "main";
+$view     = isset($_GET["view"]) ? $_GET["view"] : "login";
 $controllerClassName = "\\controller\\" . ucfirst($controllerName) . "Controller";
 
 if (class_exists($controllerClassName)){
