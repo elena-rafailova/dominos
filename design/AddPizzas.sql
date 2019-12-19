@@ -41,10 +41,10 @@ INSERT INTO ingredients(name, category_id, price) VALUES
 ('Burger Sauce', 1, 0);
 
 
-INSERT INTO pizzas(name, img_url, modified) VALUES
-('Margarita', 'uploads/margarita.png', 0),
-('Master Burger Pizza', 'uploads/masterburger.png', 0),
-('Chick-chi-rik', 'uploads/chikchirik.png', 0);
+INSERT INTO pizzas(name, img_url, modified, category) VALUES
+('Margarita', 'Uploads/margarita.png', 0, 2),
+('Master Burger Pizza', 'Uploads/masterburger.png', 0, 1),
+('Chick-chi-rik', 'Uploads/chikchirik.png', 0, 1);
 
 INSERT INTO pizzas_have_ingredients VALUES
 (1, 1),
