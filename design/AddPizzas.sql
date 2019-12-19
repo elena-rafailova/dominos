@@ -1,4 +1,4 @@
-INSERT INTO sizes(name, price) VALUES ('Medium', 6.5), ('Large', 8.9), ('Jumbo', 10.5);
+INSERT INTO sizes(name, price, slices) VALUES ('Medium', 6.5, 6), ('Large', 8.9, 8), ('Jumbo', 10.5, 12);
 
 INSERT INTO doughs(name, price) VALUES ('Traditional', 0), ('Italian', 0), ('With Philadelphia', 2.25);
 

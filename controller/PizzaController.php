@@ -15,6 +15,10 @@ class PizzaController
             $pizzas = Pizza::getAllPizzas($category);
         }
 
+        $doughs = Pizza::getDoughsOrSizes(true);
+        $sizes = Pizza::getDoughsOrSizes(false);
+
+
         foreach ($pizzas as $pizza) {
             $pizza->setPrice($pizza->getPrice() + $pizza->getDoughAndSizePrice());
         }

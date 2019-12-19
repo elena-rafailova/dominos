@@ -35,7 +35,19 @@ class PizzaDAO {
                 $price = 0;
                 foreach ($ingredients as $ingredient) {
                     $price += $ingredient->getPrice();
+
                 }
+//                $sql1 = "SELECT name FROM doughs WHERE id = ?";
+//                $stmt1 = $pdo->prepare($sql1);
+//                $stmt1->execute([1]);
+//
+//                $dough = $stmt1->fetch(PDO::FETCH_ASSOC)["name"];
+//
+//                $sql1 = "SELECT name FROM sizes WHERE id = ?";
+//                $stmt1 = $pdo->prepare($sql1);
+//                $stmt1->execute([2]);
+//
+//                $size = $stmt1->fetch(PDO::FETCH_ASSOC)["name"];
                 $pizzas[] = new Pizza($row["id"], $row["name"],
                                       $row["img_url"], $row["modified"],
                                       $ingredients, $price, $row["category"], 1, 2);
@@ -48,7 +60,7 @@ class PizzaDAO {
         }
     }
 
-    function getIngredients($id = null) {
+    public function getIngredients($id = null) {
         try {
             $pdo = getPDO();
 
@@ -68,6 +80,8 @@ class PizzaDAO {
             foreach ($rows as $row) {
                 $ingredients[] = new Ingredient($row["id"], $row["name"], $row["category"], $row["price"]);
             }
+
+
 
             return $ingredients;
 
@@ -91,4 +105,25 @@ class PizzaDAO {
             echo $e->getMessage();
         }
     }
+
+    public function getDoughsOrSizes($dough = true) {
+        try {
+            $pdo = getPDO();
+
+            $sql = "SELECT id, name, price ";
+            if ($dough) {
+                $sql .= "FROM doughs";
+            } else {
+                $sql .= ", slices FROM sizes";
+            }
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        }catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
 }

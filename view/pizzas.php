@@ -35,10 +35,26 @@ if (!isset($pizzas)) {
             echo "<td>" . $pizza->printIngredients() . "</td>";
             echo "<td>" . $pizza->getPrice() . "</td>";
             echo "<td><img src='" . $pizza->getImg_url() . "' /></td>";
-            echo "<td>" . $pizza->getDough() . "</td>";
-            echo "<td>" . $pizza->getSize() . "</td>";
-            echo "<td>" . $pizza->getCategory() . "</td>";
 
+            echo "<td>";
+            echo "<select>";
+            foreach ($doughs as $dough) {
+                echo "<option value='" . $dough["id"] . "'>";
+                echo $dough["name"] . ((isset($dough["price"]) && $dough["price"] != 0) ? " (+" . $dough["price"] . "lb)" : "");
+                echo "</option>";
+            }
+            echo "</select>";
+            echo "</td>";
+            echo "<td>";
+            echo "<select>";
+            foreach ($sizes as $size) {
+                echo "<option value='" . $size["id"] . "' " . (($pizza->getSize() == $size["id"]) ? "selected" : "") . ">";
+                    echo $size["name"] . ((isset($size["slices"])) ? " (" . $size["slices"] . " Slices)" : "");
+                echo "</option>";
+            }
+            echo "</select>";
+            echo "</td>";
+            echo "<td>" . $pizza->getCategory() . "</td>";
 
             echo "</tr>";
         }

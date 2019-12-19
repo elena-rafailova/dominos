@@ -92,10 +92,15 @@ class Pizza
     }
 
     public function getDoughAndSizePrice() {
-        //TODO find out what the pricing problem is? Solve it!
         $pizzaDAO = new PizzaDAO();
         $DAndSPrice = $pizzaDAO->getPriceFromDoughAndSize($this->dough, $this->size);
         return $DAndSPrice;
+    }
+
+    static public function getDoughsOrSizes($doughs = true) {
+        $pizzaDAO = new PizzaDAO();
+        $result = $pizzaDAO->getDoughsOrSizes($doughs);
+        return $result;
     }
 
 }
