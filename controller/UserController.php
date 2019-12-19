@@ -25,13 +25,13 @@ function register() {
             $arrayUser = (array) $user;
             $_SESSION["logged_user"] = $arrayUser;
             $msg = "Successful registration.";
-            include_once "index.php?view=main";
+            include_once "view/main.php";
         }
         else{
-            $msg= 'Unsuccessful';
+            echo $msg;
             //include_once "view/register.php";
         }
-        echo $msg;
+
     }
 }
 
@@ -64,12 +64,17 @@ function edit()
         if (!isset($_SESSION["logged_user"])) {
             header("Location: index.php");
         }
-        if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['new_password'])) {
-            $user = new User($_POST["first_name"], $_POST["last_name"],$_POST['email'] ,$_POST['new_password']);
-            $user_id = $user->getId();
+        if (isset($_POST['first_name']) && isset($_POST['last_name'])) {
+            $password=$_SESSION['logged_user']['password'];
+            if(isset($_POST['password']) && password_verify($_POST['password'],$_SESSION['logged_user']['password'] ) ) {
+                if (isset($_POST['new_password']) && isset($_POST['verify_password']) && $_POST['new_password'] === $_POST['verify_password']) {
+                    $password = password_hash($_POST['new_password'], PASSWORD_BCRYPT);
+                }
+            }
+            $user = array('first_name' => $_POST["first_name"], 'last_name'=> $_POST["last_name"] , 'password'=>$password, 'id'=>$_SESSION['logged_user']['id']);
         }
-        UserDAO::editUser($user, $user_id);
-        $arrayUser = (array) $user;
+        UserDAO::editUser($user);
+        $user['email'] = $_SESSION['logged_user']['email'];
         $_SESSION['logged_user'] = $user;
         echo "Profile changed successfully.";
 //            header("Location: index.php?action=main");

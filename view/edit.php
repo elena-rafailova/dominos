@@ -1,4 +1,5 @@
 <?php
+include_once 'main.php';
 ?>
 
 <!doctype html>
@@ -13,17 +14,17 @@
 <body>
 <form action="index.php?target=user&action=edit" method="post">
     <label>First name:</label><br>
-    <input type="text" name="first_name" value="<?php $_SESSION['logged_user']['first_name']?>" required><br>
+    <input type="text" name="first_name" value="<?= $_SESSION['logged_user']['first_name']?>" required><br>
     <label>Last name:</label><br>
-    <input type="text" name="last_name"  value="<?php $_SESSION['logged_user']['last_name']?>" required><br>
+    <input type="text" name="last_name"  value="<?= $_SESSION['logged_user']['last_name']?>" required><br>
     <label>Email:</label><br>
-    <input type="email" name="email"  value="<?php $_SESSION['logged_user']['email']?>" readonly><br>
+    <input type="email" name="email"  value="<?= $_SESSION['logged_user']['email']?>" readonly><br>
     <label>Current password:</label><br>
-    <input type="password" name="password" placeholder="Enter password" required><br>
+    <input type="password" name="password" placeholder="Enter password" ><br>
     <label>New password:</label><br>
-    <input type="password" name="new_password" placeholder="Enter new password" required><br>
+    <input type="password" name="new_password" placeholder="Enter new password" ><br>
     <label>Verify password:</label><br>
-    <input type="password"  name="verifyPass" placeholder="Verify password" required><br>
+    <input type="password"  name="verify_password" placeholder="Verify password" ><br>
     <input type="submit" name="edit" value="Edit" ><br>
 </form>
 </body>

@@ -51,25 +51,22 @@ class UserDAO
             echo "Something went wrong". $e->getMessage();
         }
     }
-    static function editUser(User $user,$user_id)
+    static function editUser(array &$user)
     {
         try {
+            $params = [];
+            $params[] = $user['first_name'];
+            $params[] = $user['last_name'];
+            $params[] = $user['password'];
+            $params[] = $user['id'];
             $pdo = getPDO();
             $sql = "UPDATE users SET first_name =? , last_name=?, password=? WHERE id=?;";
-            $password = password_hash($user->getPassword(), PASSWORD_BCRYPT);
-            $user->setId($user_id);
-            $user->setPassword($password);
-            $first_name = $user->getFirstName();
-            $last_name = $user->getLastName();
-            $password = $user->getPassword();
-            $id = $user->getId();
-            $array = array($first_name, $last_name, $password, $id);
             $stmt = $pdo->prepare($sql);
-            $stmt->execute($array);
-//            $user_id = $pdo->lastInsertId();
-//            $user["id"] = $user_id;
+            $stmt->execute($params);
+            return true;
         } catch (PDOException $e) {
             echo $e->getMessage();
+            return false;
         }
     }
 }
