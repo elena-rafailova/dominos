@@ -22,7 +22,8 @@ function register() {
             $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
             $user = new User($_POST["first_name"], $_POST["last_name"], $_POST["email"], $password );
             UserDAO::addUser($user);
-            $arrayUser = (array) $user;
+            $arrayUser = array('first_name' => $user->getFirstName(), 'last_name'=> $user->getLastName() , 'email'=> $user->getEmail(),
+                'password'=>$user->getPassword(), 'id'=>$user->getId());
             $_SESSION["logged_user"] = $arrayUser;
             $msg = "Successful registration.";
             include_once "view/main.php";
@@ -76,7 +77,8 @@ function edit()
         UserDAO::editUser($user);
         $user['email'] = $_SESSION['logged_user']['email'];
         $_SESSION['logged_user'] = $user;
-        echo "Profile changed successfully.";
+        echo "Profile changed successfully. <br>";
+        include_once "view/main.php";
 //            header("Location: index.php?action=main");
     } else {
         echo "Something went wrong.";
