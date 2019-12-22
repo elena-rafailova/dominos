@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +16,7 @@
             <label>New password:</label><br>
             <input type="password" name="password" placeholder="Enter password" required><br>
             <label>Verify password:</label><br>
-            <input type="password"  name="verifyPass" placeholder="Verify password" required><br>
+            <input type="password"  name="verify_password" placeholder="Verify password" required><br>
             <input type="submit" name="register" value="Register" ><br>
         </form>
         <h5>Already have an account? Login <a href="index.php?view=login">here!</a> </h5>

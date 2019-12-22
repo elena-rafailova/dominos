@@ -1,5 +1,6 @@
 <?php
 include_once 'main.php';
+$user = json_decode($_SESSION['logged_user']);
 ?>
 
 <!doctype html>
@@ -14,11 +15,11 @@ include_once 'main.php';
 <body>
 <form action="index.php?target=user&action=edit" method="post">
     <label>First name:</label><br>
-    <input type="text" name="first_name" value="<?= $_SESSION['logged_user']['first_name']?>" required><br>
+    <input type="text" name="first_name" value="<?= $user->first_name ?>" required><br>
     <label>Last name:</label><br>
-    <input type="text" name="last_name"  value="<?= $_SESSION['logged_user']['last_name']?>" required><br>
+    <input type="text" name="last_name"  value="<?= $user->last_name ?>" required><br>
     <label>Email:</label><br>
-    <input type="email" name="email"  value="<?= $_SESSION['logged_user']['email']?>" readonly><br>
+    <input type="email" name="email"  value="<?= $user->email ?>" readonly><br>
     <label>Current password:</label><br>
     <input type="password" name="password" placeholder="Enter password" ><br>
     <label>New password:</label><br>

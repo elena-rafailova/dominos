@@ -12,6 +12,7 @@
         <input type="password" name="password" placeholder="Enter password" required><br>
         <input type="submit" name="login" value="Login" ><br>
     </form>
+<!--    <h5>Forgotten your password? Click <a href="index.php?view=forgottenPass">here!</a> </h5>-->
     <h5>Don't have an account? Register <a href="index.php?view=register">here!</a> </h5>
 </body>
 </html>

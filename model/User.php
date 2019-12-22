@@ -4,14 +4,14 @@
 namespace model;
 
 
-class User
+class User implements \JsonSerializable
 {
     private $id;
     private $first_name;
     private $last_name;
     private $email;
     private $password;
-    private $date_created;
+   // private $date_created;
 
    public function __construct($first_name,$last_name,$email,$password) {
        $this->first_name = $first_name;
@@ -34,7 +34,6 @@ class User
         return $this->first_name;
     }
 
-
     public function getLastName()
     {
         return $this->last_name;
@@ -55,4 +54,8 @@ class User
         $this->password = $password;
     }
 
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
 }
