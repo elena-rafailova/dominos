@@ -28,8 +28,9 @@ class Pizza
     private $dough;
     private $size;
     private $category;
+    private $quantity;
 
-    public function __construct($id, $name, $img_url, $modified, $ingredients, $price, $category = 0, $dough = null, $size = null) {
+    public function __construct($id, $name, $img_url, $modified, $ingredients, $price, $category = 0, $dough = null, $size = null, $quantity = null) {
         $this->id = $id;
         $this->name = $name;
         $this->img_url = $img_url;
@@ -39,6 +40,7 @@ class Pizza
         $this->category = $category;
         $this->dough = $dough;
         $this->size = $size;
+        $this->quantity = $quantity;
     }
 
     static function getAllPizzas($category = null) {
@@ -89,6 +91,11 @@ class Pizza
         return $this->id;
     }
 
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
     public function printIngredients() {
         $ingredients = $this->getIngredients();
         $ingrs = [];
@@ -118,5 +125,23 @@ class Pizza
     static public function getPizzaById($id) {
         $pizzaDAO =  new PizzaDAO();
         return $pizzaDAO->getPizza($id);
+    }
+
+    static public function addNew($pizza, $ingredients) {
+        $pizzaDAO = new PizzaDAO();
+        return $pizzaDAO->addNew($pizza, $ingredients);
+    }
+
+    public function setDough($dough) {
+        $this->dough = $dough;
+    }
+
+    public function setSize($size) {
+        $this->size = $size;
+    }
+
+
+    public function setQuantity($quantity) {
+        $this->quantity = $quantity;
     }
 }

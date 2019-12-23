@@ -64,9 +64,8 @@ class PizzaDAO {
         try {
             $pdo = getPDO();
 
-            $sql = "SELECT i.id AS id, i.name AS name, i.price AS price, c.name AS category 
+            $sql = "SELECT i.id AS id, i.name AS name, i.price AS price
                     FROM ingredients AS i 
-                    JOIN categories  AS c ON(c.id = i.category_id)
                     JOIN pizzas_have_ingredients AS phi ON (phi.ingredient_id = i.id)
                     JOIN pizzas AS p ON (phi.pizza_id = p.id)";
             if (isset($id)) {
@@ -78,7 +77,7 @@ class PizzaDAO {
             $ingredients = [];
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             foreach ($rows as $row) {
-                $ingredients[] = new Ingredient($row["id"], $row["name"], $row["category"], $row["price"]);
+                $ingredients[] = new Ingredient($row["id"], $row["name"], null, $row["price"]);
             }
 
 
@@ -157,10 +156,9 @@ class PizzaDAO {
         try {
             $pdo = getPDO();
 
-            $sql = "SELECT i.id AS id, i.name AS name, i.price AS price, c.name AS category 
+            $sql = "SELECT i.id AS id, i.name AS name, i.price AS price
                     FROM ingredients AS i 
-                    JOIN categories  AS c ON(c.id = i.category_id)
-                    WHERE i.category_id=?";
+                    WHERE i.category_id = ?";
 
             $stmt = $pdo->prepare($sql);
             $stmt->execute([$id]);
@@ -168,7 +166,7 @@ class PizzaDAO {
             $ingredients = [];
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             foreach ($rows as $row) {
-                $ingredients[] = new Ingredient($row["id"], $row["name"], $row["category"], $row["price"]);
+                $ingredients[] = new Ingredient($row["id"], $row["name"], null, $row["price"]);
             }
 
             return $ingredients;
@@ -178,4 +176,53 @@ class PizzaDAO {
         }
     }
 
+    public function getIngredientById($id) {
+        try {
+            $pdo = getPDO();
+
+            $sql = "SELECT i.id AS id, i.name AS name, i.price AS price
+                    FROM ingredients AS i 
+                    WHERE i.id= ?";
+
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$id]);
+
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $ingredient = new Ingredient($row["id"], $row["name"], null, $row["price"]);
+
+            return $ingredient;
+
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    /** @var Pizza $pizza
+     *  @return int
+     */
+    public function addNew($pizzaName, $ingredients) {
+        $pdo = getPDO();
+        try {
+
+            $pdo->beginTransaction();
+            $sql = "INSERT INTO pizzas(name) VALUES(?)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$pizzaName]);
+
+            $pizza_id = $pdo->lastInsertId();
+            /** @var Ingredient $item */
+            foreach ($ingredients as $item) {
+                $sql2 = "INSERT INTO pizzas_have_ingredients(pizza_id, ingredient_id) VALUES(?, ?)";
+                $stmt2 = $pdo->prepare($sql2);
+                $stmt2->execute([$pizza_id, $item->getId()]);
+            }
+
+            $pdo->commit();
+            return $pizza_id;
+        }catch (PDOException $e) {
+            $pdo->rollBack();
+            echo $e->getMessage();
+        }
+    }
 }

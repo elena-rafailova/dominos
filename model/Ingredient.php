@@ -37,4 +37,9 @@ class Ingredient
         return $pizzaDAO->getIngredientsByCategory($category);
     }
 
+    static public function getIngredientById($id) {
+        $pizzaDAO = new PizzaDAO();
+        return $pizzaDAO->getIngredientById($id);
+    }
+
 }

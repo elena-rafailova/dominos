@@ -20,8 +20,9 @@ if (!isset($ingredients)) {
 <p><?php echo $pizza->getName()  ?> </p>
 
 
-<form action="index.php?target=order&action=finished" method="post">
-    <select>
+<form action="index.php?target=order&action=finish" method="post">
+    <input type="hidden" value="<?=$pizza->getId();?>" name="pizza_id">
+    <select name="dough">
         <?php foreach ($doughs as $dough) {?>
         <option value='<?=$dough["id"]?>'>
         <?= $dough["name"] . ((isset($dough["price"]) && $dough["price"] != 0) ? " (+" . $dough["price"] . "lv)" : ""); ?>
@@ -29,13 +30,16 @@ if (!isset($ingredients)) {
         <?php } ?>
     </select>
 
-    <select>
+    <select name="size">
         <?php foreach ($sizes as $size) { ?>
         <option value='<?= $size["id"] ?>' <?php if ($pizza->getSize() == $size["id"]) { echo "selected"; } ?>>
                     <?php echo $size["name"] . ((isset($size["slices"])) ? " (" . $size["slices"] . " Slices)" : "")?>
         </option>
         <?php } ?>
     </select><br>
+    <h6>Toppings:</h6>
+    <p><?php echo $pizza->printIngredients(); ?></p>
+
 
     <h6>Sauces</h6>
     <?php
@@ -44,11 +48,11 @@ if (!isset($ingredients)) {
         <input type="radio" name="sauces[]" value="<?= $sauce->getId() ?>"  <?php if(in_array($sauce->getName(), $pizza->getIngrNames())) { echo "checked"; } ?> > <?= $sauce->getName();?><br>
     <?php } ?>
 
-    <h6>Spices</h6>
+    <h6>Herbs</h6>
     <?php
     /** @var \model\Ingredient $spice */
-    foreach ($ingredients[1] as $spice) {?>
-        <input type="checkbox" name="spices[]" value="<?= $spice->getId() ?>"  <?php if(in_array($spice->getName(), $pizza->getIngrNames())) { echo "checked"; } ?> > <?= $spice->getName();?><br>
+    foreach ($ingredients[1] as $herb) {?>
+        <input type="checkbox" name="herbs[]" value="<?= $herb->getId() ?>"  <?php if(in_array($herb->getName(), $pizza->getIngrNames())) { echo "checked"; } ?> > <?= $herb->getName();?><br>
     <?php } ?>
 
     <h6>Cheeses</h6>
