@@ -1,14 +1,23 @@
 <?php
+
 include_once "main.php";
+
+if (!isset($addresses)) {
+    header("index.php?target=address&action=show");
+}
+
 //todo add google maps
 ?>
     <h4>MODIFY YOUR DETAILS, ADD OR DELETE AN ADDRESS</h4>
-<div style="float: left">
+<div style="float: left; margin-right: 30px">
     <p>
         <span>My addresses</span>
     </p>
     <ul>
-        <li>home</li>
+    <?php
+    foreach ($addresses as $address) {
+        echo " <li>". $address->name." </li>";
+    }?>
     </ul>
     <a href="index.php?view=add_address"><button>ADD A NEW ADDRESS</button></a>
 </div>

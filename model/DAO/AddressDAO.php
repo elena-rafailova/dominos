@@ -47,4 +47,24 @@ class AddressDAO
             echo "Something went wrong". $e->getMessage();
         }
     }
+
+    static function get($user_id) {
+        try{
+            $pdo = getPDO();
+            $pdo->beginTransaction();
+            $sql ="SELECT * FROM addresses as a JOIN users_have_addresses as uha ON a.id = uha.address_id
+                            WHERE uha.user_id = ?";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$user_id]);
+            $rows = $stmt->fetchAll(PDO::FETCH_OBJ);
+            if (empty($rows)) {
+                return false;
+            } else {
+                return $rows;
+            }
+        }
+        catch (PDOException $e) {
+            echo "Something went wrong". $e->getMessage();
+        }
+    }
 }
