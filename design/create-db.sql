@@ -45,9 +45,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `dominos`.`adresses`
+-- Table `dominos`.`addresses`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dominos`.`adresses` (
+CREATE TABLE IF NOT EXISTS `dominos`.`addresses` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `phone_number` VARCHAR(45) NOT NULL,
   `city_id` INT NOT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `dominos`.`restaurants` (
   INDEX `restaurant_address_fk_idx` (`address_id` ASC),
   CONSTRAINT `restaurant_address_fk`
     FOREIGN KEY (`address_id`)
-    REFERENCES `dominos`.`adresses` (`id`)
+    REFERENCES `dominos`.`addresses` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `dominos`.`orders` (
     ON UPDATE NO ACTION,
   CONSTRAINT `order_address_fk`
     FOREIGN KEY (`delivery_address_id`)
-    REFERENCES `dominos`.`adresses` (`id`)
+    REFERENCES `dominos`.`addresses` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `order_restaurant_fk`
@@ -177,6 +177,7 @@ CREATE TABLE IF NOT EXISTS `dominos`.`pizzas` (
   `name` VARCHAR(100) NOT NULL,
   `img_url` VARCHAR(200) NULL,
   `modified` TINYINT(1) NOT NULL DEFAULT 1,
+  `category` TINYINT NOT NULL DEFAULT '1',
   `date_created` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
@@ -190,6 +191,7 @@ CREATE TABLE IF NOT EXISTS `dominos`.`sizes` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
   `price` DOUBLE NOT NULL,
+  `slices` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -216,7 +218,6 @@ CREATE TABLE IF NOT EXISTS `dominos`.`orders_have_pizzas` (
   `quantity` INT NOT NULL,
   `size_id` INT NOT NULL,
   `dough_id` INT NOT NULL DEFAULT 1,
-  `price` DOUBLE NOT NULL,
   PRIMARY KEY (`order_id`, `pizza_id`),
   INDEX `item_pizza_id_fk_idx` (`pizza_id` ASC),
   INDEX `orders_have_pizzas_size_fk_idx` (`size_id` ASC),
@@ -251,7 +252,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `dominos`.`ingredients` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
-  `category_id` INT NOT NULL,
+  `category_id` INT NULL,
   `price` DOUBLE NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `ingredient_category_fk_idx` (`category_id` ASC),
@@ -301,7 +302,7 @@ CREATE TABLE IF NOT EXISTS `dominos`.`users_have_addresses` (
     ON UPDATE NO ACTION,
   CONSTRAINT `address_of_user_fk`
     FOREIGN KEY (`address_id`)
-    REFERENCES `dominos`.`adresses` (`id`)
+    REFERENCES `dominos`.`addresses` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB

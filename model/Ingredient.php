@@ -3,6 +3,8 @@
 
 namespace model;
 
+use model\DAO\PizzaDAO;
+
 
 class Ingredient
 {
@@ -25,4 +27,14 @@ class Ingredient
     public function getName() {
         return $this->name;
     }
+
+    public function getId() {
+        return $this->id;
+    }
+
+    static public function getIngredientsByCategory($category) {
+        $pizzaDAO =  new PizzaDAO();
+        return $pizzaDAO->getIngredientsByCategory($category);
+    }
+
 }

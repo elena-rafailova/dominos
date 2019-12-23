@@ -19,46 +19,17 @@ if (!isset($pizzas)) {
     <a href="index.php?target=pizza&action=show&category=2"><button>Vegetarian</button></a>
     <a href="index.php?target=pizza&action=show&category=3"><button>Spicy</button></a>
     <table>
-        <tr>
-            <th>Pizza Name:</th>
-            <th>Ingredients:</th>
-            <th>Price:</th>
-            <th>Picture:</th>
-            <th>Dough:</th>
-            <th>Size:</th>
-            <th>Category:</th>
-        </tr>
         <?php
         foreach ($pizzas as $pizza) {
             echo "<tr>";
-            echo "<td>" . $pizza->getName() . "</td>";
-            echo "<td>" . $pizza->printIngredients() . "</td>";
-            echo "<td>" . $pizza->getPrice() . "</td>";
-            echo "<td><img src='" . $pizza->getImg_url() . "' /></td>";
-
-            echo "<td>";
-            echo "<select>";
-            foreach ($doughs as $dough) {
-                echo "<option value='" . $dough["id"] . "'>";
-                echo $dough["name"] . ((isset($dough["price"]) && $dough["price"] != 0) ? " (+" . $dough["price"] . "lb)" : "");
-                echo "</option>";
-            }
-            echo "</select>";
-            echo "</td>";
-            echo "<td>";
-            echo "<select>";
-            foreach ($sizes as $size) {
-                echo "<option value='" . $size["id"] . "' " . (($pizza->getSize() == $size["id"]) ? "selected" : "") . ">";
-                    echo $size["name"] . ((isset($size["slices"])) ? " (" . $size["slices"] . " Slices)" : "");
-                echo "</option>";
-            }
-            echo "</select>";
-            echo "</td>";
-            echo "<td>" . $pizza->getCategory() . "</td>";
-
-            echo "</tr>";
+            echo "<td><img src='" . $pizza->getImg_url() . "' /><br>";
+            echo $pizza->getName() . "<br>";
+            echo $pizza->printIngredients();
+            echo "<form action='index.php?target=pizza&action=pizza' method='post'>";
+            echo "<input type='hidden' name='id' value='" . $pizza->getId() . "' >";
+            echo "<input type='submit' value='Choose' name='choose'>";
+            echo "</form><br></td></tr>";
         }
-
         ?>
     </table>
 </body>

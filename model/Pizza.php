@@ -77,6 +77,18 @@ class Pizza
         return $this->ingredients;
     }
 
+    public function getIngrNames() {
+        $ingredientsName = [];
+        foreach ($this->ingredients as $ingredient) {
+            $ingredientsName[] = $ingredient->getName();
+        }
+        return $ingredientsName;
+    }
+
+    function getId() {
+        return $this->id;
+    }
+
     public function printIngredients() {
         $ingredients = $this->getIngredients();
         $ingrs = [];
@@ -103,4 +115,8 @@ class Pizza
         return $result;
     }
 
+    static public function getPizzaById($id) {
+        $pizzaDAO =  new PizzaDAO();
+        return $pizzaDAO->getPizza($id);
+    }
 }

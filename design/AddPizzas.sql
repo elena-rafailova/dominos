@@ -2,7 +2,7 @@ INSERT INTO sizes(name, price, slices) VALUES ('Medium', 6.5, 6), ('Large', 8.9,
 
 INSERT INTO doughs(name, price) VALUES ('Traditional', 0), ('Italian', 0), ('With Philadelphia', 2.25);
 
-INSERT INTO categories(name) VALUES ('Sauses'), ('Spices'), ('Cheeses'), ('Meats'), ('Vegetables'), ('Mixed');
+INSERT INTO categories(name) VALUES ('Sauses'), ('Spices'), ('Cheeses'), ('Meats'), ('Vegetables'), ('Miscellaneous');
 
 INSERT INTO ingredients(name, category_id, price) VALUES 
 ('Tomato Sauce', 1, 0),
@@ -37,8 +37,7 @@ INSERT INTO ingredients(name, category_id, price) VALUES
 ('Corn', 5, 2),
 ('Onion', 5, 2),
 ('Pesto Sauce', 6, 2),
-('Caramelized Onions', 6, 2),
-('Burger Sauce', 1, 0);
+('Caramelized Onions', 6, 2);
 
 
 INSERT INTO pizzas(name, img_url, modified, category) VALUES
@@ -55,6 +54,7 @@ INSERT INTO pizzas_have_ingredients VALUES
 (2, 20),
 (2, 22),
 (2, 34),
+(3, 1),
 (3, 22),
 (3, 20),
 (3, 9),
