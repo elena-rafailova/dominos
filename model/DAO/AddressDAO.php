@@ -51,7 +51,7 @@ class AddressDAO
     static function get($user_id) {
         try{
             $pdo = getPDO();
-            $pdo->beginTransaction();
+//            $pdo->beginTransaction();
             $sql ="SELECT * FROM addresses as a JOIN users_have_addresses as uha ON a.id = uha.address_id
                             WHERE uha.user_id = ?";
             $stmt = $pdo->prepare($sql);

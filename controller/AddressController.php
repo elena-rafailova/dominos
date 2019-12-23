@@ -13,7 +13,11 @@ class AddressController
 function add () {
     //todo validation of address data
     if(isset($_POST['add'])) {
-        $name= $_POST['name'];
+        if($_POST['name'] != '') {
+            $name = $_POST['name'];
+        } else {
+            $name='Empty Title';
+        }
         $street_name= $_POST['street_name'];
         $street_number= $_POST['street_number'];
         $city= $_POST['city'];
@@ -27,7 +31,7 @@ function add () {
         $user_id = json_decode($_SESSION['logged_user'])->id;
         AddressDAO::add($address, $user_id);
         echo "Successfully added new address. <br>";
-        include_once "view/addresses.php";
+        header("Location: index.php?target=address&action=show");
 
     }
 }
