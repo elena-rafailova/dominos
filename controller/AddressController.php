@@ -33,5 +33,9 @@ function add () {
 }
 function change() {}
 function delete(){}
-function show() {}
+function show() {
+    $user_id = json_decode($_SESSION['logged_user'])->id;
+    $addresses = AddressDAO::get($user_id);
+    include_once "view/addresses.php";
+}
 }
