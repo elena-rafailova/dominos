@@ -10,3 +10,9 @@ table, tr, td, th {
 td,th {
     width: 300px;
 }
+
+#buttons li {
+    float: left;
+    list-style: none;
+    display: block;
+}

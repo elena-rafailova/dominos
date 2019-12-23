@@ -14,11 +14,11 @@ $user = json_decode($_SESSION['logged_user']);
 </head>
 <body>
 <form action="index.php?target=user&action=edit" method="post">
-    <label>First name:</label><br>
+    <label>First name: * </label><br>
     <input type="text" name="first_name" value="<?= $user->first_name ?>" required><br>
-    <label>Last name:</label><br>
+    <label>Last name: * </label><br>
     <input type="text" name="last_name"  value="<?= $user->last_name ?>" required><br>
-    <label>Email:</label><br>
+    <label>Email: * </label><br>
     <input type="email" name="email"  value="<?= $user->email ?>" readonly><br>
     <label>Current password:</label><br>
     <input type="password" name="password" placeholder="Enter password" ><br>
