@@ -4,7 +4,7 @@
 namespace model;
 
 
-class Address
+class Address implements \JsonSerializable
 {
     private $id;
     private $phone_number;
@@ -32,5 +32,73 @@ class Address
         $this->apartment_number=$apartment_number;
     }
 
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+    public function getPhoneNumber()
+    {
+        return $this->phone_number;
+    }
+
+
+    public function getCityId()
+    {
+        return $this->city_id;
+    }
+
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+
+    public function getStreetName()
+    {
+        return $this->street_name;
+    }
+
+
+    public function getStreetNumber()
+    {
+        return $this->street_number;
+    }
+
+
+    public function getBuildingNumber()
+    {
+        return $this->building_number;
+    }
+
+
+    public function getEntrance()
+    {
+        return $this->entrance;
+    }
+
+
+    public function getFloor()
+    {
+        return $this->floor;
+    }
+
+
+    public function getApartmentNumber()
+    {
+        return $this->apartment_number;
+    }
+
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
 
 }
