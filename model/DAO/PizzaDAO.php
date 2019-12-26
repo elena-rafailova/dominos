@@ -16,16 +16,16 @@ class PizzaDAO {
         try {
             $pdo = getPDO();
 
-            $sql = "SELECT id, name, img_url, modified, category FROM pizzas";
+            $sql = "SELECT id, name, img_url, modified, category FROM pizzas WHERE modified=?";
             if (isset($category)) {
-                $sql .= " WHERE category=?";
+                $sql .= "AND category=?";
             }
             $stmt = $pdo->prepare($sql);
             if (isset($category)) {
 
-                $stmt->execute([$category]);
+                $stmt->execute([0,$category]);
             } else {
-                $stmt->execute([]);
+                $stmt->execute([0]);
             }
 
             $pizzas = [];
