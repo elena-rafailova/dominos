@@ -6,6 +6,8 @@ include_once "DBConnector.php";
 
 use model\Pizza;
 use model\Ingredient;
+use model\Dough;
+use model\Size;
 use PDO;
 use PDOException;
 
@@ -118,7 +120,18 @@ class PizzaDAO {
             $stmt = $pdo->prepare($sql);
             $stmt->execute();
 
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $items = [];
+
+            foreach ($rows as $row) {
+                if ($dough) {
+                    $items[] = new Dough($row["id"], $row["name"], $row["price"]);
+                } else {
+                    $items[] = new Size($row["id"], $row["name"], $row["price"], $row["slices"]);
+                }
+            }
+
+            return $items;
 
         }catch (PDOException $e) {
             echo $e->getMessage();

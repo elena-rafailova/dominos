@@ -140,7 +140,6 @@ class Pizza
         $this->size = $size;
     }
 
-
     public function setQuantity($quantity) {
         $this->quantity = $quantity;
     }

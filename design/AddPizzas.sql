@@ -74,3 +74,6 @@ ADD CONSTRAINT `order_status_fk`
   REFERENCES `dominos`.`statuses` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+
+UPDATE `dominos`.`ingredients` SET `category_id`='6' WHERE `id`='34';
+

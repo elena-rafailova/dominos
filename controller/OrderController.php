@@ -55,20 +55,33 @@ class OrderController {
                     }
                     $newPizzaId = Pizza::addNew($pizza->getName(), $ingredients);
                     $pizza = new Pizza($newPizzaId, $pizza->getName(), null,1,
-                        $ingredients, $price, null, $_POST["dough"], $_POST["size"], 1);
+                        $ingredients, $price, null, $_POST["dough"], $_POST["size"], null);
 
                 } else {
-                    $pizza->setQuantity(1);
+                    $price = 0;
+                    /** @var Ingredient $ingredient */
+                    foreach ($pizza->getIngredients() as $ingredient) {
+                        $price+= $ingredient->getPrice();
+                    }
                     $pizza->setDough($_POST["dough"]);
                     $pizza->setSize($_POST["size"]);
-
                 }
+
+                $price += $pizza->getDoughAndSizePrice();
+                $pizza->setPrice($price);
+
+                if (isset($_POST["quantity"]) && $_POST["quantity"] >= 1 && $_POST["quantity"] <= 100) {
+                    $pizza->setQuantity($_POST["quantity"]);
+                } else {
+                    header("Location: index.php?target=pizza&action=showAll");
+                }
+
                 $order = new Order(null, $user->id, null, 1, null, null,
-                    1, $pizza->getPrice(), [$pizza], null);
+                    1, $pizza->getPrice() * $_POST["quantity"], [$pizza], null);
                 $order->placeOrder();
             }
         } else {
-            header("Location: index.php?target=pizza&action=show");
+            header("Location: index.php?target=pizza&action=showAll");
         }
     }
 }

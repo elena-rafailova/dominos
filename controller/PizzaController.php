@@ -8,7 +8,7 @@ use model\Pizza;
 
 class PizzaController
 {
-    function show() {
+    function showAll() {
         if (!isset($_GET["category"])) {
             $pizzas = Pizza::getAllPizzas();
         } else {
@@ -26,7 +26,7 @@ class PizzaController
         include_once "view/pizzas.php";
     }
 
-    function pizza() {
+    function showPizza() {
         if (isset($_POST["choose"])) {
             if (isset($_POST["id"])) {
                 $pizza = Pizza::getPizzaById($_POST["id"]);
@@ -38,6 +38,7 @@ class PizzaController
                 for ($i = 0; $i < 6; $i++) {
                     $ingredients[] = Ingredient::getIngredientsByCategory($i+1);
                 }
+                $ingredients[] = Ingredient::getIngredientsByCategory(null);
                 include_once "view/pizza.php";
             }
         }

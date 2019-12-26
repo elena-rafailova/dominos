@@ -25,7 +25,7 @@ if (!isset($pizzas)) {
             echo "<td><img src='" . $pizza->getImg_url() . "' /><br>";
             echo $pizza->getName() . "<br>";
             echo $pizza->printIngredients();
-            echo "<form action='index.php?target=pizza&action=pizza' method='post'>";
+            echo "<form action='index.php?target=pizza&action=showPizza' method='post'>";
             echo "<input type='hidden' name='id' value='" . $pizza->getId() . "' >";
             echo "<input type='submit' value='Choose' name='choose'>";
             echo "</form><br></td></tr>";
