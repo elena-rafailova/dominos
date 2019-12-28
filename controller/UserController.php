@@ -5,10 +5,14 @@ namespace controller;
 
 use model\DAO\UserDAO;
 use model\User;
+use Swift_Mailer;
+use Swift_Message;
+use Swift_SmtpTransport;
 
+
+require_once 'model/DAO/config.php';
 class UserController
 {
-//TODO forgotten password
 function register() {
     if(isset($_POST["register"])){
         if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email'])
@@ -139,6 +143,119 @@ function validationOfInput($first_name, $last_name, $email, $password=1, $verify
 
        return $msg;
 }
+
+function sendMail($email, $token)
+    {
+        // Create the Transport
+        $transport = (new Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))->setUsername(EMAIL)
+            ->setPassword(PASSWORD);
+
+    // Create the Mailer using your created Transport
+        $mailer = new Swift_Mailer($transport);
+
+        $body = '<!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <title>Reset your password</title>
+            </head>
+            <body>
+                <p>
+                    Hello dear user,
+                    <br>
+                    You have sent a request to change your password.
+                    Please do so if you still wish by clicking on the link below.
+                    Please be noted that the link will expire in an hour.
+                </p>
+                <a href="http://localhost/dominos/index.php?target=user&action=resetPassword&token=' . $token . '">Reset you password here.</a>
+            </body>
+            </html>';
+        // Create a message
+        $message = (new Swift_Message('Reset your password'))
+            ->setFrom(EMAIL)
+            ->setTo($email)
+            ->setBody($body, 'text/html');
+
+        // Send the message
+        $result = $mailer->send($message);
+    }
+
+function forgotPassword() {
+    $msg='';
+    if(isset($_POST['forgot_password'])) {
+        if(isset($_POST['email'])){
+            $email=$_POST['email'];
+            if (!(filter_var($email, FILTER_VALIDATE_EMAIL))) {
+                $msg .= " Invalid email format. <br> ";
+            }else {
+                $user = UserDAO::checkUser($email);
+                if (!$user) {
+                    $msg .= "User with that email doesn't exist! <br>";
+                } else {
+                    $user_id = $user->id;
+                    $token = bin2hex(random_bytes(50));
+                    $expFormat = mktime(
+                        date("H") + 1, date("i"), date("s"), date("m"), date("d"), date("Y")
+                    );
+                    $expDate = date("Y-m-d H:i:s", $expFormat);
+                    UserDAO::addToken($user_id, $token, $expDate);
+                    $this->sendMail($email, $token);
+                    include_once "view/forgot_message.php";
+                }
+            }
+        }
+    }
+//    if($msg!= '') {
+//        echo $msg;
+//    }
+}
+function resetPassword() {
+    //from email
+    if(isset($_GET['token'])){
+        $token=$_GET['token'];
+        $user = UserDAO::getUserByToken($token);
+        if(!$user) {
+            echo "There is no such user.";
+        }
+        else {
+            $_SESSION['id'] = $user->id;
+            echo $_SESSION['id'];
+            include_once "view/reset_password.php";
+        }
+    }
+}
+
+function changePassword() {
+    if(isset($_POST['change_password'])) {
+       $password = $_POST['new_password'];
+       $confirm_password = $_POST['confirm_password'];
+        $msg = '';
+        if ($password === $confirm_password) {
+            if (!(preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $password))) {
+                $msg .= " Wrong password input. Password should be at least 8 characters -
+                containing at least one lowercase, one uppercase letter, one digit
+                and one special character. <br> ";
+            } else {
+                    $user_id = $_SESSION['id'];
+                    $new_password = password_hash($password, PASSWORD_BCRYPT);
+                    $update = UserDAO::updatePassword($new_password, $user_id);
+                    if($update) {
+                        header("Location: index.php?view=login");
+                    } else {
+                        echo 'Mistake in UserDAO!';
+                    }
+                }
+            }
+        else {
+            $msg .= " Passwords don't match! <br> ";
+        }
+        if($msg!='') {
+            echo $msg;
+        }
+
+    }
+}
+
 
 }
 

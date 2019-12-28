@@ -68,4 +68,64 @@ class UserDAO
             return false;
         }
     }
+
+    public static function addToken($user_id,$token,$expDate)
+    {
+            //add token to DB table
+        try {
+            $pdo = getPDO();
+            $sql ="INSERT INTO password_reset(user_id, token, exp_date) VALUES (?,?,?)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(array($user_id,$token,$expDate));
+            return true;
+        }
+        catch (PDOException $e) {
+            echo "Something went wrong". $e->getMessage();
+            return false;
+        }
+    }
+
+    public static function getUserByToken($token)
+    {
+        //get user info by token
+        try {
+            $pdo = getPDO();
+            $sql ="SELECT u.id,u.first_name,u.last_name,u.email FROM users AS u JOIN password_reset AS pr ON (u.id = pr.user_id) WHERE pr.token =?";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(array($token));
+            $row = $stmt->fetch(PDO::FETCH_OBJ);
+            if (empty($row)) {
+                return false;
+            } else {
+                return $row;
+            }
+        }
+        catch (PDOException $e) {
+            echo "Something went wrong". $e->getMessage();
+        }
+    }
+
+    public static function updatePassword($new_password, $user_id)
+    {
+        // update users with new pass and delete token from reset_password
+        try {
+            $pdo = getPDO();
+            $pdo->beginTransaction();
+            $sql = "UPDATE users SET password=? WHERE id=?;";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(array($new_password, $user_id));
+
+            $sql2 = "DELETE FROM password_reset WHERE user_id = ? ";
+            $stmt2 = $pdo->prepare($sql2);
+            $stmt2->execute([$user_id]);
+
+            $pdo->commit();
+            return true;
+        } catch (PDOException $e) {
+            $pdo->rollBack();
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
 }

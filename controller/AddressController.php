@@ -83,27 +83,27 @@ function show() {
 function validationOfInput($street_name, $name , $phone_number, $building_number='' ,$apartment_number='' ,$entrance= '') {
     $msg = '';
 
-    if(!(preg_match("^[a-zA-Z0-9\s\.\"\']+$^", $street_name))) {
+    if((preg_match("^[a-zA-Z0-9\s]+$^",$name)) !=1 ) {
+        $msg .= " Invalid address name format. <br> ";
+    }
+    if((preg_match("^[a-zA-Z0-9\s.\"']+$^", $street_name)) != 1) {
         $msg .= " Invalid street name format. <br> ";
     }
-    if(!(preg_match("^[a-zA-Z0-9\s]+$^",$name))) {
-        $msg .= " Invalid name format. <br> ";
-    }
-    if(!(preg_match("^[0-9\s\+]+$^", $phone_number))) {
+    if((preg_match("^[0-9\s+]+$^", $phone_number)) != 1) {
         $msg .= " Invalid phone number format. <br> ";
     }
     if($building_number!= ''){
-        if(!(preg_match("^[a-zA-Z0-9]+$^",$building_number))){
+        if(!ctype_alnum($building_number)){
             $msg .= " Invalid building number format.<br> ";
         }
     }
     if($apartment_number!= ''){
-        if(!preg_match("^[a-zA-Z0-9]+$^",$apartment_number)){
+        if(!ctype_alnum($apartment_number)){
             $msg .= " Invalid apartment number format. <br> ";
         }
     }
     if($entrance!= ''){
-        if(!preg_match("^[a-zA-Z0-9]+$^",$entrance)){
+        if(!ctype_alnum($entrance)){
             $msg .= " Invalid entrance format. <br> ";
         }
     }
