@@ -219,7 +219,6 @@ function resetPassword() {
         }
         else {
             $_SESSION['id'] = $user->id;
-            echo $_SESSION['id'];
             include_once "view/reset_password.php";
         }
     }

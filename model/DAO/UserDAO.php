@@ -69,7 +69,7 @@ class UserDAO
         }
     }
 
-    public static function addToken($user_id,$token,$expDate)
+    static function addToken($user_id,$token,$expDate)
     {
             //add token to DB table
         try {
@@ -85,7 +85,7 @@ class UserDAO
         }
     }
 
-    public static function getUserByToken($token)
+    static function getUserByToken($token)
     {
         //get user info by token
         try {
@@ -105,7 +105,7 @@ class UserDAO
         }
     }
 
-    public static function updatePassword($new_password, $user_id)
+    static function updatePassword($new_password, $user_id)
     {
         // update users with new pass and delete token from reset_password
         try {
