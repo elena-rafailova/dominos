@@ -5,10 +5,17 @@ namespace controller;
 use model\Ingredient;
 use model\Order;
 use model\Pizza;
+use model\Restaurant;
 use model\User;
 
 
 class OrderController {
+
+    public function hello() {
+        echo "Hello";
+        die();
+    }
+
     public function finish() {
         if (isset($_POST["order"])) {
             if (isset($_POST["pizza_id"]) && isset($_POST["dough"]) && isset($_POST["size"]) && isset($_POST["sauces"])) {
@@ -53,9 +60,9 @@ class OrderController {
                     foreach ($ingredients as $ingredient) {
                         $price += $ingredient->getPrice();
                     }
-                    $newPizzaId = Pizza::addNew($pizza->getName(), $ingredients);
-                    $pizza = new Pizza($newPizzaId, $pizza->getName(), null,1,
-                        $ingredients, $price, null, $_POST["dough"], $_POST["size"], null);
+                    //$newPizzaId = Pizza::addNew($pizza->getName(), $ingredients);
+                    //$pizza = new Pizza($newPizzaId, $pizza->getName(), null,1,
+                    //    $ingredients, $price, null, $_POST["dough"], $_POST["size"], null);
 
                 } else {
                     $price = 0;
@@ -78,10 +85,13 @@ class OrderController {
 
                 $order = new Order(null, $user->id, null, 1, null, null,
                     1, $pizza->getPrice() * $_POST["quantity"], [$pizza], null);
-                $order->placeOrder();
+                //$order->placeOrder();
+
+                include_once "view/orderStatus.php";
             }
         } else {
             header("Location: index.php?target=pizza&action=showAll");
         }
     }
+
 }

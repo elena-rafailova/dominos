@@ -18,9 +18,9 @@ class PizzaDAO {
         try {
             $pdo = getPDO();
 
-            $sql = "SELECT id, name, img_url, modified, category FROM pizzas WHERE modified=?";
+            $sql = "SELECT id, name, img_url, modified, category FROM pizzas WHERE modified=? ";
             if (isset($category)) {
-                $sql .= "AND category=?";
+                $sql .= " AND category=?";
             }
             $stmt = $pdo->prepare($sql);
             if (isset($category)) {

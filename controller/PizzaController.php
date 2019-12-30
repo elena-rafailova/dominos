@@ -15,14 +15,6 @@ class PizzaController
             $category = $_GET["category"];
             $pizzas = Pizza::getAllPizzas($category);
         }
-
-        $doughs = Pizza::getDoughsOrSizes(true);
-        $sizes = Pizza::getDoughsOrSizes(false);
-
-
-        foreach ($pizzas as $pizza) {
-            $pizza->setPrice($pizza->getPrice() + $pizza->getDoughAndSizePrice());
-        }
         include_once "view/pizzas.php";
     }
 

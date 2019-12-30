@@ -47,3 +47,30 @@ CREATE TABLE `restaurants` (
 INSERT INTO `restaurants` VALUES (1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8),(9,9),(10,10),(11,11),(12,12),
 (13,13),(14,14),(15,15),(16,16),(17,17),(18,18),(19,19),(20,20),(21,21);
 
+-- New Data For addresses of restaurants
+ALTER TABLE `dominos`.`addresses` 
+ADD COLUMN `latitude` DOUBLE NULL AFTER `date_created`,
+ADD COLUMN `longitude` DOUBLE NULL AFTER `latitude`;
+
+UPDATE `dominos`.`addresses` SET `latitude`='42.717450', `longitude`='23.252440' WHERE `id`='11';
+UPDATE `dominos`.`addresses` SET `latitude`='43.221271', `longitude`='27.873374' WHERE `id`='1';
+UPDATE `dominos`.`addresses` SET `latitude`='42.129890', `longitude`='24.743910' WHERE `id`='2';
+UPDATE `dominos`.`addresses` SET `latitude`='42.141990', `longitude`='24.784860' WHERE `id`='3';
+UPDATE `dominos`.`addresses` SET `latitude`='42.141510', `longitude`='24.739880' WHERE `id`='4';
+UPDATE `dominos`.`addresses` SET `latitude`='42.672600', `longitude`='23.285360' WHERE `id`='5';
+UPDATE `dominos`.`addresses` SET `latitude`='42.697180', `longitude`='23.121410' WHERE `id`='6';
+UPDATE `dominos`.`addresses` SET `latitude`='42.679870', `longitude`='23.355980' WHERE `id`='7';
+UPDATE `dominos`.`addresses` SET `latitude`='42.126610', `longitude`='24.774030' WHERE `id`='8';
+UPDATE `dominos`.`addresses` SET `latitude`='42.665620', `longitude`='23.298760' WHERE `id`='9';
+UPDATE `dominos`.`addresses` SET `latitude`='42.694380', `longitude`='23.284690' WHERE `id`='10';
+UPDATE `dominos`.`addresses` SET `latitude`='42.636070', `longitude`='23.369710' WHERE `id`='12';
+UPDATE `dominos`.`addresses` SET `latitude`='42.623760', `longitude`='23.368460' WHERE `id`='13';
+UPDATE `dominos`.`addresses` SET `latitude`='42.655050', `longitude`='23.364780' WHERE `id`='14';
+UPDATE `dominos`.`addresses` SET `latitude`='42.734670', `longitude`='23.294600' WHERE `id`='15';
+UPDATE `dominos`.`addresses` SET `latitude`='42.661520', `longitude`='23.264910' WHERE `id`='16';
+UPDATE `dominos`.`addresses` SET `latitude`='42.643280', `longitude`='23.341030' WHERE `id`='17';
+UPDATE `dominos`.`addresses` SET `latitude`='42.653840', `longitude`='23.346120' WHERE `id`='18';
+UPDATE `dominos`.`addresses` SET `latitude`='42.702830', `longitude`='23.352890' WHERE `id`='19';
+UPDATE `dominos`.`addresses` SET `latitude`='42.708720', `longitude`='23.132000' WHERE `id`='20';
+UPDATE `dominos`.`addresses` SET `latitude`='42.674750', `longitude`='23.309700' WHERE `id`='21';
+

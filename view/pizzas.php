@@ -11,13 +11,12 @@ if (!isset($pizzas)) {
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
     <h1>Our pizzas: </h1>
-    <a href="index.php?target=pizza&action=show&category=1"><button>New</button></a>
-    <a href="index.php?target=pizza&action=show&category=2"><button>Vegetarian</button></a>
-    <a href="index.php?target=pizza&action=show&category=3"><button>Spicy</button></a>
+    <a href="index.php?target=pizza&action=showAll&category=1"><button>New</button></a>
+    <a href="index.php?target=pizza&action=showAll&category=2"><button>Vegetarian</button></a>
+    <a href="index.php?target=pizza&action=showAll&category=3"><button>Spicy</button></a>
     <table>
         <?php
         foreach ($pizzas as $pizza) {

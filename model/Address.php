@@ -17,9 +17,11 @@ class Address implements \JsonSerializable
     private $floor;
     private $apartment_number;
     private $date_created;
+    private $latitude;
+    private $longitude;
 
-    public function __construct($phone_number, $city_id, $name, $street_name, $street_number,
-                                $building_number=null, $entrance=null, $floor=null, $apartment_number=null)
+    public function __construct($phone_number, $city_id, $name, $street_name, $street_number, $building_number=null,
+                                $entrance=null, $floor=null, $apartment_number=null, $longitude = null, $latitude = null)
     {
         $this->phone_number=$phone_number;
         $this->city_id=$city_id;
