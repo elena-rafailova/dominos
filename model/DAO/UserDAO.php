@@ -90,7 +90,7 @@ class UserDAO
         //get user info by token
         try {
             $pdo = getPDO();
-            $sql ="SELECT u.id,u.first_name,u.last_name,u.email FROM users AS u JOIN password_reset AS pr ON (u.id = pr.user_id) WHERE pr.token =?";
+            $sql ="SELECT u.id,u.first_name,u.last_name,u.email, pr.exp_date FROM users AS u JOIN password_reset AS pr ON (u.id = pr.user_id) WHERE pr.token =?";
             $stmt = $pdo->prepare($sql);
             $stmt->execute(array($token));
             $row = $stmt->fetch(PDO::FETCH_OBJ);
@@ -123,6 +123,20 @@ class UserDAO
             return true;
         } catch (PDOException $e) {
             $pdo->rollBack();
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    static function deleteToken($user_id)
+    {
+        try {
+            $pdo = getPDO();
+            $sql = "DELETE FROM password_reset WHERE user_id = ? ";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$user_id]);
+            return true;
+        } catch (PDOException $e) {
             echo $e->getMessage();
             return false;
         }

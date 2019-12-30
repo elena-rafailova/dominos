@@ -195,8 +195,7 @@ function forgotPassword() {
                     $user_id = $user->id;
                     $token = bin2hex(random_bytes(50));
                     $expFormat = mktime(
-                        date("H") + 1, date("i"), date("s"), date("m"), date("d"), date("Y")
-                    );
+                    date("H"), date("i"), date("s"), date("m"), date("d")+1, date("Y"));
                     $expDate = date("Y-m-d H:i:s", $expFormat);
                     UserDAO::addToken($user_id, $token, $expDate);
                     $this->sendMail($email, $token);
@@ -213,13 +212,25 @@ function resetPassword() {
     //from email
     if(isset($_GET['token'])){
         $token=$_GET['token'];
+        $curDate = date("Y-m-d H:i:s");
         $user = UserDAO::getUserByToken($token);
         if(!$user) {
-            echo "There is no such user.";
+        echo "<h2>Invalid Link</h2>
+        <p>The link is invalid/expired or you have already used the link in which case it is 
+        deactivated.</p>";
         }
         else {
             $_SESSION['id'] = $user->id;
-            include_once "view/reset_password.php";
+            $expDate = $user->exp_date;
+            if ($expDate >= $curDate){
+                include_once "view/reset_password.php";
+            }
+            else {
+                UserDAO::deleteToken($_SESSION['id']);
+                echo "<h2>Invalid Link</h2>
+                <p>The link is expired.You are trying to use the expired link which 
+                    is valid only 24 hours (1 days after request).<br /><br /></p>";
+            }
         }
     }
 }
