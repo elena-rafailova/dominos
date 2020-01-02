@@ -19,12 +19,11 @@ class PizzaDAO {
             $pdo = getPDO();
 
             $sql = "SELECT id, name, img_url, modified, category FROM pizzas WHERE modified=? ";
-            if (isset($category)) {
+            if (isset($category) && $category != 0) {
                 $sql .= " AND category=?";
             }
             $stmt = $pdo->prepare($sql);
-            if (isset($category)) {
-
+            if (isset($category) && $category != 0) {
                 $stmt->execute([0,$category]);
             } else {
                 $stmt->execute([0]);

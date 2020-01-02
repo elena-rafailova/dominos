@@ -1,5 +1,6 @@
 <?php
 include_once "main.php";
+include_once "model/DAO/config.php";
 
 //if (!isset($restaurants)) {
 //    header("index.php?target=restaurant&action=show");
@@ -19,7 +20,7 @@ include_once "main.php";
 
 <div id="map"></div>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNlaNlS38FSY8XNxzvEuw7mt-1WsrlspM&callback=getLocation"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_O6dUhOX_YuXTAsIHtWVTJ-wcNjjhjlM&callback=getLocation"
         async defer></script>
 
 </body>
@@ -27,7 +28,6 @@ include_once "main.php";
 <script>
     var map;
     var restaurants;
-    var geocoder;
 
     function getRestaurants() {
         var xhttp = new XMLHttpRequest();
@@ -60,13 +60,7 @@ include_once "main.php";
 
 
     function getLocation() {
-        var options = {
-            enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0
-        };
-
-        navigator.geolocation.getCurrentPosition(initMap, null, options);
+        navigator.geolocation.getCurrentPosition(initMap);
 
     }
 
@@ -81,12 +75,20 @@ include_once "main.php";
         });
 
 
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(parseFloat(position.coords.latitude), parseFloat(position.coords.longitude)),
-            map: map,
-            optimized: false,
-            title: "Home"
+        infoWindow = new google.maps.InfoWindow;
+        infoWindow.setContent('You are here.');
+        infoWindow.setPosition(myPos);
+        infoWindow.open(map);
 
+
+        var markerOptions = new google.maps.Marker({
+            clickable: true,
+            flat: true,
+            map: map,
+            position: myPos,
+            title: "You are here",
+            visible:true,
+            icon:'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
         });
 
         var data = document.getElementById("data").innerText;
@@ -97,12 +99,28 @@ include_once "main.php";
                 position: new google.maps.LatLng(parseFloat(data.latitude), parseFloat(data.longitude)),
                 map: map,
                 optimized: false,
-                title: data.name
-
+                icon:'https://www.dominos.bg/echo/images/dominos30.png',
             });
             var label = { color: '#333', fontWeight: 'bold', fontSize: '16px', text: data.name };
             marker.setLabel(label);
+
+            var info = document.createElement("div");
+            var text = document.createElement("p");
+            var bold = document.createElement("strong");
+            bold.innerText = data.name;
+            text.innerText = data.street_name + " " + data.street_number;
+
+            info.appendChild(bold);
+            info.appendChild(text);
+
+            marker.addListener('click', function() {
+                infoWindow.setContent(info);
+                infoWindow.open(map, marker);
+            });
+
         });
+
+
     }
 </script>
 

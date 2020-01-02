@@ -6,7 +6,7 @@ namespace model;
 use model\DAO\PizzaDAO;
 
 
-class Ingredient
+class Ingredient implements \JsonSerializable
 {
     private $id;
     private $name;
@@ -42,4 +42,9 @@ class Ingredient
         return $pizzaDAO->getIngredientById($id);
     }
 
+    public function jsonSerialize() {
+        $vars = get_object_vars($this);
+
+        return $vars;
+    }
 }

@@ -17,7 +17,7 @@ use model\Ingredient;
 use model\DAO\PizzaDAO;
 
 
-class Pizza
+class Pizza implements \JsonSerializable
 {
     private $id;
     private $name;
@@ -142,5 +142,11 @@ class Pizza
 
     public function setQuantity($quantity) {
         $this->quantity = $quantity;
+    }
+
+    public function jsonSerialize() {
+        $vars = get_object_vars($this);
+
+        return $vars;
     }
 }

@@ -9,12 +9,6 @@ use model\Pizza;
 class PizzaController
 {
     function showAll() {
-        if (!isset($_GET["category"])) {
-            $pizzas = Pizza::getAllPizzas();
-        } else {
-            $category = $_GET["category"];
-            $pizzas = Pizza::getAllPizzas($category);
-        }
         include_once "view/pizzas.php";
     }
 
@@ -34,6 +28,16 @@ class PizzaController
                 include_once "view/pizza.php";
             }
         }
+    }
+
+    function getPizzasInfo() {
+        if (!isset($_GET["category"])) {
+            $pizzas = Pizza::getAllPizzas();
+        } else {
+            $category = $_GET["category"];
+            $pizzas = Pizza::getAllPizzas($category);
+        }
+        echo json_encode($pizzas, JSON_UNESCAPED_UNICODE);
     }
 
 }

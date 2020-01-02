@@ -271,5 +271,9 @@ function changePassword() {
         echo 'Hello, '.$user->first_name;
         die();
     }
+
+    public function carryOut() {
+        $_SESSION["carry_out"] = $_POST["resId"];
+    }
 }
 

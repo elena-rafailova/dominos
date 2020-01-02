@@ -12,7 +12,7 @@ echo $user->first_name."<br>";
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-<a href="index.php?target=pizza&action=showAll"><button>Menu</button></a>
+<a href="index.php?target=pizza&action=showAll"><button>Order</button></a>
 <a href="index.php?target=restaurant&action=show"><button>Restaurants</button></a>
 <ul id="buttons">
     <li><a href="index.php?view=edit"><button>My Profile (edit) </button></a></li>
