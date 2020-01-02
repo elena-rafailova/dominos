@@ -19,7 +19,7 @@ include_once "main.php";
 
 <div id="map"></div>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNlaNlS38FSY8XNxzvEuw7mt-1WsrlspM&callback=getLocation"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_O6dUhOX_YuXTAsIHtWVTJ-wcNjjhjlM&callback=getLocation"
         async defer></script>
 
 </body>

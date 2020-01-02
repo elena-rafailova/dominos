@@ -37,6 +37,7 @@ function add () {
         }
     }
 }
+
 function change()
 {
     if (isset($_POST['change'])) {
@@ -67,6 +68,7 @@ function change()
         }
     }
 }
+
 function delete(){
     if(isset($_POST['delete'])){
             $id = $_POST['id'];
@@ -74,6 +76,7 @@ function delete(){
             header("Location: index.php?target=address&action=show");
         }
 }
+
 function show() {
     $user_id = json_decode($_SESSION['logged_user'])->id;
     $addresses = AddressDAO::get($user_id);

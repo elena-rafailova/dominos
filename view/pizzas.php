@@ -1,6 +1,6 @@
 <?php
 include_once "main.php";
-
+include_once "menu-list.php";
 if (!isset($pizzas)) {
     header("index.php?target=pizza&action=show");
 }

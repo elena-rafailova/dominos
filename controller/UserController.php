@@ -208,6 +208,7 @@ function forgotPassword() {
 //        echo $msg;
 //    }
 }
+
 function resetPassword() {
     //from email
     if(isset($_GET['token'])){
@@ -266,10 +267,5 @@ function changePassword() {
     }
 }
 
-    public function greet() {
-        $user = json_decode($_SESSION['logged_user']);
-        echo 'Hello, '.$user->first_name;
-        die();
-    }
 }
 
