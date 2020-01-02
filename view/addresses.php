@@ -110,14 +110,6 @@ if (!isset($addresses)) {
                 <label>ENTRANCE</label><br>
                 <input type="text" name="entrance"  maxlength="6"  /><br><br>
 
-<!--                <div style="float: left ;width: 30%; margin-right: 8px;">-->
-<!--                    <img  src="uploads/green_check.svg" width="30px" height="30px" alt="Change" /><br>-->
-<!--                    <input type="button" onclick="submitForm('index.php?target=address&action=change')" value="Change" name="change">-->
-<!--                </div>-->
-<!--                <div style="float: left; width: 30%;">-->
-<!--                    <img src="uploads/delete_cross.svg" width="30px" height="30px" alt="Delete" /><br>-->
-<!--                    <input type="button" onclick="submitForm('index.php?target=address&action=delete')" value="Delete" name="delete">-->
-<!--                </div>-->
             </form>
     <?php
     }

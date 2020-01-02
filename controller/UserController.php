@@ -208,6 +208,7 @@ function forgotPassword() {
 //        echo $msg;
 //    }
 }
+
 function resetPassword() {
     //from email
     if(isset($_GET['token'])){
@@ -272,8 +273,13 @@ function changePassword() {
         die();
     }
 
-    public function carryOut() {
-        $_SESSION["carry_out"] = $_POST["resId"];
+    public function deliveryMethod() {
+        if (isset($_POST["resId"])) {
+            $_SESSION["carry_out"] = $_POST["resId"];
+        }
+        if (isset($_POST["addrId"])) {
+            $_SESSION["delivery"] = $_POST["addrId"];
+        }
     }
 }
 

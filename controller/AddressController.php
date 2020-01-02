@@ -37,6 +37,7 @@ function add () {
         }
     }
 }
+
 function change()
 {
     if (isset($_POST['change'])) {
@@ -67,6 +68,7 @@ function change()
         }
     }
 }
+
 function delete(){
     if(isset($_POST['delete'])){
             $id = $_POST['id'];
@@ -74,10 +76,17 @@ function delete(){
             header("Location: index.php?target=address&action=show");
         }
 }
+
 function show() {
     $user_id = json_decode($_SESSION['logged_user'])->id;
     $addresses = AddressDAO::get($user_id);
     include_once "view/addresses.php";
+}
+
+function getAddresses() {
+    $user_id = json_decode($_SESSION['logged_user'])->id;
+    $addresses = AddressDAO::get($user_id);
+    echo json_encode($addresses, JSON_UNESCAPED_UNICODE);
 }
 
 function validationOfInput($street_name, $name , $phone_number, $building_number='' ,$apartment_number='' ,$entrance= '') {

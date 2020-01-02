@@ -10,16 +10,20 @@ echo $user->first_name."<br>";
     <meta charset="UTF-8">
     <title>Main</title>
     <link rel="stylesheet" href="styles/styles.css">
+
 </head>
 <body>
 <a href="index.php?target=pizza&action=showAll"><button>Order</button></a>
-<a href="index.php?target=restaurant&action=show"><button>Restaurants</button></a>
+<!--<a href="index.php?target=restaurant&action=show"><button>Restaurants</button></a>-->
 <ul id="buttons">
     <li><a href="index.php?view=edit"><button>My Profile (edit) </button></a></li>
     <li><a href="index.php?target=address&action=show"><button>My Addresses</button></a></li>
     <li><a href="index.php?target=user&action=logout"><button>Logout</button></a></li>
 </ul>
 <br><br>
+
+<script src="view/js/map.js"></script>
+<script src="view/js/pizzas-view.js"></script>
 </body>
 </html>
 

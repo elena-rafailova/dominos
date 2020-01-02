@@ -60,9 +60,9 @@ class OrderController {
                     foreach ($ingredients as $ingredient) {
                         $price += $ingredient->getPrice();
                     }
-                    //$newPizzaId = Pizza::addNew($pizza->getName(), $ingredients);
-                    //$pizza = new Pizza($newPizzaId, $pizza->getName(), null,1,
-                    //    $ingredients, $price, null, $_POST["dough"], $_POST["size"], null);
+                    $newPizzaId = Pizza::addNew($pizza->getName(), $ingredients);
+                    $pizza = new Pizza($newPizzaId, $pizza->getName(), null,1,
+                        $ingredients, $price, null, $_POST["dough"], $_POST["size"], null);
 
                 } else {
                     $price = 0;
@@ -80,17 +80,36 @@ class OrderController {
                 if (isset($_POST["quantity"]) && $_POST["quantity"] >= 1 && $_POST["quantity"] <= 100) {
                     $pizza->setQuantity($_POST["quantity"]);
                 } else {
+                    //ToDo error
                     header("Location: index.php?target=pizza&action=showAll");
+                    die();
                 }
 
-                $order = new Order(null, $user->id, null, 1, null, null,
-                    1, $pizza->getPrice() * $_POST["quantity"], [$pizza], null);
-                //$order->placeOrder();
+                $delivery_addr = null;
+                if (isset($_SESSION["delivery"])) {
+                    $delivery_addr = $_SESSION["delivery"];
+                }
 
-                include_once "view/orderStatus.php";
+                $restaurant_id = null;
+                if (isset($_SESSION["carry_out"])) {
+                    $restaurant_id = $_SESSION["carry_out"];
+                }
+                if ($restaurant_id || $delivery_addr) {
+                    $order = new Order(null, $user->id, null, 1, $delivery_addr, $restaurant_id,
+                        1, $pizza->getPrice() * $_POST["quantity"], [$pizza], null);
+                    $order->placeOrder();
+
+                    include_once "view/orderStatus.php";
+                } else {
+                    //ToDo error
+                    header("Location: index.php?target=pizza&action=showAll");
+                    die();
+                }
             }
         } else {
+            //ToDo error
             header("Location: index.php?target=pizza&action=showAll");
+            die();
         }
     }
 

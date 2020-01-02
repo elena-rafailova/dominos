@@ -104,20 +104,5 @@ if (!isset($ingredients)) {
     <?php } ?>
 
 
-    <input type="button" onclick="pickDelivery()" value="Carry Out">
-    <input type="button" value="Free Delivery">
     <input type="submit" name="order" value="Order">
 </form>
-
-<script>
-    function pickDelivery() {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                alert(this.responseText)
-            }
-        };
-        xhttp.open("GET", "index.php?target=pizza&action=ingredients", true);
-        xhttp.send();
-    }
-</script>

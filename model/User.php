@@ -11,7 +11,6 @@ class User implements \JsonSerializable
     private $last_name;
     private $email;
     private $password;
-   // private $date_created;
 
    public function __construct($first_name,$last_name,$email,$password) {
        $this->first_name = $first_name;
