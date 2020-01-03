@@ -3,6 +3,7 @@
 
 namespace model;
 
+use model\DAO\IngredientDAO;
 use model\DAO\PizzaDAO;
 
 
@@ -42,9 +43,11 @@ class Ingredient implements \JsonSerializable
         return $pizzaDAO->getIngredientById($id);
     }
 
-    public function jsonSerialize() {
-        $vars = get_object_vars($this);
+    public function findPrice() {
+        $this->price = IngredientDAO::getPrice($this->id)["price"];
+    }
 
-        return $vars;
+    public function jsonSerialize() {
+        return get_object_vars($this);
     }
 }

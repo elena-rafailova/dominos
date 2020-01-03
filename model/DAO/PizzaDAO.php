@@ -153,6 +153,7 @@ class PizzaDAO {
             foreach ($ingredients as $ingredient) {
                 $price += $ingredient->getPrice();
             }
+            $price += $this->getPriceFromDoughAndSize(1, 2);
 
             $pizza = new Pizza($pizza["id"], $pizza["name"], $pizza["img_url"], 0,
                 $ingredients, $price, $pizza["category"], 1, 2);
@@ -201,9 +202,7 @@ class PizzaDAO {
 
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            $ingredient = new Ingredient($row["id"], $row["name"], null, $row["price"]);
-
-            return $ingredient;
+            return new Ingredient($row["id"], $row["name"], null, $row["price"]);
 
         } catch (PDOException $e) {
             echo $e->getMessage();

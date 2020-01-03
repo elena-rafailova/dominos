@@ -4,7 +4,9 @@
 namespace model;
 
 
-class Dough
+use model\DAO\DoughDAO;
+
+class Dough implements \JsonSerializable
 {
     private $id;
     private $name;
@@ -26,6 +28,15 @@ class Dough
 
     public function getName() {
         return $this->name;
+    }
+
+    public function findPrice() {
+        $this->price = DoughDAO::getPrice($this->id)["price"];
+    }
+
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
     }
 
 }

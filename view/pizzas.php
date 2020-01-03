@@ -17,17 +17,11 @@ include_once "menu-list.php";
         <select name="address" id="addresses">
 
         </select>
-<!--        <select name="delivery-time" id="del-time">-->
-<!--            <option>Now</option>-->
-<!--        </select>-->
         <input type="button" value="Order Now!" name="chooseOrdMethod" onclick="deliveryF()">
     </div>
     <div id="carryOut">
         <select id="restaurants">
         </select>
-<!--        <select name="delivery-time" id="pick-up-time">-->
-<!--            <option>Now</option>-->
-<!--        </select>-->
         <div id="data"></div>
         <br><br><div id="map"></div>
         <input type="button" value="Order Now!" name="chooseOrdMethod" onclick="carryOutF()">
@@ -40,18 +34,6 @@ include_once "menu-list.php";
     <button onclick="getPizzas(2)">Vegetarian</button></a>
     <button onclick="getPizzas(3)">Spicy</button></a>
     <table id="pizzas">
-<!--        --><?php
-//        foreach ($pizzas as $pizza) {
-//            echo "<tr>";
-//            echo "<td><img src='" . $pizza->getImg_url() . "' /><br>";
-//            echo $pizza->getName() . "<br>";
-//            echo $pizza->printIngredients();
-//            echo "<form action='index.php?target=pizza&action=showPizza' method='post'>";
-//            echo "<input type='hidden' name='id' value='" . $pizza->getId() . "' >";
-//            echo "<input type='submit' value='Choose' name='choose'>";
-//            echo "</form><br></td></tr>";
-//        }
-//        ?>
     </table>
 
 

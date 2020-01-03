@@ -11,11 +11,6 @@ use model\User;
 
 class OrderController {
 
-    public function hello() {
-        echo "Hello";
-        die();
-    }
-
     public function finish() {
         if (isset($_POST["order"])) {
             if (isset($_POST["pizza_id"]) && isset($_POST["dough"]) && isset($_POST["size"]) && isset($_POST["sauces"])) {
@@ -38,11 +33,11 @@ class OrderController {
                 if (!isset($_POST["vegetables"])) {
                     $_POST["vegetables"] = [];
                 }
-                if (!isset($_POST["mixed"])) {
-                    $_POST["mixed"] = [];
+                if (!isset($_POST["miscellaneous"])) {
+                    $_POST["miscellaneous"] = [];
                 }
                 $ingredientsIds = array_merge($_POST["sauces"], $_POST["cheeses"], $_POST["herbs"], $_POST["meats"],
-                    $_POST["vegetables"], $_POST["mixed"]);
+                    $_POST["vegetables"], $_POST["miscellaneous"]);
 
                 $pizzaIngrsIds = [];
                 /** @var Ingredient $ingredient */

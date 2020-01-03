@@ -4,7 +4,10 @@
 namespace model;
 
 
-class Size {
+use model\DAO\DoughDAO;
+use model\DAO\SizeDAO;
+
+class Size implements \JsonSerializable {
     private $id;
     private $name;
     private $price;
@@ -31,5 +34,14 @@ class Size {
 
     public function getSlices() {
         return $this->slices;
+    }
+
+    public function findPrice() {
+        $this->price = SizeDAO::getPrice($this->id)["price"];
+    }
+
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
     }
 }
