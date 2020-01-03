@@ -24,6 +24,7 @@ echo $user->first_name."<br>";
 
 <script src="view/js/map.js"></script>
 <script src="view/js/pizzas-view.js"></script>
+<script src="view/js/others-view.js"></script>
 </body>
 </html>
 
