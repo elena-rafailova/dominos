@@ -39,4 +39,7 @@ class Dough implements \JsonSerializable
         return get_object_vars($this);
     }
 
+    public static function getAll() {
+        return DoughDAO::getAll();
+    }
 }

@@ -1,7 +1,8 @@
 <?php
 include_once "main.php";
 ?>
-<body onload="initializePizza()">
+<body>
+<script src="view/js/pizzas-view.js"></script>
 
     <img id="img"/><br>
     <p id="name"></p>
@@ -14,7 +15,7 @@ include_once "main.php";
         <select name="size" id="sizes"  onchange="changePrice()">
         </select><br>
 
-        <input type="hidden" id="price-for-one" name="price-for-one">
+        <p id="price_for_one"></p>
         <div>Price: <span id="price"></span> lv</div>
 
         <h6>Quantity</h6>
@@ -60,5 +61,7 @@ include_once "main.php";
         <input type="submit" name="order" value="Order">
 
     </form>
-
+<script>
+    initializePizza();
+</script>
 </body>

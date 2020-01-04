@@ -106,36 +106,6 @@ class PizzaDAO {
         }
     }
 
-    public function getDoughsOrSizes($dough = true) {
-        try {
-            $pdo = getPDO();
-
-            $sql = "SELECT id, name, price ";
-            if ($dough) {
-                $sql .= "FROM doughs";
-            } else {
-                $sql .= ", slices FROM sizes";
-            }
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute();
-
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $items = [];
-
-            foreach ($rows as $row) {
-                if ($dough) {
-                    $items[] = new Dough($row["id"], $row["name"], $row["price"]);
-                } else {
-                    $items[] = new Size($row["id"], $row["name"], $row["price"], $row["slices"]);
-                }
-            }
-
-            return $items;
-
-        }catch (PDOException $e) {
-            echo $e->getMessage();
-        }
-    }
 
     public function getPizza($id) {
         try {
@@ -156,7 +126,7 @@ class PizzaDAO {
             $price += $this->getPriceFromDoughAndSize(1, 2);
 
             $pizza = new Pizza($pizza["id"], $pizza["name"], $pizza["img_url"], 0,
-                $ingredients, $price, $pizza["category"], 1, 2);
+                $ingredients, $price, $pizza["category"], new Dough(1, null, null), new Size(2, null, null, null));
 
             return $pizza;
         }catch (PDOException $e) {
@@ -165,49 +135,6 @@ class PizzaDAO {
         }
     }
 
-    public function getIngredientsByCategory($id) {
-        try {
-            $pdo = getPDO();
-
-            $sql = "SELECT i.id AS id, i.name AS name, i.price AS price
-                    FROM ingredients AS i 
-                    WHERE i.category_id = ?";
-
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([$id]);
-
-            $ingredients = [];
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            foreach ($rows as $row) {
-                $ingredients[] = new Ingredient($row["id"], $row["name"], null, $row["price"]);
-            }
-
-            return $ingredients;
-
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
-    }
-
-    public function getIngredientById($id) {
-        try {
-            $pdo = getPDO();
-
-            $sql = "SELECT i.id AS id, i.name AS name, i.price AS price
-                    FROM ingredients AS i 
-                    WHERE i.id= ?";
-
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([$id]);
-
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            return new Ingredient($row["id"], $row["name"], null, $row["price"]);
-
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
-    }
 
     /** @var Pizza $pizza
      *  @return int

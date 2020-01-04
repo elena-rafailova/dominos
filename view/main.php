@@ -13,7 +13,7 @@ echo $user->first_name."<br>";
 
 </head>
 <body>
-<a href="index.php?target=pizza&action=showAll"><button>Order</button></a>
+<a href="index.php?target=pizza&action=showAll"><input type="button" value="Order"></a>
 <!--<a href="index.php?target=restaurant&action=show"><button>Restaurants</button></a>-->
 <ul id="buttons">
     <li><a href="index.php?view=edit"><button>My Profile (edit) </button></a></li>

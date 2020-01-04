@@ -38,8 +38,8 @@ class OrderDAO
                 $itemValues[] = $orderId;
                 $itemValues[] = $item->getId();
                 $itemValues[] = $item->getQuantity();
-                $itemValues[] = $item->getSize();
-                $itemValues[] = $item->getDough();
+                $itemValues[] = $item->getSize()->getId();
+                $itemValues[] = $item->getDough()->getId();
 
                 $sql1 = "INSERT INTO orders_have_pizzas(order_id, pizza_id, quantity, size_id, dough_id) VALUES (?, ?, ?, ?, ?)";
                 $stmt1 = $pdo->prepare($sql1);

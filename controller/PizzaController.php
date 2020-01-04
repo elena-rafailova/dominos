@@ -3,6 +3,7 @@
 
 namespace controller;
 
+use model\DAO\SizeDAO;
 use model\Dough;
 use model\Ingredient;
 use model\Pizza;
@@ -16,25 +17,25 @@ class PizzaController
 
     function show() {
         if (isset($_GET["id"])) {
-            $pizza = Pizza::getPizzaById($_GET["id"]);
-            $doughs = Pizza::getDoughsOrSizes(true);
-            $sizes = Pizza::getDoughsOrSizes(false);
-
-            $ingredients = [];
-            for ($i = 0; $i < 6; $i++) {
-                $ingredients[] = Ingredient::getIngredientsByCategory($i+1);
-            }
-            //$ingredients[] = Ingredient::getIngredientsByCategory(null);
+//            $pizza = Pizza::getPizzaById($_GET["id"]);
+//            $doughs = Pizza::getDoughsOrSizes(true);
+//            $sizes = Pizza::getDoughsOrSizes(false);
+//
+//            $ingredients = [];
+//            for ($i = 0; $i < 6; $i++) {
+//                $ingredients[] = Ingredient::getIngredientsByCategory($i+1);
+//            }
+//            //$ingredients[] = Ingredient::getIngredientsByCategory(null);
             include_once "view/pizza.php";
         }
     }
 
     function getDoughs() {
-        echo json_encode(Pizza::getDoughsOrSizes(true), JSON_UNESCAPED_UNICODE);
+        echo json_encode(Dough::getAll(), JSON_UNESCAPED_UNICODE);
     }
 
     function getSizes() {
-        echo json_encode(Pizza::getDoughsOrSizes(false), JSON_UNESCAPED_UNICODE);
+        echo json_encode(Size::getAll(), JSON_UNESCAPED_UNICODE);
     }
 
     function getPizza() {

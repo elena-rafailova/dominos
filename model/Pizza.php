@@ -15,6 +15,8 @@ include_once "Ingredient.php";
 
 use model\Ingredient;
 use model\DAO\PizzaDAO;
+use model\Size;
+use model\Dough;
 
 
 class Pizza implements \JsonSerializable
@@ -25,7 +27,9 @@ class Pizza implements \JsonSerializable
     private $modified;
     private $price;
     private $ingredients;
+    /** @var Dough $dough */
     private $dough;
+    /** @var Size $size */
     private $size;
     private $category;
     private $quantity;
@@ -81,6 +85,7 @@ class Pizza implements \JsonSerializable
 
     public function getIngrNames() {
         $ingredientsName = [];
+        /** @var Ingredient $ingredient */
         foreach ($this->ingredients as $ingredient) {
             $ingredientsName[] = $ingredient->getName();
         }
@@ -96,30 +101,15 @@ class Pizza implements \JsonSerializable
         return $this->quantity;
     }
 
-    public function printIngredients() {
-        $ingredients = $this->getIngredients();
-        $ingrs = [];
-        foreach ($ingredients as $ingredient) {
-            $ingrs[] = $ingredient->getName();
-        }
-        return implode(", ", $ingrs);
-    }
-
 
     public function setPrice($price) {
         $this->price = $price;
     }
 
     public function getDoughAndSizePrice() {
-        $pizzaDAO = new PizzaDAO();
-        $DAndSPrice = $pizzaDAO->getPriceFromDoughAndSize($this->dough, $this->size);
-        return $DAndSPrice;
-    }
-
-    static public function getDoughsOrSizes($doughs = true) {
-        $pizzaDAO = new PizzaDAO();
-        $result = $pizzaDAO->getDoughsOrSizes($doughs);
-        return $result;
+        $this->dough->findPrice();
+        $this->size->findPrice();
+        return $this->dough->getPrice() + $this->size->getPrice();
     }
 
     static public function getPizzaById($id) {
@@ -132,12 +122,12 @@ class Pizza implements \JsonSerializable
         return $pizzaDAO->addNew($pizza, $ingredients);
     }
 
-    public function setDough($dough) {
-        $this->dough = $dough;
+    public function setDough($id) {
+        $this->dough = new Dough($id, null,null);
     }
 
-    public function setSize($size) {
-        $this->size = $size;
+    public function setSize($id) {
+        $this->size = new Size($id, null, null, null);
     }
 
     public function setQuantity($quantity) {

@@ -34,13 +34,11 @@ class Ingredient implements \JsonSerializable
     }
 
     static public function getIngredientsByCategory($category) {
-        $pizzaDAO =  new PizzaDAO();
-        return $pizzaDAO->getIngredientsByCategory($category);
+        return IngredientDAO::getByCategory($category);
     }
 
     static public function getIngredientById($id) {
-        $pizzaDAO = new PizzaDAO();
-        return $pizzaDAO->getIngredientById($id);
+        return IngredientDAO::getById($id);
     }
 
     public function findPrice() {

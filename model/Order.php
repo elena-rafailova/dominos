@@ -38,7 +38,6 @@ class Order
         $orderDAO->placeOrder($this);
     }
 
-
     public function getId() {
         return $this->id;
     }

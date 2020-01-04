@@ -27,6 +27,8 @@ include_once "menu-list.php";
         <input type="button" value="Order Now!" name="chooseOrdMethod" onclick="carryOutF()">
 
     </div>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_O6dUhOX_YuXTAsIHtWVTJ-wcNjjhjlM&callback=getLocation"
+                async defer></script>
     <?php } ?>
 
     <h1>Our pizzas: </h1>
@@ -37,17 +39,15 @@ include_once "menu-list.php";
     </table>
 
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_O6dUhOX_YuXTAsIHtWVTJ-wcNjjhjlM&callback=getLocation"
-        async defer></script>
     <script>
         getAddresses();
         getRestaurants();
         createRestaurantDiv();
-        getPizzas();
         var delivery = document.getElementById("delivery");
         delivery.style.display = "none";
         var carryOut = document.getElementById("carryOut");
         carryOut.style.display = "none";
         var deliveryPopUp = document.getElementById("deliveryPopUp");
+        getPizzas();
     </script>
 </body>
