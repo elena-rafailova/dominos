@@ -1,14 +1,14 @@
 var map;
-var restaurants;
 
-//
+
 // function getLocation() {
 //     navigator.geolocation.getCurrentPosition(initMap);
 //
 // }
 
-function initMap(allRestaurants, selected) {
-    var myPos = {lat: selected.latitude, lng: selected.longitude};
+function initMap(selected, allRestaurants) {
+    myPos = {lat: selected.latitude, lng: selected.longitude};
+
     map = new google.maps.Map(document.getElementById('map'), {
 
         lat: selected.latitude,
@@ -51,7 +51,6 @@ function initMap(allRestaurants, selected) {
 
         })();
     }
-
 }
 
 function getRestaurants() {
@@ -66,6 +65,7 @@ function getRestaurants() {
             Array.prototype.forEach.call(data, function (data) {
 
                 var restaurant = {
+                    "id" : data.id,
                     "name" : data.name,
                     "street_name" : data.street_name,
                     "street_number" : data.street_number,
@@ -87,17 +87,33 @@ function getRestaurants() {
                         "longitude" : parseFloat(data.longitude)
                     };
                 }
-                option.addEventListener("click", function() {
-                    selected = {
-                        "latitude" : parseFloat(data.latitude),
-                        "longitude" : parseFloat(data.longitude)
-                    };
-                    initMap(allRestaurants, selected);
-
-                });
+                //works only on Mozilla
+                // option.addEventListener("click", function () {
+                //         //alert("hi");
+                //         selected = {
+                //             "latitude": parseFloat(data.latitude),
+                //             "longitude": parseFloat(data.longitude)
+                //         };
+                //         initMap(selected, allRestaurants);
+                //
+                // });
+                //console.log(data.name);
                 select.appendChild(option);
             });
-            initMap(allRestaurants, selected);
+            initMap(selected, allRestaurants);
+
+            select.addEventListener("change", function () {
+                for(var key in allRestaurants) {
+                    if (allRestaurants[key].id == this.value) {
+                        var current = {
+                            "latitude": parseFloat(allRestaurants[key].latitude),
+                            "longitude": parseFloat(allRestaurants[key].longitude)
+                        };
+                        initMap(current, allRestaurants);
+                        break;
+                    }
+                }
+            });
         }
     };
     xhttp.open("GET", "index.php?target=restaurant&action=getRestaurants", true);

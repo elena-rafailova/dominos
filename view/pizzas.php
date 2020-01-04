@@ -26,7 +26,7 @@ include_once "menu-list.php";
         <input type="button" value="Order Now!" name="chooseOrdMethod" onclick="carryOutF()">
 
     </div>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_O6dUhOX_YuXTAsIHtWVTJ-wcNjjhjlM&callback=getLocation"
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_O6dUhOX_YuXTAsIHtWVTJ-wcNjjhjlM&callback=getRestaurants"
                 async defer></script>
     <?php } ?>
 
