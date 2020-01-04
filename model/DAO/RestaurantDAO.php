@@ -17,7 +17,7 @@ static function getAll() {
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_OBJ);
-        if($rows>0){
+        if($rows > 0){
             return $rows;
         }
         else {

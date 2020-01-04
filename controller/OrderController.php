@@ -2,10 +2,12 @@
 
 namespace controller;
 
+use model\Dough;
 use model\Ingredient;
 use model\Order;
 use model\Pizza;
 use model\Restaurant;
+use model\Size;
 use model\User;
 
 
@@ -57,7 +59,8 @@ class OrderController {
                     }
                     $newPizzaId = Pizza::addNew($pizza->getName(), $ingredients);
                     $pizza = new Pizza($newPizzaId, $pizza->getName(), null,1,
-                        $ingredients, $price, null, $_POST["dough"], $_POST["size"], null);
+                        $ingredients, $price, null, new Dough($_POST["dough"], null, null),
+                        new Size($_POST["size"], null, null, null), null);
 
                 } else {
                     $price = 0;

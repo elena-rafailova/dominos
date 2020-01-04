@@ -50,84 +50,7 @@ function getPizzas(category) {
     xhttp.send();
 }
 
-function getRestaurants() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var select = document.getElementById("restaurants");
-            var data = this.responseText;
-            data = JSON.parse(data);
 
-            Array.prototype.forEach.call(data, function (data) {
-                var option = document.createElement("option");
-                option.value = data.id;
-                option.innerText = data.name;
-                select.appendChild(option);
-            });
-        }
-    };
-    xhttp.open("GET", "index.php?target=restaurant&action=getRestaurants", true);
-    xhttp.send();
-}
-
-function getAddresses() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            var select = document.getElementById("addresses");
-            var data = this.responseText;
-            data = JSON.parse(data);
-
-            Array.prototype.forEach.call(data, function (data) {
-                var option = document.createElement("option");
-                option.value = data.id;
-                option.innerText = data.name + " (" + data.street_name + " " + data.street_number + ")";
-                select.appendChild(option);
-            });
-        }
-    };
-    xhttp.open("GET", "index.php?target=address&action=getAddresses", true);
-    xhttp.send();
-}
-
-function seeAddresses() {
-    delivery.style.display = "block";
-    deliveryPopUp.style.display = "none";
-}
-
-function seeRestaurants() {
-    carryOut.style.display = "block";
-    deliveryPopUp.style.display = "none";
-    document.getElementById("map").style.display = "block";
-}
-
-function carryOutF() {
-    var xhttp = new XMLHttpRequest();
-    var select = document.getElementById("restaurants");
-    var selectedRes = select.options[select.selectedIndex].value;
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            carryOut.style.display = "none";
-        }
-    };
-    xhttp.open("POST", "index.php?target=user&action=deliveryMethod", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("resId=" + selectedRes);
-}
-
-function deliveryF() {
-    var xhttp = new XMLHttpRequest();
-    var select = document.getElementById("addresses");
-    var selectedRes = select.options[select.selectedIndex].value;
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            delivery.style.display = "none";
-        }
-    };
-    xhttp.open("POST", "index.php?target=user&action=deliveryMethod", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("addrId=" + selectedRes);
-}
 
 // function getTimes() {
 //     var del_time = document.getElementById("del-time");
@@ -150,13 +73,22 @@ function deliveryF() {
 // }
 
 function initializePizza() {
-    getPizza();
+
+    var url = window.location.search.substr(1);
+    url = url.split("&");
+    url = url[url.length - 1];
+    var id = url.split("=");
+    pizzaId = id[id.length - 1];
+
+
+    getPizza(pizzaId);
     getDoughs();
     getSizes();
-    getSauces();
+    getSauces(pizzaId);
+
     var i;
     for (i = 2; i <= 6; i++) {
-        getIngr(i);
+        getIngr(i, pizzaId);
     }
 
     var price_for_one = document.getElementById("price_for_one");
@@ -213,13 +145,8 @@ function getSizes() {
     xhttp.send();
 }
 
-function getPizza() {
+function getPizza(id) {
     var xhttp = new XMLHttpRequest();
-    var url = window.location.search.substr(1);
-    url = url.split("&");
-    url = url[url.length - 1];
-    var id = url.split("=");
-    id = id[id.length - 1];
 
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -250,12 +177,14 @@ function getPizza() {
     xhttp.send();
 }
 
-function getSauces() {
+function getSauces(pizzaId) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var saucesEl = document.getElementById("sauces");
-            var sauces = JSON.parse(this.responseText);
+            var all = JSON.parse(this.responseText);
+            var sauces = all[0];
+            var pizzaIngr = all[1];
             for(var key in sauces) {
                 var input = document.createElement("input");
                 input.type = "radio";
@@ -263,19 +192,9 @@ function getSauces() {
                 input.id = "sauce" + sauces[key]["id"];
                 input.name = "sauces[]";
 
-                var toppings = document.getElementById("toppings");
-                toppings = toppings.innerText;
-                toppings = toppings.split(", ");
-                //alert(toppings.innerText);
-                for(var ind in toppings) {
-                    if (toppings[ind] == sauces[key]["name"]) {
-                        // alert("yes");
-                        input.checked = true;
-                    }
+                if (pizzaIngr.includes(sauces[key]["name"])) {
+                    input.checked = true;
                 }
-                // if (toppings.includes(sauces[key]["name"])) {
-                //     input.checked = true;
-                // }
 
                 var label = document.createElement("label");
                 label.innerText = sauces[key]["name"];
@@ -290,11 +209,11 @@ function getSauces() {
         }
     };
 
-    xhttp.open("GET", "index.php?target=pizza&action=getIngr&category=1", true);
+    xhttp.open("GET", "index.php?target=pizza&action=getIngr&category=1&pizza=" + pizzaId, true);
     xhttp.send();
 }
 
-function getIngr($category) {
+function getIngr($category, pizzaId) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -307,7 +226,9 @@ function getIngr($category) {
                 case 6 : categoryName = "miscellaneous"; break;
             }
             var ingredientEl = document.getElementById(categoryName);
-            var ingredients = JSON.parse(this.responseText);
+            var all = JSON.parse(this.responseText);
+            var ingredients = all[0];
+            var pizzaIngr = all[1];
             for(var key in ingredients) {
                 var input = document.createElement("input");
                 input.type = "checkbox";
@@ -317,12 +238,7 @@ function getIngr($category) {
                 input.className = categoryName;
 
 
-                //input.onselect = priceChangeForIngr(ingredients[key]["id"]);
-
-                var toppings = document.getElementById("toppings");
-                toppings = toppings.innerText;
-                toppings = toppings.split(", ");
-                if (toppings.includes(ingredients[key]["name"])) {
+                if (pizzaIngr.includes(ingredients[key]["name"])) {
                     input.checked = true;
                 }
 
@@ -349,7 +265,7 @@ function getIngr($category) {
         }
     };
 
-    xhttp.open("GET", "index.php?target=pizza&action=getIngr&category=" + $category, true);
+    xhttp.open("GET", "index.php?target=pizza&action=getIngr&category=" + $category + "&pizza=" + pizzaId, true);
     xhttp.send();
 }
 

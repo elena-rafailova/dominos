@@ -47,7 +47,15 @@ class PizzaController
 
     function getIngr() {
         if (isset($_GET["category"])) {
-            echo json_encode(Ingredient::getIngredientsByCategory($_GET["category"]), JSON_UNESCAPED_UNICODE);
+            if (isset($_GET["pizza"])) {
+                $pizza = Pizza::getPizzaById($_GET["pizza"]);
+            }
+            $ingredients = Ingredient::getIngredientsByCategory($_GET["category"]);
+
+            $result = [];
+            $result[] = $ingredients;
+            $result[] = $pizza->getIngrNames();
+            echo json_encode($result, JSON_UNESCAPED_UNICODE);
         }
     }
 

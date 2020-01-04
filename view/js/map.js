@@ -1,79 +1,164 @@
 var map;
 var restaurants;
 
-function createRestaurantDiv() {
+//
+// function getLocation() {
+//     navigator.geolocation.getCurrentPosition(initMap);
+//
+// }
+
+function initMap(allRestaurants, selected) {
+    var myPos = {lat: selected.latitude, lng: selected.longitude};
+    map = new google.maps.Map(document.getElementById('map'), {
+
+        lat: selected.latitude,
+        lng: selected.longitude,
+        center: myPos,
+        zoom: 16
+    });
+
+
+    infoWindow = new google.maps.InfoWindow;
+    infoWindow.open(map);
+
+    for (var key in allRestaurants) {
+        (function () {
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(allRestaurants[key].latitude, allRestaurants[key].longitude),
+                map: map,
+                optimized: false,
+                icon: 'https://www.dominos.bg/echo/images/dominos30.png',
+            });
+            var label = {color: '#333', fontWeight: 'bold', fontSize: '16px', text: allRestaurants[key].name};
+            marker.setLabel(label);
+
+            var info = document.createElement("div");
+            var text = document.createElement("p");
+            var phone = document.createElement("p");
+            var bold = document.createElement("strong");
+            bold.innerText = allRestaurants[key].name;
+            text.innerText = allRestaurants[key].street_name + " " + allRestaurants[key].street_number;
+            phone.innerText = "phone: " + allRestaurants[key].phone_number;
+
+            info.appendChild(bold);
+            info.appendChild(text);
+            info.appendChild(phone);
+
+            marker.addListener('click', function () {
+                infoWindow.setContent(info);
+                infoWindow.open(map, marker);
+            });
+
+        })();
+    }
+
+}
+
+function getRestaurants() {
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
+    xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            restaurants = JSON.parse(this.responseText);
-            var data = document.getElementById("data");
-            data.innerText = this.responseText;
-            data.style.display = "none";
+            var select = document.getElementById("restaurants");
+            var data = this.responseText;
+            data = JSON.parse(data);
+            var allRestaurants = [];
+            var selected;
+            Array.prototype.forEach.call(data, function (data) {
+
+                var restaurant = {
+                    "name" : data.name,
+                    "street_name" : data.street_name,
+                    "street_number" : data.street_number,
+                    "phone_number" : data.phone_number,
+                    "latitude" : parseFloat(data.latitude),
+                    "longitude" : parseFloat(data.longitude)
+                };
+
+                allRestaurants.push(restaurant);
+
+                var option = document.createElement("option");
+                option.value = data.id;
+                option.innerText = data.name;
+                if (data.name === "SOFIA - STUDENT CITY") {
+                    option.selected = true;
+                    //const center = new google.maps.LatLng(, );
+                    selected = {
+                        "latitude" : parseFloat(data.latitude),
+                        "longitude" : parseFloat(data.longitude)
+                    };
+                }
+                option.addEventListener("click", function() {
+                    selected = {
+                        "latitude" : parseFloat(data.latitude),
+                        "longitude" : parseFloat(data.longitude)
+                    };
+                    initMap(allRestaurants, selected);
+
+                });
+                select.appendChild(option);
+            });
+            initMap(allRestaurants, selected);
         }
     };
     xhttp.open("GET", "index.php?target=restaurant&action=getRestaurants", true);
     xhttp.send();
 }
 
+function getAddresses() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var select = document.getElementById("addresses");
+            var data = this.responseText;
+            data = JSON.parse(data);
 
-function getLocation() {
-    navigator.geolocation.getCurrentPosition(initMap);
-
+            Array.prototype.forEach.call(data, function (data) {
+                var option = document.createElement("option");
+                option.value = data.id;
+                option.innerText = data.name + " (" + data.street_name + " " + data.street_number + ")";
+                select.appendChild(option);
+            });
+        }
+    };
+    xhttp.open("GET", "index.php?target=address&action=getAddresses", true);
+    xhttp.send();
 }
 
-function initMap(position) {
-    var myPos = {lat: position.coords.latitude, lng: position.coords.longitude};
-    map = new google.maps.Map(document.getElementById('map'), {
+function seeAddresses() {
+    delivery.style.display = "block";
+    deliveryPopUp.style.display = "none";
+}
 
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-        center: myPos,
-        zoom: 20
-    });
+function seeRestaurants() {
+    carryOut.style.display = "block";
+    deliveryPopUp.style.display = "none";
+    document.getElementById("map").style.display = "block";
+}
 
+function carryOutF() {
+    var xhttp = new XMLHttpRequest();
+    var select = document.getElementById("restaurants");
+    var selectedRes = select.options[select.selectedIndex].value;
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            carryOut.style.display = "none";
+        }
+    };
+    xhttp.open("POST", "index.php?target=user&action=deliveryMethod", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("resId=" + selectedRes);
+}
 
-    infoWindow = new google.maps.InfoWindow;
-    infoWindow.setContent('You are here.');
-    infoWindow.setPosition(myPos);
-    infoWindow.open(map);
-
-
-    var markerOptions = new google.maps.Marker({
-        clickable: true,
-        flat: true,
-        map: map,
-        position: myPos,
-        title: "You are here",
-        visible:true,
-        icon:'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-    });
-
-    var data = document.getElementById("data").innerText;
-    data = JSON.parse(data);
-
-    Array.prototype.forEach.call(data, function (data){
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(parseFloat(data.latitude), parseFloat(data.longitude)),
-            map: map,
-            optimized: false,
-            icon:'https://www.dominos.bg/echo/images/dominos30.png',
-        });
-        var label = { color: '#333', fontWeight: 'bold', fontSize: '16px', text: data.name };
-        marker.setLabel(label);
-
-        var info = document.createElement("div");
-        var text = document.createElement("p");
-        var bold = document.createElement("strong");
-        bold.innerText = data.name;
-        text.innerText = data.street_name + " " + data.street_number;
-
-        info.appendChild(bold);
-        info.appendChild(text);
-
-        marker.addListener('click', function() {
-            infoWindow.setContent(info);
-            infoWindow.open(map, marker);
-        });
-
-    });
+function deliveryF() {
+    var xhttp = new XMLHttpRequest();
+    var select = document.getElementById("addresses");
+    var selectedRes = select.options[select.selectedIndex].value;
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            delivery.style.display = "none";
+        }
+    };
+    xhttp.open("POST", "index.php?target=user&action=deliveryMethod", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("addrId=" + selectedRes);
 }

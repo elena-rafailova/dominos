@@ -22,7 +22,6 @@ include_once "menu-list.php";
     <div id="carryOut">
         <select id="restaurants">
         </select>
-        <div id="data"></div>
         <br><br><div id="map"></div>
         <input type="button" value="Order Now!" name="chooseOrdMethod" onclick="carryOutF()">
 
@@ -40,14 +39,13 @@ include_once "menu-list.php";
 
 
     <script>
+        getPizzas();
         getAddresses();
         getRestaurants();
-        createRestaurantDiv();
         var delivery = document.getElementById("delivery");
         delivery.style.display = "none";
         var carryOut = document.getElementById("carryOut");
         carryOut.style.display = "none";
         var deliveryPopUp = document.getElementById("deliveryPopUp");
-        getPizzas();
     </script>
 </body>

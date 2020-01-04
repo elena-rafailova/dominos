@@ -23,6 +23,5 @@ class Restaurant
 
     public static function getAllRestaurants() {
         return RestaurantDAO::getAll();
-
     }
 }

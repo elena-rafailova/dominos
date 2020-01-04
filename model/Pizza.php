@@ -84,12 +84,12 @@ class Pizza implements \JsonSerializable
     }
 
     public function getIngrNames() {
-        $ingredientsName = [];
+        $ingredientsNames = [];
         /** @var Ingredient $ingredient */
         foreach ($this->ingredients as $ingredient) {
-            $ingredientsName[] = $ingredient->getName();
+            $ingredientsNames[] = $ingredient->getName();
         }
-        return $ingredientsName;
+        return $ingredientsNames;
     }
 
     function getId() {
