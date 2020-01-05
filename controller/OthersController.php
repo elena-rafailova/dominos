@@ -7,9 +7,9 @@ use model\Others;
 
 class OthersController
 {
-    function showOthers() {
-      include_once "view/others.php";
-    }
+//    function showOthers() {
+//     include_once "view/others.php";
+//    }
 
     function getOthersInfo() {
         if (!(isset($_GET['filter'])) && isset($_GET["category_id"])) {
@@ -24,6 +24,15 @@ class OthersController
         else {
             $others="Error";
         }
-        echo json_encode($others, JSON_UNESCAPED_UNICODE);
+//        echo json_encode($others, JSON_UNESCAPED_UNICODE);
+        include_once "view/others.php";
     }
+
+
+//    function getOther() {
+//        if (isset($_GET["id"]) && isset($_GET["category_id"])) {
+//            $other = Others::getOtherById($_GET["id"], $_GET["category_id"]);
+//            echo json_encode($other, JSON_UNESCAPED_UNICODE);
+//        }
+//    }
 }

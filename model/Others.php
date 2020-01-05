@@ -37,5 +37,32 @@ class Others
     }
 
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity($quantity): void
+    {
+        $this->quantity = $quantity;
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    static function getOtherById($id,$category_id)
+    {
+        $otherDAO= new OthersDAO();
+        return $otherDAO->getOther($id, $category_id);
+    }
+
 
 }

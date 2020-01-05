@@ -2,6 +2,7 @@
 
 
 namespace model\DAO;
+use model\Others;
 use PDO;
 use PDOException;
 
@@ -10,7 +11,7 @@ include_once "DBConnector.php";
 class OthersDAO
 {
 
-    public static function getAll($category_id, $filter=null)
+    public function getAll($category_id, $filter=null)
     {
         try {
             $pdo = getPDO();
@@ -30,6 +31,26 @@ class OthersDAO
             return $rows;
         } catch (PDOException $e) {
             echo "Something went wrong". $e->getMessage();
+            return false;
+        }
+    }
+
+    public function getOther($id,$category_id)
+    {
+        try {
+            $pdo = getPDO();
+
+            $sql = "SELECT id, name, img_url,description, modified, filter, others_category_id, price FROM others WHERE id=? AND others_category_id=?;";
+
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$id, $category_id]);
+
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $other = new Others($row["id"], $row["name"] ,$row["img_url"],
+                $row["description"], $row["modified"], $row["filter"] ,$row["others_category_id"], $row["price"]);
+            return $other;
+        }catch (PDOException $e) {
+            echo $e->getMessage();
             return false;
         }
     }

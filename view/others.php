@@ -14,11 +14,13 @@ include_once "menu-list.php";
  */
 
 if(isset($_GET['category_id'])) {
-    $category_id=$_GET['category_id'];
-//    if (!isset($others)) {
-//        header("index.php?target=others&action=showOthers&category_id =". $category_id);
-//    }
+    $category_id = $_GET['category_id'];
+    if(!isset($others)) {
+        header("Location: index.php?target=others&action=getOthers&category_id=$category_id");
+    }
 }
+
+
 
 ?>
 
@@ -61,98 +63,94 @@ if(isset($_GET['category_id'])) {
 } ?>
 <table id="others">
 <?php
-//    foreach ($others as $other) {
-//        echo "<tr>";
-//        echo "<td><img src='" . $other->img_url. "' /><br>";
-//        echo $other->name . "<br>";
-//        echo "<hr>";
-//        echo $other->description . "<br>";
-//        if($category_id == 8) {
-//            switch ($other->name) {
-//                case 'COCA-COLA':
-//                    echo "Size: <select id='coca-cola' onchange='updatePrice(this.id);'>
-//                  <option  selected disabled hidden>Choose here</option>
-//                  <option value='2'>0.5 L </option>
-//                  <option value='3.1'>1.5 L </option></select>";
-//
-//                    echo '<div id="coca-cola-price"><p>Price: </p></div> ';
-//                    break;
-//                case 'COCA-COLA ZERO':
-//                    echo "Size: <select id='coca-cola-zero' onchange='updatePrice(this.id);'>
-//                  <option  selected disabled hidden>Choose here</option>
-//                  <option value='2'>0.5 L </option>
-//                  <option value='3.1'>1.5 L </option></select>";
-//
-//                    echo '<div id="coca-cola-zero-price"><p>Price: </p></div> ';
-//                    break;
-//                case 'FANTA':
-//                    echo "Size: <select id='fanta' onchange='updatePrice(this.id);'>
-//                  <option  selected disabled hidden>Choose here</option>
-//                  <option value='2'>0.5 L </option>
-//                  <option value='3.1'>1.5 L </option></select>";
-//
-//                    echo '<div id="fanta-price"><p>Price: </p></div> ';
-//                    break;
-//                case 'SPRITE':
-//                    echo "Size: <select id='sprite' onchange='updatePrice(this.id);'>
-//                  <option  selected disabled hidden>Choose here</option>
-//                  <option value='2'>0.5 L </option>
-//                  <option value='3.1'>1.5 L </option></select>";
-//
-//                    echo '<div id="sprite-price"><p>Price: </p></div> ';
-//                    break;
-//                case 'MINERAL WATER':
-//                    echo "Size: <select id='mineral-water' onchange='updatePrice(this.id);'>
-//                  <option  selected disabled hidden>Choose here</option>
-//                  <option value='1'>0.5 L </option>
-//                  <option value='1.5'>1.5 L </option></select>";
-//
-//                    echo '<div id="mineral-water-price"><p>Price: </p></div> ';
-//                    break;
-//                case 'ZAGORKA':
-//                    echo "Size: <select id='zagorka' onchange='updatePrice(this.id);'>
-//                  <option value='' selected disabled hidden>Choose here</option>
-//                  <option value='1.7'>0.33 L </option>
-//                  <option value='2.6'>1 L </option></select>";
-//
-//                    echo '<div id="zagorka-price"><p>Price: </p></div> ';
-//                    break;
-//                case 'MALEE':
-//                    echo "Size: <select id='malee' onchange='updatePrice(this.id);'>
-//                  <option  selected disabled hidden>Choose here</option>
-//                  <option value='2.4'>COCONUT WATER 0.33 L </option>
-//                  <option value='2.4'>FRUIT JUICES MANGO 0.33 L </option>
-//                  <option value='2.4'>FRUIT JUICES GUAVA 0.33 L </option>
-//                  <option value='2.4'>MANGOSTEEN MIXED 0.33 L </option>
-//                  <option value='2.4'>COCO WATER & COCO MILK 0.33 L </option>
-//                  <option value='3.9'>COCO WATER & COCO MILK 1 L </option>
-//                  <option value='3.9'>FRUIT JUICES GUAVA 1 L </option>
-//                  <option value='3.9'>MANGOSTEEN MIXED 1 L </option>
-//                  <option value='3.9'>FRUIT JUICES MANGO 1 L </option>
-//                  <option value='3.9'>COCONUT WATER 1 L </option></select>";
-//
-//                    echo '<div id="malee-price"><p>Price: </p></div> ';
-//                    break;
-//                default:
-//                    echo 'Price: ' . $other->price . " lv. <br>";
-//            }
-//        }
-//        else {
-//            echo 'Price: '.$other->price . " lv. <br>";}
-//        echo "<form action='' method='post'>";
-//        echo "<input type='hidden' name='id' value='" . $other->id . "' >";
-//        echo "<input type='submit' value='Choose' name='choose'>";
-//        echo "</form><br></td></tr>";
-//    }
+    foreach ($others as $other) {
+        echo "<tr>";
+        echo "<td><img src='" . $other->img_url. "' /><br>";
+        echo $other->name . "<br>";
+        echo "<hr>";
+        echo $other->description . "<br>";
+
+        echo "<input type='button' onclick='getOptions(category_id, this.id);' id='$other->id.choose' value='Choose' name='choose'>";
+
+        echo "<form id='$other->id.order' style='display: none' action='index.php?target=order&action=finish' method='post'>";
+        echo "<input type='hidden' id='$other->id.id' name='other_id' value='$other->id'>";
+        echo "<input type='hidden' id='$other->id.category_id' name='category_id' value='$category_id'>";
+                if($category_id == 8) {
+            switch ($other->name) {
+                case 'SPRITE':
+                case 'FANTA':
+                case 'COCA-COLA ZERO':
+                case 'COCA-COLA':
+                    echo "Size: <select name='size' id='$other->id' onchange='updatePrice(this.id);'>
+                  <option  selected disabled hidden>Choose here</option>
+                  <option value='2'>0.5 L </option>
+                  <option value='3.1'>1.5 L </option></select>";
+
+                    echo "<p id='$other->id.price_for_one' style='display:none;'></p>
+                            <div>Price: <span id='$other->id.price'>$other->price</span> BGN</div>";
+                    break;
+                case 'MINERAL WATER':
+                    echo "Size: <select name='size' id='$other->id' onchange='updatePrice(this.id);'>
+                  <option  selected disabled hidden>Choose here</option>
+                  <option value='1'>0.5 L </option>
+                  <option value='1.5'>1.5 L </option></select>";
+
+                    echo "<p id='$other->id.price_for_one' style='display:none;'></p>
+                            <div>Price: <span id='$other->id.price'>$other->price</span> BGN</div>";
+                    break;
+                case 'ZAGORKA':
+                    echo "Size: <select name='size' id='$other->id' onchange='updatePrice(this.id);'>
+                  <option value='' selected disabled hidden>Choose here</option>
+                  <option value='1.7'>0.33 L </option>
+                  <option value='2.6'>1 L </option></select>";
+
+                    echo "<p id='$other->id.price_for_one' style='display:none;'></p>
+                            <div>Price: <span id='$other->id.price'>$other->price</span> BGN</div>";
+                    break;
+                case 'MALEE':
+                    echo "Size: <select name='size' id='$other->id' onchange='updatePrice(this.id);'>
+                  <option  selected disabled hidden>Choose here</option>
+                  <option value='2.4'>COCONUT WATER 0.33 L </option>
+                  <option value='2.4'>FRUIT JUICES MANGO 0.33 L </option>
+                  <option value='2.4'>FRUIT JUICES GUAVA 0.33 L </option>
+                  <option value='2.4'>MANGOSTEEN MIXED 0.33 L </option>
+                  <option value='2.4'>COCO WATER & COCO MILK 0.33 L </option>
+                  <option value='3.9'>COCO WATER & COCO MILK 1 L </option>
+                  <option value='3.9'>FRUIT JUICES GUAVA 1 L </option>
+                  <option value='3.9'>MANGOSTEEN MIXED 1 L </option>
+                  <option value='3.9'>FRUIT JUICES MANGO 1 L </option>
+                  <option value='3.9'>COCONUT WATER 1 L </option></select>";
+
+                    echo "<p id='$other->id.price_for_one' style='display:none;'></p>
+                            <div>Price: <span id='$other->id.price'>$other->price</span> BGN</div>";
+                    break;
+                default:
+                    echo "<p id='$other->id.price_for_one' style='display:none;'>$other->price</p>
+                             <div>Price: <span id='$other->id.price'>$other->price</span> BGN</div>";
+                    break;}
+                } else {
+                    echo "<p id='$other->id.price_for_one' style='display:none;'>$other->price</p>
+                             <div>Price: <span id=\"$other->id.price\">$other->price</span> BGN</div>";
+                }
+
+        echo "<h6>Quantity</h6>
+        <input type='button' value='-' id='$other->id' onclick='decrementVal(this.id)'>
+        <input type='text' min='1' max='100' name='quantity' id='$other->id.quantity' value='1' required readonly>
+        <input type='button' value='+' id='$other->id' onclick='incrementVal(this.id)'>";
+        echo "<input type='submit' name='order' value='Order'></form><br></td></tr>";
+    }
  ?>
 </table>
-<script type="text/javascript">
-        var category_id = <?= $category_id; ?>;
-        getOthers(category_id,null );
 
-        function updatePrice(clicked_id) {
+<script type="text/javascript">
+
+    var category_id = <?= $category_id; ?>;
+
+    function updatePrice(clicked_id) {
             var price = document.getElementById(clicked_id).value;
-            document.getElementById(clicked_id + '-price').innerHTML="<p>Price: " + price + " lv. </p>";
+            console.log(price);
+            document.getElementById(clicked_id + '.price_for_one').innerText= price;
+            document.getElementById(clicked_id + '.price').innerText=price;
         }
 </script>
 </body>

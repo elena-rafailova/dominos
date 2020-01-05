@@ -3,6 +3,7 @@
 namespace model\DAO;
 include_once "DBConnector.php";
 
+use model\Others;
 use model\Pizza;
 use model\Order;
 use PDO;
@@ -34,16 +35,26 @@ class OrderDAO
 
             /** @var Pizza $item */
             foreach ($order->getItems() as $item) {
-                $itemValues = [];
-                $itemValues[] = $orderId;
-                $itemValues[] = $item->getId();
-                $itemValues[] = $item->getQuantity();
-                $itemValues[] = $item->getSize()->getId();
-                $itemValues[] = $item->getDough()->getId();
+                if(method_exists($item, "getSize")) {
+                    $itemValues = [];
+                    $itemValues[] = $orderId;
+                    $itemValues[] = $item->getId();
+                    $itemValues[] = $item->getQuantity();
+                    $itemValues[] = $item->getSize()->getId();
+                    $itemValues[] = $item->getDough()->getId();
 
-                $sql1 = "INSERT INTO orders_have_pizzas(order_id, pizza_id, quantity, size_id, dough_id) VALUES (?, ?, ?, ?, ?)";
-                $stmt1 = $pdo->prepare($sql1);
-                $stmt1->execute($itemValues);
+                    $sql1 = "INSERT INTO orders_have_pizzas(order_id, pizza_id, quantity, size_id, dough_id) VALUES (?, ?, ?, ?, ?)";
+                    $stmt1 = $pdo->prepare($sql1);
+                    $stmt1->execute($itemValues);
+                } else /** @var Others $item */ {
+                    $itemValues = [];
+                    $itemValues[] = $orderId;
+                    $itemValues[] = $item->getId();
+                    $itemValues[] = $item->getQuantity();
+                    $sql1 = "INSERT INTO orders_have_others(order_id, other_id, quantity) VALUES (?, ?, ?)";
+                    $stmt1 = $pdo->prepare($sql1);
+                    $stmt1->execute($itemValues);
+                }
             }
 
             $pdo->commit();

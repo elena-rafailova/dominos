@@ -5,6 +5,7 @@ namespace controller;
 use model\Dough;
 use model\Ingredient;
 use model\Order;
+use model\Others;
 use model\Pizza;
 use model\Restaurant;
 use model\Size;
@@ -104,6 +105,45 @@ class OrderController {
                     die();
                 }
             }
+            elseif(isset($_POST["other_id"]) && isset($_POST["category_id"])){
+                    $user = json_decode($_SESSION['logged_user']);
+                        $id= $_POST["other_id"];
+                        $category_id = $_POST["category_id"];
+                    $other = Others::getOtherById($_POST["other_id"],$_POST["category_id"]);
+
+                if (isset($_POST["quantity"]) && $_POST["quantity"] >= 1 && $_POST["quantity"] <= 100) {
+                    $other->setQuantity($_POST["quantity"]);
+                } else {
+                    //ToDo error
+                    header("Location: index.php");
+                    die();
+                }
+
+                $delivery_addr = null;
+                if (isset($_SESSION["delivery"])) {
+                    $delivery_addr = $_SESSION["delivery"];
+                }
+
+                $restaurant_id = null;
+                if (isset($_SESSION["carry_out"])) {
+                    $restaurant_id = $_SESSION["carry_out"];
+                }
+                if ($restaurant_id || $delivery_addr) {
+                    if($category_id == 8 && isset($_POST["size"])) {
+                        $price = $_POST["size"];
+                    }else {
+                        $price= $other->getPrice();
+                    }
+                }
+                    $order = new Order(null, $user->id, null, 1, $delivery_addr, $restaurant_id,
+                        1, $price * $_POST["quantity"], [$other], null);
+                    $order->placeOrder();
+
+                    include_once "view/orderStatus.php";
+            }
+//            else {//ToDo error
+//                header("Location: index.php?target=pizza&action=showAll");
+//                die();}
         } else {
             //ToDo error
             header("Location: index.php?target=pizza&action=showAll");
