@@ -29,20 +29,11 @@
 //                 td.appendChild(hr);
 //                 td.appendChild(p2);
 //
-//                 var form = document.createElement("form");
-//                 form.action = "index.php?target=others&action=showOthers&category_id=" + category_id + "&id=" + others[key]["id"];
-//                 // form.action= '#';
-//                 // form.onsubmit= function() {getOptions(category_id)};
-//                 form.method = "post";
-//
-//                  // var id = document.createElement("input");
-//                  // id.type = "hidden";
-//                  // id.value = others[key]['id'];
-//                  // id.id = "other_id";
-//
 //                 var button = document.createElement("button");
 //                 button.innerText = "Choose";
-//                 form.appendChild(button);
+//                 button.id = others[key]["id"] + 'choose';
+//                 button.onclick= function() {getOptions(category_id, this.id)}
+//                 td.appendChild(button);
 //
 //                 var order_form = document.createElement("form");
 //                 order_form.id= others[key]["id"] + "order";
@@ -94,19 +85,16 @@
 //
 //                 td.appendChild(order_form);
 //
-//                 td.appendChild(form);
-//                 //td.appendChild(button)
-//
 //                 tr.appendChild(td);
 //                 table.appendChild(tr);
-// //             }
+//             }
 //         }
 //     };
 //     if(filter!= null) {
-//         var url = "index.php?target=others&action=getOthersInfo&category_id=" + category_id + "&filter=" + filter;
-//     } else {
-//         var url = "index.php?target=others&action=getOthersInfo&category_id=" + category_id;
-//     }
+//         var url = "index.php?target=others&action=getOthersInfo&category_id=" + category_id + "&filter=" + filter;}
+//     // } else {
+//     //     var url = "index.php?target=others&action=getOthersInfo&category_id=" + category_id;
+//     // }
 //
 //     xhttp.open("GET", url , true);
 //     xhttp.send();

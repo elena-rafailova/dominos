@@ -28,34 +28,34 @@ if(isset($_GET['category_id'])) {
 <?php switch($category_id) {
     case 1:
         echo "<h1>Our starters: </h1>
-        <button onclick='getOthers(1, 1);'>New</button>
-        <button onclick='getOthers(1, 2);'>Vegetarian</button>";
+        <a href='index.php?target=others&action=getOthersInfo&category_id=1&filter=1'><button>New</button></a>
+        <a href='index.php?target=others&action=getOthersInfo&category_id=1&filter=2'><button>Vegetarian</button></a>";
         break;
     case 2:
         echo "<h1>Our chicken: </h1>
-        <button onclick='getOthers(2,3);'>Spicy</button>";
+        <a href='index.php?target=others&action=getOthersInfo&category_id=2&filter=3'><button>Spicy</button></a>";
         break;
     case 3:
         echo "<h1>Our pasta: </h1>
-        <button onclick='getOthers(3, 1);'>New</button>
-        <button onclick='getOthers(3,3);'>Spicy</button>";
+        <a href='index.php?target=others&action=getOthersInfo&category_id=3&filter=1'><button>New</button></a>
+        <a href='index.php?target=others&action=getOthersInfo&category_id=3&filter=3'><button>Spicy</button></a>";
         break;
     case 4:
         echo "<h1>Our salads: </h1>
-        <button onclick='getOthers(4, 2);'>Vegetarian</button>";
+        <a href='index.php?target=others&action=getOthersInfo&category_id=4&filter=2'><button>Vegetarian</button></a>";
         break;
     case 5:
         echo "<h1>Our sandwiches: </h1>";
         break;
     case 6:
         echo "<h1>Our dips: </h1>
-        <button onclick='getOthers(6, 1);'>New</button>
-        <button onclick='getOthers(6, 3);'>Spicy</button>";
+        <a href='index.php?target=others&action=getOthersInfo&category_id=6&filter=1'><button>New</button></a>
+        <a href='index.php?target=others&action=getOthersInfo&category_id=6&filter=3'><button>Spicy</button></a>";
         break;
     case 7:
         echo "<h1>Our desserts: </h1>
-        <button onclick='getOthers(7, 4);'>Desserts</button>
-        <button onclick='getOthers(7, 5);'>Ice Creams</button>";
+        <a href='index.php?target=others&action=getOthersInfo&category_id=7&filter=4'><button>Desserts</button></a>
+        <a href='index.php?target=others&action=getOthersInfo&category_id=7&filter=5'><button>Ice Creams</button></a>";
         break;
     case 8:
         echo "<h1>Our drinks: </h1>";
