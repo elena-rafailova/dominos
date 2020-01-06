@@ -31,7 +31,10 @@ function add () {
             } else {
                 $address = new Address($phone_number, $city, $name, $street_name, $street_number, $building_number, $entrance, $floor, $apartment_number);
                 $user_id = json_decode($_SESSION['logged_user'])->id;
-                AddressDAO::add($address, $user_id);
+
+                $addressDAO = new AddressDAO();
+                $addressDAO->add($address, $user_id);
+
                 header("Location: index.php?target=address&action=show");
             }
         }
@@ -57,6 +60,7 @@ function change()
             $building_number = $_POST['building_number'];
             $apartment_number = $_POST['apartment_number'];
             $entrance = $_POST['entrance'];
+
             $msg = $this->validationOfInput($street_name, $name, $phone_number, $building_number, $apartment_number, $entrance);
             if ($msg != '') {
                 echo $msg;
@@ -64,7 +68,10 @@ function change()
             } else {
                 $id = $_POST['id'];
                 $address = new Address($phone_number, $city, $name, $street_name, $street_number, $building_number, $entrance, $floor, $apartment_number);
-                AddressDAO::change($address, $id);
+
+                $addressDAO = new AddressDAO();
+                $addressDAO->change($address, $id);
+
                 header("Location: index.php?target=address&action=show");
             }
         }
@@ -72,22 +79,25 @@ function change()
 }
 
 function delete(){
+    $addressDAO = new AddressDAO();
     if(isset($_POST['delete'])){
-            $id = $_POST['id'];
-            AddressDAO::delete($id);
-            header("Location: index.php?target=address&action=show");
-        }
+        $id = $_POST['id'];
+        $addressDAO->delete($id);
+        header("Location: index.php?target=address&action=show");
+    }
 }
 
 function show() {
     $user_id = json_decode($_SESSION['logged_user'])->id;
-    $addresses = AddressDAO::get($user_id);
+    $addressDAO = new AddressDAO();
+    $addresses = $addressDAO->get($user_id);
     include_once "view/addresses.php";
 }
 
 function getAddresses() {
     $user_id = json_decode($_SESSION['logged_user'])->id;
-    $addresses = AddressDAO::get($user_id);
+    $addressDAO = new AddressDAO();
+    $addresses = $addressDAO->get($user_id);
     echo json_encode($addresses, JSON_UNESCAPED_UNICODE);
 }
 

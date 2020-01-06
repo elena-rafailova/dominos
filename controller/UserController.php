@@ -15,12 +15,13 @@ class UserController
 {
 function register() {
     include_once "view/register.php";
+    $userDAO = new UserDAO();
     if(isset($_POST["register"])){
         if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email'])
             && isset($_POST['password']) && isset($_POST['verify_password'])) {
             $msg = $this->validationOfInput($_POST['first_name'], $_POST['last_name'], $_POST['email'],
                 $_POST['password'], $_POST['verify_password']);
-            if(UserDAO::checkUser($_POST["email"])){
+            if($userDAO->checkUser($_POST["email"])){
                 echo "User with that email already exists";
                 header("Location: index.php?target=user&action=register");
             }
@@ -31,7 +32,7 @@ function register() {
             else {
                 $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
                 $user = new User($_POST["first_name"], $_POST["last_name"], $_POST["email"], $password );
-                UserDAO::addUser($user);
+                $userDAO->addUser($user);
                 $_SESSION["logged_user"] = json_encode($user);
                 echo "Successful registration. <br>";
                 header("Location: index.php?target=pizza&action=showAll");
@@ -42,11 +43,14 @@ function register() {
 
 function login() {
     include_once "view/login.php";
+
+    $userDAO = new UserDAO();
+
     if(isset($_POST['login'])) {
         if(isset($_POST['email']) && isset($_POST['password'])) {
             $email = $_POST['email'];
             $password = $_POST['password'];
-            $userObj = UserDAO::checkUser($email);
+            $userObj = $userDAO->checkUser($email);
             if(!$userObj) {
                 echo "Invalid password or email! Try again.";
             }
@@ -68,6 +72,7 @@ function login() {
 function edit()
 {
     include_once "view/edit.php";
+    $userDAO = new UserDAO();
     if (isset($_POST['edit'])) {
         if (!isset($_SESSION["logged_user"])) {
             header("Location: index.php");
@@ -87,7 +92,7 @@ function edit()
                         $email = json_decode($_SESSION['logged_user'])->email;
                         $user = new User($_POST["first_name"], $_POST["last_name"], $email, $password);
                         $user->setId(json_decode($_SESSION['logged_user'])->id);
-                        UserDAO::editUser($user);
+                        $userDAO->editUser($user);
                         $_SESSION['logged_user'] = json_encode($user);
                         echo "Profile changed successfully. <br>";
                     }
@@ -106,7 +111,7 @@ function edit()
                         $email = json_decode($_SESSION['logged_user'])->email;
                         $user = new User($_POST["first_name"], $_POST["last_name"], $email, $password);
                         $user->setId(json_decode($_SESSION['logged_user'])->id);
-                        UserDAO::editUser($user);
+                        $userDAO->editUser($user);
                         $_SESSION['logged_user'] = json_encode($user);
                         echo "Profile changed successfully. <br>";
                         //header("Location: index.php?target=pizza&action=showAll");
@@ -185,6 +190,7 @@ function sendMail($email, $token)
 function forgotPassword() {
     $msg='';
     include_once "view/forgot_password.php";
+    $userDAO = new UserDAO();
     if(isset($_POST['forgot_password'])) {
         if(isset($_POST['email'])){
             $email=$_POST['email'];
@@ -200,7 +206,7 @@ function forgotPassword() {
                     $expFormat = mktime(
                     date("H"), date("i"), date("s"), date("m"), date("d")+1, date("Y"));
                     $expDate = date("Y-m-d H:i:s", $expFormat);
-                    UserDAO::addToken($user_id, $token, $expDate);
+                    $userDAO->addToken($user_id, $token, $expDate);
                     $this->sendMail($email, $token);
                     include_once "view/forgot_message.php";
                 }
@@ -214,10 +220,11 @@ function forgotPassword() {
 
 function resetPassword() {
     //from email
+    $userDAO = new UserDAO();
     if(isset($_GET['token'])){
         $token=$_GET['token'];
         $curDate = date("Y-m-d H:i:s");
-        $user = UserDAO::getUserByToken($token);
+        $user = $userDAO->getUserByToken($token);
         if(!$user) {
         echo "<h2>Invalid Link</h2>
         <p>The link is invalid/expired or you have already used the link in which case it is 
@@ -230,7 +237,7 @@ function resetPassword() {
                 include_once "view/reset_password.php";
             }
             else {
-                UserDAO::deleteToken($_SESSION['id']);
+                $userDAO->deleteToken($_SESSION['id']);
                 echo "<h2>Invalid Link</h2>
                 <p>The link is expired.You are trying to use the expired link which 
                     is valid only 24 hours (1 days after request).<br /><br /></p>";
@@ -240,6 +247,7 @@ function resetPassword() {
 }
 
 function changePassword() {
+    $userDAO = new UserDAO();
     if(isset($_POST['change_password'])) {
        $password = $_POST['new_password'];
        $confirm_password = $_POST['confirm_password'];
@@ -252,7 +260,7 @@ function changePassword() {
             } else {
                     $user_id = $_SESSION['id'];
                     $new_password = password_hash($password, PASSWORD_BCRYPT);
-                    $update = UserDAO::updatePassword($new_password, $user_id);
+                    $update = $userDAO->updatePassword($new_password, $user_id);
                     if($update) {
                         header("Location: index.php?view=login");
                     } else {
