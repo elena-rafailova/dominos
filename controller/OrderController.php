@@ -9,7 +9,6 @@ use model\DAO\PizzaDAO;
 use model\Dough;
 use model\Ingredient;
 use model\Order;
-use model\Others;
 use model\Pizza;
 use model\Restaurant;
 use model\Size;
@@ -109,8 +108,12 @@ class OrderController {
                 $id= $_POST["other_id"];
                 $category_id = $_POST["category_id"];
 
-                $otherDAO= new OthersDAO();
-                $other = $otherDAO->getOther($id, $category_id);
+                $user = json_decode($_SESSION['logged_user']);
+                $id= $_POST["other_id"];
+                $category_id = $_POST["category_id"];
+                //todo try catch
+                $othersDAO = new OthersDAO();
+                $other = $othersDAO->getOther($_POST["other_id"],$_POST["category_id"]);
 
                 if (isset($_POST["quantity"]) && $_POST["quantity"] >= 1 && $_POST["quantity"] <= 100) {
                     $other->setQuantity($_POST["quantity"]);

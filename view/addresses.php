@@ -5,7 +5,6 @@ include_once "main.php";
 if (!isset($addresses)) {
     header("index.php?target=address&action=show");
 }
-//todo add google maps
 ?>
     <h4>MODIFY YOUR DETAILS, ADD OR DELETE AN ADDRESS</h4>
 <div style="float: left; margin-right: 30px">
