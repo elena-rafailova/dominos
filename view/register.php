@@ -19,6 +19,6 @@
             <input type="password"  name="verify_password" placeholder="Verify password" required><br>
             <input type="submit" name="register" value="Register" ><br>
         </form>
-        <h5>Already have an account? Login <a href="index.php?view=login">here!</a> </h5>
+        <h5>Already have an account? Login <a href="index.php?target=user&action=login">here!</a> </h5>
 </body>
 </html>

@@ -14,6 +14,7 @@ require_once 'model/DAO/config.php';
 class UserController
 {
 function register() {
+    include_once "view/register.php";
     if(isset($_POST["register"])){
         if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email'])
             && isset($_POST['password']) && isset($_POST['verify_password'])) {
@@ -21,11 +22,11 @@ function register() {
                 $_POST['password'], $_POST['verify_password']);
             if(UserDAO::checkUser($_POST["email"])){
                 echo "User with that email already exists";
-                include_once "view/register.php";
+                header("Location: index.php?target=user&action=register");
             }
             elseif($msg != '') {
                echo $msg;
-               include_once "view/register.php";
+                header("Location: index.php?target=user&action=register");
             }
             else {
                 $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
@@ -33,13 +34,14 @@ function register() {
                 UserDAO::addUser($user);
                 $_SESSION["logged_user"] = json_encode($user);
                 echo "Successful registration. <br>";
-                include_once "view/main.php";
+                header("Location: index.php?target=pizza&action=showAll");
             }
         }
     }
 }
 
 function login() {
+    include_once "view/login.php";
     if(isset($_POST['login'])) {
         if(isset($_POST['email']) && isset($_POST['password'])) {
             $email = $_POST['email'];
@@ -53,7 +55,7 @@ function login() {
                     $user=json_encode($userObj);
                     $_SESSION['logged_user'] = $user;
                     echo "Successful login! <br>";
-                    include_once "view/main.php";
+                    header("Location: index.php?target=pizza&action=showAll");
                 }
                 else {
                     echo 'Invalid email or password.Try again.';
@@ -65,6 +67,7 @@ function login() {
 
 function edit()
 {
+    include_once "view/edit.php";
     if (isset($_POST['edit'])) {
         if (!isset($_SESSION["logged_user"])) {
             header("Location: index.php");
@@ -78,7 +81,7 @@ function edit()
                         $_POST['new_password'], $_POST['verify_password']);
                     if ($msg != '') {
                         echo $msg;
-                        include_once "view/main.php";
+                        //header("Location: index.php?target=pizza");
                     } else {
                         $password = password_hash($_POST['new_password'], PASSWORD_BCRYPT);
                         $email = json_decode($_SESSION['logged_user'])->email;
@@ -87,18 +90,17 @@ function edit()
                         UserDAO::editUser($user);
                         $_SESSION['logged_user'] = json_encode($user);
                         echo "Profile changed successfully. <br>";
-                        include_once "view/main.php";
                     }
                 }
                 } else {
                     echo "The current password you've entered is wrong!";
-                    include_once "view/main.php";
+                    //header("Location: index.php?target=pizza&action=showAll");
                     }
             }else {
                     $msg = $this->validationOfInput($_POST['first_name'], $_POST['last_name'], $_POST['email']);
                     if ($msg != '') {
                         echo $msg;
-                        include_once "view/main.php";
+                        //header("Location: index.php?target=pizza&action=showAll");
                     }
                     else {
                         $email = json_decode($_SESSION['logged_user'])->email;
@@ -107,7 +109,7 @@ function edit()
                         UserDAO::editUser($user);
                         $_SESSION['logged_user'] = json_encode($user);
                         echo "Profile changed successfully. <br>";
-                        include_once "view/main.php";
+                        //header("Location: index.php?target=pizza&action=showAll");
                     }
             }
         }
@@ -182,6 +184,7 @@ function sendMail($email, $token)
 
 function forgotPassword() {
     $msg='';
+    include_once "view/forgot_password.php";
     if(isset($_POST['forgot_password'])) {
         if(isset($_POST['email'])){
             $email=$_POST['email'];

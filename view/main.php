@@ -16,7 +16,7 @@ echo $user->first_name."<br>";
 <a href="index.php?target=pizza&action=showAll"><input type="button" value="Order"></a>
 <!--<a href="index.php?target=restaurant&action=show"><button>Restaurants</button></a>-->
 <ul id="buttons">
-    <li><a href="index.php?view=edit"><button>My Profile (edit) </button></a></li>
+    <li><a href="index.php?target=user&action=edit"><button>My Profile (edit) </button></a></li>
     <li><a href="index.php?target=address&action=show"><button>My Addresses</button></a></li>
     <li><a href="index.php?target=user&action=logout"><button>Logout</button></a></li>
 </ul>

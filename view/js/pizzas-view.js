@@ -50,8 +50,6 @@ function getPizzas(category) {
     xhttp.send();
 }
 
-
-
 // function getTimes() {
 //     var del_time = document.getElementById("del-time");
 //     var pick_up = document.getElementById("pick-up-time");

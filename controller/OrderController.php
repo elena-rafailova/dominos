@@ -129,11 +129,15 @@ class OrderController {
                     $restaurant_id = $_SESSION["carry_out"];
                 }
                 if ($restaurant_id || $delivery_addr) {
-                    if($category_id == 8 && isset($_POST["size"])) {
+                    if ($category_id == 8 && isset($_POST["size"])) {
                         $price = $_POST["size"];
-                    }else {
-                        $price= $other->getPrice();
+                    } else {
+                        $price = $other->getPrice();
                     }
+                } else {
+                    //ToDo error
+                    header("Location: index.php?target=pizza&action=showAll");
+                    die();
                 }
                     $order = new Order(null, $user->id, null, 1, $delivery_addr, $restaurant_id,
                         1, $price * $_POST["quantity"], [$other], null);
@@ -141,9 +145,6 @@ class OrderController {
 
                     include_once "view/orderStatus.php";
             }
-//            else {//ToDo error
-//                header("Location: index.php?target=pizza&action=showAll");
-//                die();}
         } else {
             //ToDo error
             header("Location: index.php?target=pizza&action=showAll");
