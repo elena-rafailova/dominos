@@ -35,6 +35,8 @@ function add () {
                 header("Location: index.php?target=address&action=show");
             }
         }
+    } else {
+        include_once "view/add_address.php";
     }
 }
 

@@ -14,53 +14,37 @@ spl_autoload_register(function ($class){
 session_start();
 
 $fileNotFoundFlag = false;
-$controllerName = isset($_GET["target"]) ? $_GET["target"] : "view";
-$methodName     = isset($_GET["action"]) ? $_GET["action"] : "viewRouter";
+$controllerName = isset($_GET["target"]) ? $_GET["target"] : "base";
+$methodName     = isset($_GET["action"]) ? $_GET["action"] : "baseFunc";
 
-$view           = isset($_GET["view"]) ? $_GET["view"] : "main";
+//$view           = isset($_GET["view"]) ? $_GET["view"] : "main";
 
 $controllerClassName = "\\controller\\" . ucfirst($controllerName) . "Controller";
 
 if (class_exists($controllerClassName)){
     $controller = new $controllerClassName();
-    if($controllerName == "view"){
-        if (isset($_SESSION["logged_user"])) {
+    if($controllerName == "base" && $methodName == "baseFunc"){
             try {
-                $controller->$methodName($view);
+                $controller->$methodName();
                 die();
             } catch (Exception $exception) {
                 echo "error -> " . $exception->getMessage();
                 die();
             }
-        } else {
-            if ($view != 'login' && $view != 'register' && $view!= 'forgot_password' && $view!= 'reset_password') {
-                try {
-                    $controller->$methodName('login');
-                    die();
-                } catch (Exception $exception) {
-                    echo "error -> " . $exception->getMessage();
-                    die();
-                }
-            } else if ($view == 'login' || $view == 'register' || $view == 'forgot_password' || $view == 'reset_password') {
-                try {
-                    $controller->$methodName($view);
-                    die();
-                } catch (Exception $exception) {
-                    echo "error -> " . $exception->getMessage();
-                    die();
-                }
-            }
-        }
-    }  else if (method_exists($controller,$methodName)){
+    } if (method_exists($controller,$methodName)){
         if (!($controllerName == "user" && in_array($methodName,array("login","register","forgotPassword","resetPassword", "changePassword")))){
             if (!isset($_SESSION["logged_user"])){
-                header("Location: index.php?view=login");
+                header("Location: index.php?target=user&action=login");
                 die();
             }
         }
+        if (isset($_SESSION["logged_user"]) && in_array($methodName,array("login", "register", "forgotPassword", "resetPassword", "changePassword"))) {
+            header("Location: index.php?target=pizza&action=showAll");
+            die();
+        }
         try{
             $controller->$methodName();
-        }catch (Exception $exception){
+        } catch (Exception $exception){
             echo "error -> " . $exception->getMessage();
             die();
         }

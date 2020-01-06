@@ -24,7 +24,7 @@ if (!isset($addresses)) {
     }
     ?>
     </ul>
-    <a href="index.php?view=add_address"><button>ADD A NEW ADDRESS</button></a>
+    <a href="index.php?target=address&action=add"><button>ADD A NEW ADDRESS</button></a>
 </div>
 <div style="float: left" >
     <?php
