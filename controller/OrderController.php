@@ -2,6 +2,10 @@
 
 namespace controller;
 
+use model\DAO\IngredientDAO;
+use model\DAO\OrderDAO;
+use model\DAO\OthersDAO;
+use model\DAO\PizzaDAO;
 use model\Dough;
 use model\Ingredient;
 use model\Order;
@@ -15,32 +19,17 @@ use model\User;
 class OrderController {
 
     public function finish() {
+        $pizzaDAO = new PizzaDAO();
+        $orderDAO = new OrderDAO();
+
         if (isset($_POST["order"])) {
             if (isset($_POST["pizza_id"]) && isset($_POST["dough"]) && isset($_POST["size"]) && isset($_POST["sauces"])) {
                 $user = json_decode($_SESSION['logged_user']);
 
-                $pizza = Pizza::getPizzaById($_POST["pizza_id"]);
+                $pizza = $pizzaDAO->getPizza($_POST["pizza_id"]);
 
-                if (!isset($_POST["herbs"])) {
-                    $_POST["herbs"] = [];
-                }
-                if (!isset($_POST["sauces"])) {
-                    $_POST["sauces"] = [];
-                }
-                if (!isset($_POST["cheeses"])) {
-                    $_POST["cheeses"] = [];
-                }
-                if (!isset($_POST["meats"])) {
-                    $_POST["meats"] = [];
-                }
-                if (!isset($_POST["vegetables"])) {
-                    $_POST["vegetables"] = [];
-                }
-                if (!isset($_POST["miscellaneous"])) {
-                    $_POST["miscellaneous"] = [];
-                }
-                $ingredientsIds = array_merge($_POST["sauces"], $_POST["cheeses"], $_POST["herbs"], $_POST["meats"],
-                    $_POST["vegetables"], $_POST["miscellaneous"]);
+                $ingredientsIds = array_merge($_POST["sauces"] ?? [], $_POST["cheeses"] ?? [],
+                    $_POST["herbs"] ?? [], $_POST["meats"] ?? [], $_POST["vegetables"] ?? [], $_POST["miscellaneous"] ?? []);
 
                 $pizzaIngrsIds = [];
                 /** @var Ingredient $ingredient */
@@ -51,17 +40,22 @@ class OrderController {
                 if ($pizzaIngrsIds != $ingredientsIds) {
                     $ingredients = [];
                     foreach ($ingredientsIds as $ingredient) {
-                        $ingredients[] = Ingredient::getIngredientById($ingredient);
+                        $ingredientDAO = new IngredientDAO();
+                        $ingredients[] = $ingredientDAO->getById($ingredient);
                     }
 
                     $price = 0;
                     foreach ($ingredients as $ingredient) {
                         $price += $ingredient->getPrice();
                     }
-                    $newPizzaId = Pizza::addNew($pizza->getName(), $ingredients);
-                    $pizza = new Pizza($newPizzaId, $pizza->getName(), null,1,
-                        $ingredients, $price, null, new Dough($_POST["dough"], null, null),
-                        new Size($_POST["size"], null, null, null), null);
+
+                    $pizza->setIngredients($ingredients);
+                    $pizza->setDough($_POST["dough"]);
+                    $pizza->setSize($_POST["size"]);
+                    $pizza->setPrice($price);
+
+                    $newPizzaId = $pizzaDAO->addNew($pizza->getName(), $ingredients);
+                    $pizza->setId($newPizzaId);
 
                 } else {
                     $price = 0;
@@ -93,10 +87,12 @@ class OrderController {
                 if (isset($_SESSION["carry_out"])) {
                     $restaurant_id = $_SESSION["carry_out"];
                 }
+
                 if ($restaurant_id || $delivery_addr) {
                     $order = new Order(null, $user->id, null, 1, $delivery_addr, $restaurant_id,
                         1, $pizza->getPrice() * $_POST["quantity"], [$pizza], null);
-                    $order->placeOrder();
+
+                    $orderDAO->placeOrder($order);
 
                     include_once "view/orderStatus.php";
                 } else {
@@ -105,11 +101,16 @@ class OrderController {
                     die();
                 }
             }
+
+            /*others*/
+
             elseif(isset($_POST["other_id"]) && isset($_POST["category_id"])){
-                    $user = json_decode($_SESSION['logged_user']);
-                        $id= $_POST["other_id"];
-                        $category_id = $_POST["category_id"];
-                    $other = Others::getOtherById($_POST["other_id"],$_POST["category_id"]);
+                $user = json_decode($_SESSION['logged_user']);
+                $id= $_POST["other_id"];
+                $category_id = $_POST["category_id"];
+
+                $otherDAO= new OthersDAO();
+                $other = $otherDAO->getOther($id, $category_id);
 
                 if (isset($_POST["quantity"]) && $_POST["quantity"] >= 1 && $_POST["quantity"] <= 100) {
                     $other->setQuantity($_POST["quantity"]);
@@ -139,11 +140,12 @@ class OrderController {
                     header("Location: index.php?target=pizza&action=showAll");
                     die();
                 }
-                    $order = new Order(null, $user->id, null, 1, $delivery_addr, $restaurant_id,
-                        1, $price * $_POST["quantity"], [$other], null);
-                    $order->placeOrder();
+                $order = new Order(null, $user->id, null, 1, $delivery_addr, $restaurant_id,
+                    1, $price * $_POST["quantity"], [$other], null);
 
-                    include_once "view/orderStatus.php";
+                $orderDAO->placeOrder($order);
+
+                include_once "view/orderStatus.php";
             }
         } else {
             //ToDo error

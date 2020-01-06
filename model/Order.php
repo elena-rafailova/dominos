@@ -33,11 +33,6 @@ class Order
         $this->comment = $comment;
     }
 
-    public function placeOrder() {
-        $orderDAO = new OrderDAO();
-        $orderDAO->placeOrder($this);
-    }
-
     public function getId() {
         return $this->id;
     }

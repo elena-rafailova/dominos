@@ -181,8 +181,8 @@ function getSauces(pizzaId) {
         if (this.readyState == 4 && this.status == 200) {
             var saucesEl = document.getElementById("sauces");
             var all = JSON.parse(this.responseText);
-            var sauces = all[0];
-            var pizzaIngr = all[1];
+            var sauces = all["ingredients"];
+            var pizzaIngr = all["pizzaIngredients"];
             for(var key in sauces) {
                 var input = document.createElement("input");
                 input.type = "radio";
@@ -225,8 +225,8 @@ function getIngr($category, pizzaId) {
             }
             var ingredientEl = document.getElementById(categoryName);
             var all = JSON.parse(this.responseText);
-            var ingredients = all[0];
-            var pizzaIngr = all[1];
+            var ingredients = all["ingredients"];
+            var pizzaIngr = all["pizzaIngredients"];
             for(var key in ingredients) {
                 var input = document.createElement("input");
                 input.type = "checkbox";

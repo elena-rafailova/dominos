@@ -3,6 +3,9 @@
 
 namespace controller;
 
+use model\DAO\DoughDAO;
+use model\DAO\IngredientDAO;
+use model\DAO\PizzaDAO;
 use model\DAO\SizeDAO;
 use model\Dough;
 use model\Ingredient;
@@ -17,79 +20,83 @@ class PizzaController
 
     function show() {
         if (isset($_GET["id"])) {
-//            $pizza = Pizza::getPizzaById($_GET["id"]);
-//            $doughs = Pizza::getDoughsOrSizes(true);
-//            $sizes = Pizza::getDoughsOrSizes(false);
-//
-//            $ingredients = [];
-//            for ($i = 0; $i < 6; $i++) {
-//                $ingredients[] = Ingredient::getIngredientsByCategory($i+1);
-//            }
-//            //$ingredients[] = Ingredient::getIngredientsByCategory(null);
             include_once "view/pizza.php";
         }
     }
 
     function getDoughs() {
-        echo json_encode(Dough::getAll(), JSON_UNESCAPED_UNICODE);
+        $doughDAO = new DoughDAO();
+        echo json_encode($doughDAO->getAll(), JSON_UNESCAPED_UNICODE);
     }
 
     function getSizes() {
-        echo json_encode(Size::getAll(), JSON_UNESCAPED_UNICODE);
+        $sizeDAO = new SizeDAO();
+        echo json_encode($sizeDAO->getAll(), JSON_UNESCAPED_UNICODE);
     }
 
     function getPizza() {
         if (isset($_GET["id"])) {
-            $pizza = Pizza::getPizzaById($_GET["id"]);
+            $pizzaDAO = new PizzaDAO();
+            $pizza = $pizzaDAO->getPizza($_GET["id"]);
             echo json_encode($pizza, JSON_UNESCAPED_UNICODE);
         }
     }
 
-    function getIngr() {
+    function getIngr()
+    {
         if (isset($_GET["category"])) {
             if (isset($_GET["pizza"])) {
-                $pizza = Pizza::getPizzaById($_GET["pizza"]);
+                $pizzaDAO = new PizzaDAO();
+                $pizza = $pizzaDAO->getPizza($_GET["pizza"]);
             }
-            $ingredients = Ingredient::getIngredientsByCategory($_GET["category"]);
+
+            $ingredientDAO = new IngredientDAO();
+            $ingredients = $ingredientDAO->getAll();
 
             $result = [];
-            $result[] = $ingredients;
-            $result[] = $pizza->getIngrNames();
+            $result["ingredients"] = [];
+            /** @var Ingredient $ingredient */
+            foreach ($ingredients as $ingredient) {
+                if ($ingredient->getCategory() == $_GET["category"]) {
+                    $result["ingredients"][] = $ingredient;
+                }
+            }
+            $result["pizzaIngredients"] = $pizza->getIngrNames();
             echo json_encode($result, JSON_UNESCAPED_UNICODE);
+
         }
     }
 
     function getPizzasInfo() {
+        $pizzaDAO = new PizzaDAO();
         if (!isset($_GET["category"])) {
-            $pizzas = Pizza::getAllPizzas();
+            $pizzas = $pizzaDAO->getAll();
         } else {
             $category = $_GET["category"];
-            $pizzas = Pizza::getAllPizzas($category);
+            $pizzas = $pizzaDAO->getAll($category);
         }
         echo json_encode($pizzas, JSON_UNESCAPED_UNICODE);
     }
 
     function getDoughPrice() {
         if (isset($_GET["id"])) {
-            $dough = new Dough($_GET["id"], null, null);
-            $dough->findPrice();
-            echo $dough->getPrice();
+            $doughDAO = new DoughDAO();
+            echo $doughDAO->getPrice($_GET["id"]);
         }
     }
 
     function getSizePrice() {
         if (isset($_GET["id"])) {
-            $dough = new Size($_GET["id"], null, null, null);
-            $dough->findPrice();
-            echo $dough->getPrice();
+            $sizeDAO = new SizeDAO();
+
+            echo $sizeDAO->getPrice($_GET["id"]);
         }
     }
 
     function getIngrPrice() {
         if (isset($_GET["id"])) {
-            $ingredient = new Ingredient($_GET["id"], null, null, null);
-            $ingredient->findPrice();
-            echo $ingredient->getPrice();
+            $ingredientDAO = new IngredientDAO();
+            echo $ingredientDAO->getPrice($_GET["id"]);
         }
     }
 

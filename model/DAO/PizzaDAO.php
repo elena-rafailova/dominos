@@ -2,7 +2,6 @@
 
 
 namespace model\DAO;
-include_once "DBConnector.php";
 
 use model\Pizza;
 use model\Ingredient;
@@ -12,11 +11,11 @@ use PDO;
 use PDOException;
 
 
-class PizzaDAO {
+class PizzaDAO extends BaseDAO {
 
     public function getAll($category = null) {
         try {
-            $pdo = getPDO();
+            $pdo = parent::getPDO();
 
             $sql = "SELECT id, name, img_url, modified, category FROM pizzas WHERE modified=? ";
             if (isset($category) && $category != 0) {
@@ -63,7 +62,7 @@ class PizzaDAO {
 
     public function getIngredients($id = null) {
         try {
-            $pdo = getPDO();
+            $pdo = parent::getPDO();
 
             $sql = "SELECT i.id AS id, i.name AS name, i.price AS price
                     FROM ingredients AS i 
@@ -92,7 +91,7 @@ class PizzaDAO {
 
     public function getPriceFromDoughAndSize($doughId = 1, $sizeId = 2) {
         try {
-            $pdo = getPDO();
+            $pdo = parent::getPDO();
             $sql = "SELECT s.price + d.price AS sum 
                     FROM doughs AS d JOIN sizes AS s 
                     WHERE s.id = ? AND d.id = ?";
@@ -109,7 +108,7 @@ class PizzaDAO {
 
     public function getPizza($id) {
         try {
-            $pdo = getPDO();
+            $pdo = parent::getPDO();
 
             $sql = "SELECT id, name, img_url, category FROM pizzas WHERE id=?;";
 
@@ -140,7 +139,7 @@ class PizzaDAO {
      *  @return int
      */
     public function addNew($pizzaName, $ingredients) {
-        $pdo = getPDO();
+        $pdo = parent::getPDO();
         try {
 
             $pdo->beginTransaction();

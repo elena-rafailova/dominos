@@ -117,17 +117,21 @@ class Pizza implements \JsonSerializable
         return $pizzaDAO->getPizza($id);
     }
 
-    static public function addNew($pizza, $ingredients) {
-        $pizzaDAO = new PizzaDAO();
-        return $pizzaDAO->addNew($pizza, $ingredients);
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    public function setIngredients($ingredients) {
+        $this->ingredients = $ingredients;
     }
 
     public function setDough($id) {
-        $this->dough = new Dough($id, null,null);
+        $this->dough = new Dough($id);
     }
 
     public function setSize($id) {
-        $this->size = new Size($id, null, null, null);
+        $this->size = new Size($id);
     }
 
     public function setQuantity($quantity) {

@@ -9,11 +9,11 @@ use model\Order;
 use PDO;
 use PDOException;
 
-class OrderDAO
-{
+class OrderDAO extends BaseDAO {
+
     /** @var Order $order */
     public function placeOrder($order) {
-        $pdo = getPDO();
+        $pdo = parent::getPDO();
         try {
             $pdo->beginTransaction();
 
@@ -46,7 +46,7 @@ class OrderDAO
                     $sql1 = "INSERT INTO orders_have_pizzas(order_id, pizza_id, quantity, size_id, dough_id) VALUES (?, ?, ?, ?, ?)";
                     $stmt1 = $pdo->prepare($sql1);
                     $stmt1->execute($itemValues);
-                } else /** @var Others $item */ {
+                } else  {
                     $itemValues = [];
                     $itemValues[] = $orderId;
                     $itemValues[] = $item->getId();
@@ -60,7 +60,7 @@ class OrderDAO
             $pdo->commit();
         }catch (PDOException $e) {
             $pdo->rollBack();
-            echo $e->getMessage();
+            throw $e;
         }
     }
 }

@@ -14,7 +14,7 @@ class Ingredient implements \JsonSerializable
     private $category;
     private $price;
 
-    public function __construct($id = null, $name = null, $category = null, $price = null) {
+    public function __construct($id, $name = null, $category = null, $price = null) {
         $this->id = $id;
         $this->name = $name;
         $this->category = $category;
@@ -33,6 +33,11 @@ class Ingredient implements \JsonSerializable
         return $this->id;
     }
 
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
     static public function getIngredientsByCategory($category) {
         return IngredientDAO::getByCategory($category);
     }
@@ -48,4 +53,5 @@ class Ingredient implements \JsonSerializable
     public function jsonSerialize() {
         return get_object_vars($this);
     }
+
 }

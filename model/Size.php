@@ -13,7 +13,7 @@ class Size implements \JsonSerializable {
     private $price;
     private $slices;
 
-    public function __construct($id, $name, $price, $slices) {
+    public function __construct($id, $name = null, $price = null, $slices = null) {
         $this->id = $id;
         $this->name = $name;
         $this->price = $price;
@@ -45,7 +45,4 @@ class Size implements \JsonSerializable {
         return get_object_vars($this);
     }
 
-    public static function getAll() {
-        return SizeDAO::getAll();
-    }
 }

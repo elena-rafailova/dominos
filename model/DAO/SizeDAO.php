@@ -2,47 +2,35 @@
 
 
 namespace model\DAO;
-include_once "DBConnector.php";
 
 use model\Size;
 use PDO;
-use PDOException;
 
-class SizeDAO
-{
-    static public function getPrice($id) {
-        try {
-            $pdo = getPDO();
+class SizeDAO extends BaseDAO {
+    public function getPrice($id) {
+        $pdo = parent::getPDO();
 
-            $sql = "SELECT price FROM sizes WHERE id=?";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([$id]);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
+        $sql = "SELECT price FROM sizes WHERE id=?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC)["price"];
     }
 
 
-    public static function getAll() {
-        try {
-            $pdo = getPDO();
+    public function getAll() {
+        $pdo = parent::getPDO();
 
-            $sql = "SELECT id, name, price, slices FROM sizes ";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute();
+        $sql = "SELECT id, name, price, slices FROM sizes ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
 
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $sizes = [];
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $sizes = [];
 
-            foreach ($rows as $row) {
-                $sizes[] = new Size($row["id"], $row["name"], $row["price"], $row["slices"]);
-            }
-
-            return $sizes;
-
-        }catch (PDOException $e) {
-            echo $e->getMessage();
+        foreach ($rows as $row) {
+            $sizes[] = new Size($row["id"], $row["name"], $row["price"], $row["slices"]);
         }
+
+        return $sizes;
     }
 }

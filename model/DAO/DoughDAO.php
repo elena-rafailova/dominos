@@ -1,48 +1,36 @@
 <?php
 
 namespace model\DAO;
-include_once "DBConnector.php";
 
 use model\Dough;
-use model\Size;
 use PDO;
-use PDOException;
 
-class DoughDAO
-{
-    static public function getPrice($id) {
-        try {
-            $pdo = getPDO();
+class DoughDAO extends BaseDAO {
 
-            $sql = "SELECT price FROM doughs WHERE id=?";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([$id]);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
+    public function getPrice($id) {
+        $pdo = parent::getPDO();
+
+        $sql = "SELECT price FROM doughs WHERE id=?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC)["price"];
     }
 
 
-    public static function getAll() {
-        try {
-            $pdo = getPDO();
+    public function getAll() {
+        $pdo = parent::getPDO();
 
-            $sql = "SELECT id, name, price FROM doughs ";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute();
+        $sql = "SELECT id, name, price FROM doughs ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
 
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $doughs = [];
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $doughs = [];
 
-            foreach ($rows as $row) {
-                $doughs[] = new Dough($row["id"], $row["name"], $row["price"]);
-            }
-
-            return $doughs;
-
-        }catch (PDOException $e) {
-            echo $e->getMessage();
+        foreach ($rows as $row) {
+            $doughs[] = new Dough($row["id"], $row["name"], $row["price"]);
         }
+
+        return $doughs;
     }
 }

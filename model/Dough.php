@@ -12,7 +12,7 @@ class Dough implements \JsonSerializable
     private $name;
     private $price;
 
-    public function __construct($id, $name, $price) {
+    public function __construct($id, $name = null, $price = null) {
         $this->id = $id;
         $this->name = $name;
         $this->price = $price;
@@ -31,7 +31,8 @@ class Dough implements \JsonSerializable
     }
 
     public function findPrice() {
-        $this->price = DoughDAO::getPrice($this->id)["price"];
+        $doughDAO = new DoughDAO();
+        $this->price = $doughDAO->getPrice($this->id);
     }
 
     public function jsonSerialize()
@@ -39,7 +40,4 @@ class Dough implements \JsonSerializable
         return get_object_vars($this);
     }
 
-    public static function getAll() {
-        return DoughDAO::getAll();
-    }
 }
