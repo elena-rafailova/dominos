@@ -49,6 +49,7 @@ class AddressDAO extends BaseDAO {
         if (empty($rows)) {
             return false;
         } else {
+            //todo make $rows = new Address()
             return $rows;
         }
     }

@@ -1,6 +1,5 @@
 <?php
 include_once "main.php";
-//todo add google maps!
 ?>
 
 <h4>Add a new address</h4>

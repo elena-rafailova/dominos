@@ -15,6 +15,7 @@ class UserController
 {
 function register() {
     include_once "view/register.php";
+    //todo try catch for DAO
     $userDAO = new UserDAO();
     if(isset($_POST["register"])){
         if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email'])
@@ -43,7 +44,7 @@ function register() {
 
 function login() {
     include_once "view/login.php";
-
+    //todo try catch for DAO
     $userDAO = new UserDAO();
 
     if(isset($_POST['login'])) {
@@ -72,6 +73,7 @@ function login() {
 function edit()
 {
     include_once "view/edit.php";
+    //todo try catch for DAO
     $userDAO = new UserDAO();
     if (isset($_POST['edit'])) {
         if (!isset($_SESSION["logged_user"])) {
@@ -190,6 +192,7 @@ function sendMail($email, $token)
 function forgotPassword() {
     $msg='';
     include_once "view/forgot_password.php";
+    //todo try catch for DAO
     $userDAO = new UserDAO();
     if(isset($_POST['forgot_password'])) {
         if(isset($_POST['email'])){
@@ -197,14 +200,14 @@ function forgotPassword() {
             if (!(filter_var($email, FILTER_VALIDATE_EMAIL))) {
                 $msg .= " Invalid email format. <br> ";
             }else {
-                $user = UserDAO::checkUser($email);
+                $user = $userDAO->checkUser($email);
                 if (!$user) {
                     $msg .= "User with that email doesn't exist! <br>";
                 } else {
                     $user_id = $user->id;
                     $token = bin2hex(random_bytes(50));
                     $expFormat = mktime(
-                    date("H"), date("i"), date("s"), date("m"), date("d")+1, date("Y"));
+                    date("H")+1, date("i"), date("s"), date("m"), date("d"), date("Y"));
                     $expDate = date("Y-m-d H:i:s", $expFormat);
                     $userDAO->addToken($user_id, $token, $expDate);
                     $this->sendMail($email, $token);
@@ -220,6 +223,7 @@ function forgotPassword() {
 
 function resetPassword() {
     //from email
+    //todo try catch for DAO
     $userDAO = new UserDAO();
     if(isset($_GET['token'])){
         $token=$_GET['token'];
@@ -240,13 +244,14 @@ function resetPassword() {
                 $userDAO->deleteToken($_SESSION['id']);
                 echo "<h2>Invalid Link</h2>
                 <p>The link is expired.You are trying to use the expired link which 
-                    is valid only 24 hours (1 days after request).<br /><br /></p>";
+                    is valid only 1 hour.<br /><br /></p>";
             }
         }
     }
 }
 
 function changePassword() {
+    //todo try catch for DAO
     $userDAO = new UserDAO();
     if(isset($_POST['change_password'])) {
        $password = $_POST['new_password'];
@@ -277,12 +282,6 @@ function changePassword() {
 
     }
 }
-
-    public function greet() {
-        $user = json_decode($_SESSION['logged_user']);
-        echo 'Hello, '.$user->first_name;
-        die();
-    }
 
     public function deliveryMethod() {
         if (isset($_POST["resId"])) {

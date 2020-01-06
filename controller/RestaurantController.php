@@ -3,9 +3,7 @@
 
 namespace controller;
 
-
 use model\DAO\RestaurantDAO;
-use model\Restaurant;
 
 class RestaurantController
     {
@@ -14,7 +12,9 @@ class RestaurantController
     }
 
     function getRestaurants() {
-        $restaurants = Restaurant::getAllRestaurants();
+        //todo try catch
+        $restaurantDAO= new RestaurantDAO();
+        $restaurants = $restaurantDAO->getAll();
         echo json_encode($restaurants, JSON_UNESCAPED_UNICODE);
     }
 }

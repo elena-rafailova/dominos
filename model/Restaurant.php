@@ -21,7 +21,4 @@ class Restaurant
         $this->address = $address;
     }
 
-    public static function getAllRestaurants() {
-        return RestaurantDAO::getAll();
-    }
 }

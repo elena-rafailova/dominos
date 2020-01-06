@@ -4,8 +4,6 @@
 namespace model;
 
 
-use model\DAO\OthersDAO;
-
 class Others
 {
     private $id;
@@ -30,13 +28,6 @@ class Others
         $this->quantity = $quantity;
     }
 
-    static function getAll($category_id,$filter = null) {
-        $othersDAO = new OthersDAO();
-
-        return $othersDAO->getAll($category_id,$filter);
-    }
-
-
     public function getId()
     {
         return $this->id;
@@ -57,12 +48,5 @@ class Others
     {
         return $this->price;
     }
-
-    static function getOtherById($id,$category_id)
-    {
-        $otherDAO= new OthersDAO();
-        return $otherDAO->getOther($id, $category_id);
-    }
-
 
 }

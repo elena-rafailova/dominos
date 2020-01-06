@@ -5,7 +5,6 @@ namespace model\DAO;
 
 use model\User;
 use PDO;
-use PDOException;
 
 class UserDAO extends BaseDAO {
     function addUser(User $user){
@@ -40,6 +39,7 @@ class UserDAO extends BaseDAO {
         if (empty($row)) {
             return false;
         } else {
+            //todo make $row = new User();
             return $row;
         }
     }
@@ -81,6 +81,7 @@ class UserDAO extends BaseDAO {
         if (empty($row)) {
             return false;
         } else {
+            //todo make $row = new User();
             return $row;
         }
     }
