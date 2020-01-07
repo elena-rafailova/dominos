@@ -40,7 +40,7 @@ class OthersDAO extends BaseDAO {
 
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             $other = new Others($row["id"], $row["name"] ,$row["img_url"],
-                $row["description"], $row["modified"], $row["filter"] ,$row["others_category_id"], $row["price"]);
+                $row["description"], $row["filter"] ,$row["others_category_id"], $row["price"]);
             return $other;
 
     }
