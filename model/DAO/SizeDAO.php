@@ -16,6 +16,17 @@ class SizeDAO extends BaseDAO {
         return $stmt->fetch(PDO::FETCH_ASSOC)["price"];
     }
 
+    public function getById($id) {
+        $pdo = parent::getPDO();
+
+        $sql = "SELECT id, name, price, slices FROM sizes WHERE id=?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return new Size($row["id"], $row["name"], $row["price"], $row["slices"]);
+    }
 
     public function getAll() {
         $pdo = parent::getPDO();

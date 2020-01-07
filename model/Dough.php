@@ -30,10 +30,6 @@ class Dough implements \JsonSerializable
         return $this->name;
     }
 
-    public function findPrice() {
-        $doughDAO = new DoughDAO();
-        $this->price = $doughDAO->getPrice($this->id);
-    }
 
     public function jsonSerialize()
     {

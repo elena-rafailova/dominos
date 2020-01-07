@@ -15,7 +15,7 @@ include_once "main.php";
         <select name="size" id="sizes"  onchange="changePrice()">
         </select><br>
 
-        <p id="price_for_one"></p>
+        <input type="hidden" id="price_for_one" name="price_for_one" value="0">
         <div>Price: <span id="price"></span> lv</div>
 
         <h6>Quantity</h6>

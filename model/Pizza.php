@@ -34,13 +34,12 @@ class Pizza implements \JsonSerializable
     private $category;
     private $quantity;
 
-    public function __construct($id, $name, $img_url, $modified, $ingredients, $price, $category = 0, $dough = null, $size = null, $quantity = null) {
+    public function __construct($id, $name, $img_url, $modified, $ingredients, $category = 0, $dough = null, $size = null, $quantity = null) {
         $this->id = $id;
         $this->name = $name;
         $this->img_url = $img_url;
         $this->modified = $modified;
         $this->ingredients = $ingredients;
-        $this->price = $price;
         $this->category = $category;
         $this->dough = $dough;
         $this->size = $size;
@@ -106,11 +105,6 @@ class Pizza implements \JsonSerializable
         $this->price = $price;
     }
 
-    public function getDoughAndSizePrice() {
-        $this->dough->findPrice();
-        $this->size->findPrice();
-        return $this->dough->getPrice() + $this->size->getPrice();
-    }
 
     static public function getPizzaById($id) {
         $pizzaDAO =  new PizzaDAO();

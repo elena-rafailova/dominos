@@ -71,7 +71,6 @@ function getPizzas(category) {
 // }
 
 function initializePizza() {
-
     var url = window.location.search.substr(1);
     url = url.split("&");
     url = url[url.length - 1];
@@ -90,13 +89,11 @@ function initializePizza() {
     }
 
     var price_for_one = document.getElementById("price_for_one");
-    price_for_one.style.display = "none";
 
     var customize = document.getElementById("customize");
     customize.style.display = "none";
 
 }
-
 
 function getDoughs() {
     var xhttp = new XMLHttpRequest();
@@ -112,7 +109,6 @@ function getDoughs() {
                 if (list[key]["price"] != 0) option.innerText += " (+" + list[key]["price"] + "lv)";
                 doughs.appendChild(option);
             }
-
         }
     };
 
@@ -131,7 +127,6 @@ function getSizes() {
                 option.value = list[key]["id"];
                 option.innerText = list[key]["name"];
                 if (option.innerText == "Large") option.selected = true;
-                price += list[key]["price"];
                 option.innerText += " (" + list[key]["slices"] + " slices)";
                 sizes.appendChild(option);
             }
@@ -165,8 +160,8 @@ function getPizza(id) {
             }
             toppings.innerText = str.join(", ");
 
-            var price = document.getElementById("price_for_one");
-            price.innerText = pizza["price"].toFixed(2);
+            var price_for_one = document.getElementById("price_for_one");
+            price_for_one.value = pizza["price"].toFixed(2);
             document.getElementById("price").innerText =  pizza["price"].toFixed(2);
         }
     };
@@ -235,13 +230,12 @@ function getIngr($category, pizzaId) {
                 input.name = categoryName + "[]";
                 input.className = categoryName;
 
-
                 if (pizzaIngr.includes(ingredients[key]["name"])) {
                     input.checked = true;
                 }
 
                 input.addEventListener("click", function (event) {
-                    var price = document.getElementById("price_for_one");
+                    var price_for_one = document.getElementById("price_for_one");
                     var targetElement = event.target;
                     if (this.checked == true) {
                         addIngrPrice(targetElement.value);
@@ -267,28 +261,18 @@ function getIngr($category, pizzaId) {
     xhttp.send();
 }
 
-
 function changePrice() {
-    var price = document.getElementById("price_for_one");
-    price.innerText = 0;
+    var price_for_one = document.getElementById("price_for_one");
+    price_for_one.value = 0;
     var id;
 
     var doughs = document.getElementById("doughs");
-    try {
-        id = doughs.options[doughs.selectedIndex].value;
-    } catch (e) {
-        id = 1;
-    }
-    getPriceOfDough(id, price);
+    id = doughs.options[doughs.selectedIndex].value;
+    getPriceOfDough(id, price_for_one);
 
     var sizes = document.getElementById("sizes");
-    try {
-        id = sizes.options[sizes.selectedIndex].value;
-    } catch (e) {
-        id = 2;
-    }
-    getPriceOfSize(id, price);
-
+    id = sizes.options[sizes.selectedIndex].value;
+    getPriceOfSize(id, price_for_one);
 
     var i;
     for (i = 2; i <= 6; i++) {
@@ -310,7 +294,7 @@ function addIngredients(category) {
     var i;
     for (i = 0; i < elements.length; i++) {
         if (elements[i].checked) {
-            addIngrPrice(elements[i].value, price);
+            addIngrPrice(elements[i].value);
         }
     }
 
@@ -320,18 +304,14 @@ function addIngrPrice(ingr_id) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            var price = document.getElementById("price_for_one");
-            //alert(price.innerText);
+            var price_for_one = document.getElementById("price_for_one");
             var priceVal = parseFloat(this.responseText);
-            //alert(priceVal);
-            priceVal += parseFloat(price.innerText);
+            priceVal += parseFloat(price_for_one.value);
 
-            price.innerText = priceVal.toFixed(2);
+            price_for_one.value = priceVal.toFixed(2);
 
             var quantity = document.getElementById("quantity");
             if (quantity.value != quantity.defaultValue) {
-
-                console.log(" Add ingr price for one: " + priceVal + " quantity: " + quantity.value);
                 priceVal *= quantity.value;
             }
             document.getElementById("price").innerText = priceVal.toFixed(2);
@@ -346,16 +326,14 @@ function removeIngrPrice(ingr_id) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            var price = document.getElementById("price_for_one");
+            var price_for_one = document.getElementById("price_for_one");
             //alert(price.innerText);
-            var priceVal = parseFloat(price.innerText);
+            var priceVal = parseFloat(price_for_one.value);
             priceVal -= parseFloat(this.responseText);
 
-            price.innerText = priceVal.toFixed(2);
+            price_for_one.value = priceVal.toFixed(2);
             var quantity = document.getElementById("quantity");
             if (quantity.value != quantity.defaultValue) {
-
-                console.log(" RemoveIngr price for one: " + priceVal + " quantity: " + quantity.value);
                 priceVal *= quantity.value;
             }
             document.getElementById("price").innerText = priceVal.toFixed(2);
@@ -366,19 +344,18 @@ function removeIngrPrice(ingr_id) {
     xhttp.send();
 }
 
-function getPriceOfDough(dough_id, price) {
+function getPriceOfDough(dough_id, price_for_one) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var priceVal = parseFloat(this.responseText);
-            priceVal += parseFloat(price.innerText);
+            priceVal += parseFloat(price_for_one.value);
 
-            price.innerText = priceVal;
+            price_for_one.value = priceVal;
             var quantity = document.getElementById("quantity");
 
             if (quantity.value != quantity.defaultValue) {
-                console.log("Dough price for one: " + priceVal + " quantity: " + quantity.value + " current price: " + price.innerText);
-                //priceVal *= parseFloat(quantity.value);
+                priceVal *= parseFloat(quantity.value);
             }
 
             document.getElementById("price").innerText = priceVal.toFixed(2);
@@ -389,19 +366,16 @@ function getPriceOfDough(dough_id, price) {
     xhttp.send();
 }
 
-function getPriceOfSize(size_id, price) {
+function getPriceOfSize(size_id, price_for_one) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var priceVal = parseFloat(this.responseText);
-            priceVal += parseFloat(price.innerText);
+            priceVal += parseFloat(price_for_one.value);
 
-            price.innerText = priceVal.toFixed(2);
+            price_for_one.value = priceVal.toFixed(2);
             var quantity = document.getElementById("quantity");
-
             if (quantity.value != quantity.defaultValue) {
-
-                console.log(" Size price for one: " + priceVal + " quantity: " + quantity.value);
                 priceVal *= quantity.value;
             }
 
@@ -421,7 +395,7 @@ function incrementVal() {
 
     var price_for_one = document.getElementById("price_for_one");
     var price = document.getElementById("price");
-    price.innerText = (parseFloat(price_for_one.innerText) * value).toFixed(2);
+    price.innerText = (parseFloat(price_for_one.value) * value).toFixed(2);
 
     document.getElementById('quantity').value = value;
 }
@@ -434,7 +408,7 @@ function decrementVal() {
 
         var price_for_one = document.getElementById("price_for_one");
         var price = document.getElementById("price");
-        price.innerText = (parseFloat(price_for_one.innerText) * value).toFixed(2);
+        price.innerText = (parseFloat(price_for_one.value) * value).toFixed(2);
 
         document.getElementById('quantity').value = value;
     }

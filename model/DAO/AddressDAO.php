@@ -3,7 +3,6 @@
 namespace model\DAO;
 
 use model\Address;
-use model\Restaurant;
 use PDO;
 use PDOException;
 
@@ -97,30 +96,4 @@ class AddressDAO extends BaseDAO {
             throw $e;
         }
     }
-
-//    function getAllRestaurantAddresses() {
-//        try {
-//            $pdo = getPDO();
-//
-//            $sql = "SELECT r.id AS restaurant_id, r.name, a.id AS address_id, a.city_id,
-//                    a.street_name, a.street_number, a.building_number
-//                    FROM restaurants AS r
-//                    JOIN addresses AS a ON (r.address_id = a.id)";
-//            $stmt = $pdo->prepare($sql);
-//            $stmt->execute([]);
-//
-//            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-//            $restaurants = [];
-//            foreach ($rows as $row) {
-//                $address = new Address($row["address_id"], $row["city_id"], null, $row["street_name"],
-//                    $row["street_number"], $row["building_number"], null, null, null);
-//                $restaurants[] = new Restaurant($row["restaurant_id"], $row["name"], $address);
-//
-//            }
-//
-//            return $restaurants;
-//        } catch (PDOException $e) {
-//            echo $e->getMessage();
-//        }
-//    }
 }

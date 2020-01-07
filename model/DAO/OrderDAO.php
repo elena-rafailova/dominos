@@ -1,7 +1,6 @@
 <?php
 
 namespace model\DAO;
-include_once "DBConnector.php";
 
 use model\Others;
 use model\Pizza;

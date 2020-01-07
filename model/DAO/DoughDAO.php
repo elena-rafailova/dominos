@@ -16,11 +16,23 @@ class DoughDAO extends BaseDAO {
         return $stmt->fetch(PDO::FETCH_ASSOC)["price"];
     }
 
+    public function getById($id) {
+        $pdo = parent::getPDO();
+
+        $sql = "SELECT id, name, price FROM doughs WHERE id=?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return new Dough($row["id"], $row["name"], $row["price"]);
+    }
+
 
     public function getAll() {
         $pdo = parent::getPDO();
 
-        $sql = "SELECT id, name, price FROM doughs ";
+        $sql = "SELECT id, name, price FROM doughs";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
 

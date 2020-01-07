@@ -38,6 +38,19 @@ class PizzaController
         if (isset($_GET["id"])) {
             $pizzaDAO = new PizzaDAO();
             $pizza = $pizzaDAO->getPizza($_GET["id"]);
+
+            $price = 0;
+            /** @var Ingredient $ingredient */
+            foreach ($pizza->getIngredients() as $ingredient) {
+                $price += $ingredient->getPrice();
+            }
+            $doughDAO = new DoughDAO();
+            $price += $doughDAO->getPrice($pizza->getDough()->getId());
+            $sizeDAO = new SizeDAO();
+            $price += $sizeDAO->getPrice($pizza->getSize()->getId());
+
+            $pizza->setPrice($price);
+
             echo json_encode($pizza, JSON_UNESCAPED_UNICODE);
         }
     }
@@ -49,6 +62,7 @@ class PizzaController
                 $pizzaDAO = new PizzaDAO();
                 $pizza = $pizzaDAO->getPizza($_GET["pizza"]);
             }
+
 
             $ingredientDAO = new IngredientDAO();
             $ingredients = $ingredientDAO->getAll();
