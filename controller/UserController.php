@@ -3,6 +3,7 @@
 
 namespace controller;
 
+use model\Cart;
 use model\DAO\UserDAO;
 use model\User;
 use Swift_Mailer;
@@ -35,6 +36,7 @@ function register() {
                 $user = new User($_POST["first_name"], $_POST["last_name"], $_POST["email"], $password );
                 $userDAO->addUser($user);
                 $_SESSION["logged_user"] = json_encode($user);
+                $_SESSION["cart"] = new Cart();
                 echo "Successful registration. <br>";
                 header("Location: index.php?target=pizza&action=showAll");
             }
@@ -59,6 +61,7 @@ function login() {
                 if(password_verify($password, $userObj->password)) {
                     $user=json_encode($userObj);
                     $_SESSION['logged_user'] = $user;
+                    $_SESSION["cart"] = new Cart();
                     echo "Successful login! <br>";
                     header("Location: index.php?target=pizza&action=showAll");
                 }

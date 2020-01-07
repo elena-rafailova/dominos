@@ -137,7 +137,7 @@ if(isset($_GET['category_id'])) {
         <input type='button' value='-' id='$other->id' onclick='decrementVal(this.id)'>
         <input type='text' min='1' max='100' name='quantity' id='$other->id.quantity' value='1' required readonly>
         <input type='button' value='+' id='$other->id' onclick='incrementVal(this.id)'>";
-        echo "<input type='submit' name='order' value='Order'></form><br></td></tr>";
+        echo "<input type='submit' name='add_to_cart' value='Add'></form><br></td></tr>";
     }
  ?>
 </table>

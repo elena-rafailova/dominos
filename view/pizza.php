@@ -7,7 +7,7 @@ include_once "main.php";
     <img id="img"/><br>
     <p id="name"></p>
 
-    <form action="index.php?target=order&action=finish" method="post">
+    <form action="index.php?target=cart&action=addToCart" method="post">
         <input type="hidden" id="id" name="pizza_id">
         <select name="dough" id="doughs" onchange="changePrice()">
         </select>
@@ -58,7 +58,7 @@ include_once "main.php";
 
             </div>
         </div>
-        <input type="submit" name="order" value="Order">
+        <input type="submit" name="add_to_cart" value="Add">
 
     </form>
 <script>

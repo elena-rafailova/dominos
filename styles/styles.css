@@ -32,3 +32,7 @@ td,th {
     width: 10px;
     white-space: nowrap;
 }
+
+.shopping_cart_img {
+    width: 50px;
+}
