@@ -1,5 +1,9 @@
 <?php
 include_once "main.php";
+
+if(!isset($cities)) {
+    header("Location : index.php?target=address&action=add");
+}
 ?>
 
 <h4>Add a new address</h4>
@@ -14,10 +18,10 @@ include_once "main.php";
         <input type="number" min="0" max="999" name="street_number" required /><br>
         <label>CITY *</label><br>
         <select name="city" required>
-            <option value="" selected disabled hidden>Choose here</option>
-            <option value="1">Sofia</option>
-            <option value="2">Plovdiv</option>
-            <option value="3">Varna</option>
+           <option value='' selected disabled hidden>Choose here</option>
+            <?php foreach($cities as $city) {
+            echo "<option value='$city->id'>$city->name</option>";
+            }?>
         </select><br>
         <label >PHONE NUMBER *</label><br>
         <input type="tel" name="phone_number"  minlength="9" maxlength="15" required   /><br>

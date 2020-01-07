@@ -76,9 +76,6 @@ function edit()
     //todo try catch for DAO
     $userDAO = new UserDAO();
     if (isset($_POST['edit'])) {
-        if (!isset($_SESSION["logged_user"])) {
-            header("Location: index.php");
-        }
         if (isset($_POST['first_name']) && isset($_POST['last_name'])) {
             $password=json_decode($_SESSION['logged_user'])->password;
             if(isset($_POST['password']) && !empty($_POST['password'])) {
@@ -283,7 +280,7 @@ function changePassword() {
     }
 }
 
-    public function deliveryMethod() {
+function deliveryMethod() {
         if (isset($_POST["resId"])) {
             $_SESSION["carry_out"] = $_POST["resId"];
         }
@@ -291,5 +288,15 @@ function changePassword() {
             $_SESSION["delivery"] = $_POST["addrId"];
         }
     }
+
+function showOrders() {
+    //todo try catch
+    $user_id = json_decode($_SESSION['logged_user'])->id;
+    $userDAO = new UserDAO();
+    $orders = $userDAO->getOrders($user_id);
+    include_once "view/orders.php";
+
+}
+
 }
 

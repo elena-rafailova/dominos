@@ -18,9 +18,11 @@ echo $user->first_name."<br>";
 <ul id="buttons">
     <li><a href="index.php?target=user&action=edit"><button>My Profile (edit) </button></a></li>
     <li><a href="index.php?target=address&action=show"><button>My Addresses</button></a></li>
+    <li><a href="index.php?target=user&action=showOrders"><button>My Orders</button></a></li>
     <li><a href="index.php?target=user&action=logout"><button>Logout</button></a></li>
 </ul>
 <br><br>
+
 
 <script src="view/js/map.js"></script>
 <script src="view/js/pizzas-view.js"></script>
