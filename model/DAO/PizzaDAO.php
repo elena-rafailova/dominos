@@ -37,7 +37,7 @@ class PizzaDAO extends BaseDAO {
             $ingredients = $this->getIngredients($row["id"]);
             $pizzas[] = new Pizza($row["id"], $row["name"],
                                   $row["img_url"], $row["modified"],
-                                  $ingredients, 0, $row["category"]);
+                                  $ingredients, $row["category"]);
         }
 
         return $pizzas;

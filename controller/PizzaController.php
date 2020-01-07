@@ -7,10 +7,7 @@ use model\DAO\DoughDAO;
 use model\DAO\IngredientDAO;
 use model\DAO\PizzaDAO;
 use model\DAO\SizeDAO;
-use model\Dough;
 use model\Ingredient;
-use model\Pizza;
-use model\Size;
 
 class PizzaController
 {
@@ -83,11 +80,11 @@ class PizzaController
 
     function getPizzasInfo() {
         $pizzaDAO = new PizzaDAO();
-        if (!isset($_GET["category"])) {
+        if (!isset($_GET["filter"])) {
             $pizzas = $pizzaDAO->getAll();
         } else {
-            $category = $_GET["category"];
-            $pizzas = $pizzaDAO->getAll($category);
+            $filter = $_GET["filter"];
+            $pizzas = $pizzaDAO->getAll($filter);
         }
         echo json_encode($pizzas, JSON_UNESCAPED_UNICODE);
     }

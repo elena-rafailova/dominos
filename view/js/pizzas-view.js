@@ -1,4 +1,4 @@
-function getPizzas(category) {
+function getPizzas(filter) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -46,7 +46,7 @@ function getPizzas(category) {
         }
     };
 
-    xhttp.open("GET", "index.php?target=pizza&action=getPizzasInfo&category=" + category, true);
+    xhttp.open("GET", "index.php?target=pizza&action=getPizzasInfo&filter=" + filter, true);
     xhttp.send();
 }
 

@@ -19,53 +19,23 @@ use model\Size;
 use model\Dough;
 
 
-class Pizza implements \JsonSerializable
-{
-    private $id;
-    private $name;
-    private $img_url;
+class Pizza extends Product implements \JsonSerializable {
     private $modified;
-    private $price;
     private $ingredients;
+
     /** @var Dough $dough */
     private $dough;
+
     /** @var Size $size */
     private $size;
-    private $category;
-    private $quantity;
 
-    public function __construct($id, $name, $img_url, $modified, $ingredients, $category = 0, $dough = null, $size = null, $quantity = null) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->img_url = $img_url;
+    public function __construct($id, $name, $img_url, $modified, $ingredients, $filter = 0, $dough = null, $size = null, $quantity = null, $price = 0) {
+
+        parent::__construct($id, $name, $img_url, $price, $quantity, $filter);
         $this->modified = $modified;
         $this->ingredients = $ingredients;
-        $this->category = $category;
         $this->dough = $dough;
         $this->size = $size;
-        $this->quantity = $quantity;
-    }
-
-    static function getAllPizzas($category = null) {
-        $pizzaDAO = new PizzaDAO();
-
-        return $pizzaDAO->getAll($category);
-    }
-
-    public function getName() {
-        return $this->name;
-    }
-
-    public function getPrice() {
-        return $this->price;
-    }
-
-    public function getCategory() {
-        return $this->category;
-    }
-
-    public function getImg_url() {
-        return $this->img_url;
     }
 
     public function getDough()
@@ -91,31 +61,6 @@ class Pizza implements \JsonSerializable
         return $ingredientsNames;
     }
 
-    function getId() {
-        return $this->id;
-    }
-
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
-
-
-    public function setPrice($price) {
-        $this->price = $price;
-    }
-
-
-    static public function getPizzaById($id) {
-        $pizzaDAO =  new PizzaDAO();
-        return $pizzaDAO->getPizza($id);
-    }
-
-    public function setId($id): void
-    {
-        $this->id = $id;
-    }
-
     public function setIngredients($ingredients) {
         $this->ingredients = $ingredients;
     }
@@ -128,9 +73,6 @@ class Pizza implements \JsonSerializable
         $this->size = new Size($id);
     }
 
-    public function setQuantity($quantity) {
-        $this->quantity = $quantity;
-    }
 
     public function jsonSerialize() {
         return get_object_vars($this);
