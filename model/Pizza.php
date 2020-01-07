@@ -18,6 +18,9 @@ use model\DAO\PizzaDAO;
 use model\Size;
 use model\Dough;
 
+define("MODIFIED", 1);
+define("NOT_MODIFIED", 0);
+
 
 class Pizza extends Product implements \JsonSerializable {
     private $modified;
@@ -76,5 +79,18 @@ class Pizza extends Product implements \JsonSerializable {
 
     public function jsonSerialize() {
         return get_object_vars($this);
+    }
+
+
+    public function getModified() {
+        return $this->modified;
+    }
+
+    public function setModified($modified) {
+        if ($modified) {
+            $this->modified = MODIFIED;
+        } else {
+            $this->modified = NOT_MODIFIED;
+        }
     }
 }

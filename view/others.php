@@ -72,7 +72,7 @@ if(isset($_GET['category_id'])) {
 
         echo "<input type='button' onclick='getOptions(category_id, this.id);' id='$other->id.choose' value='Choose' name='choose'>";
 
-        echo "<form id='$other->id.order' style='display: none' action='index.php?target=order&action=finish' method='post'>";
+        echo "<form id='$other->id.order' style='display: none' action='index.php?target=cart&action=addToCart' method='post'>";
         echo "<input type='hidden' id='$other->id.id' name='other_id' value='$other->id'>";
         echo "<input type='hidden' id='$other->id.category_id' name='category_id' value='$category_id'>";
                 if($category_id == 8) {

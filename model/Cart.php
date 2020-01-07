@@ -4,7 +4,7 @@
 namespace model;
 
 
-class Cart {
+class Cart implements \JsonSerializable {
     private $products;
     private $price = 0;
 
@@ -31,6 +31,7 @@ class Cart {
         foreach ($this->products as $key=>$prod) {
             if ($prod == $product) {
                 unset($this->products[$key]);
+                $this->price -= $product->getPrice();
                 return;
             }
         }
@@ -38,5 +39,9 @@ class Cart {
 
     public function isCartEmpty() {
         return empty($this->products);
+    }
+
+    public function jsonSerialize() {
+        return get_object_vars($this);
     }
 }

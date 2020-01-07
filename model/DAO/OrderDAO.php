@@ -15,7 +15,7 @@ class OrderDAO extends BaseDAO {
         $pdo = parent::getPDO();
         try {
             $pdo->beginTransaction();
-
+            var_dump("1");
             $values = [];
             $values[] = $order->getUserId();
             $values[] = $order->getComment();
@@ -29,12 +29,14 @@ class OrderDAO extends BaseDAO {
 
             $stmt = $pdo->prepare($sql);
             $stmt->execute($values);
+            var_dump("2");
 
             $orderId = $pdo->lastInsertId();
 
-            /** @var Pizza $item */
             foreach ($order->getItems() as $item) {
-                if(method_exists($item, "getSize")) {
+                /** @var Pizza $item */
+                if($item instanceof Pizza) {
+                    var_dump("3");
                     $itemValues = [];
                     $itemValues[] = $orderId;
                     $itemValues[] = $item->getId();
@@ -45,7 +47,8 @@ class OrderDAO extends BaseDAO {
                     $sql1 = "INSERT INTO orders_have_pizzas(order_id, pizza_id, quantity, size_id, dough_id) VALUES (?, ?, ?, ?, ?)";
                     $stmt1 = $pdo->prepare($sql1);
                     $stmt1->execute($itemValues);
-                } else  {
+                } else if ($item instanceof Others) {
+                    var_dump("4");
                     $itemValues = [];
                     $itemValues[] = $orderId;
                     $itemValues[] = $item->getId();
@@ -56,6 +59,7 @@ class OrderDAO extends BaseDAO {
                 }
             }
 
+            var_dump("5");
             $pdo->commit();
         }catch (PDOException $e) {
             $pdo->rollBack();
