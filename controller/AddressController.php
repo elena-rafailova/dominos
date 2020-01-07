@@ -34,11 +34,13 @@ function add () {
                 //todo try catch
                 $addressDAO = new AddressDAO();
                 $addressDAO->add($address, $user_id);
-
                 header("Location: index.php?target=address&action=show");
             }
         }
     } else {
+        //todo try catch
+        $addressDAO = new AddressDAO();
+        $cities= $addressDAO->getCities();
         include_once "view/add_address.php";
     }
 }

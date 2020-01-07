@@ -43,14 +43,7 @@ if (!isset($addresses)) {
                            required/><br>
                     <label>CITY *</label><br>
                     <select name="city" readonly>
-                        <option value="<?= $address->city_id ?>">
-                            <?php if ($address->city_id == 1) {
-                                echo "Sofia";
-                            } elseif ($address->city_id == 2) {
-                                echo "Plovdiv";
-                            } else {
-                                echo "Varna";
-                            } ?></option>
+                        <option value="<?= $address->city_id ?>"><?=$address->city_name ?></option>
                     </select><br>
                     <label>PHONE NUMBER *</label><br>
                     <input type="tel" name="phone_number" minlength="9" maxlength="15"
@@ -82,36 +75,53 @@ if (!isset($addresses)) {
             }
         }
     }
-        if(!isset($_GET['id'])) {
+        if(!isset($_GET['id']) && $addresses) {
             ?>
             <form id="edit_address" method="post" action="">
                 <label>ADDRESS NAME</label><br>
-                <input type="text" name="name" placeholder="e.g: Home"  maxlength="40" /><br>
+                <input type="text" name="name" placeholder="e.g: Home" maxlength="40"
+                       value="<?= $addresses[0]->name ?>"/><br>
                 <label>STREET NAME *</label><br>
-                <input type="text" name="street_name"  maxlength="40" required /><br>
+                <input type="text" name="street_name" maxlength="40"
+                       value="<?= htmlspecialchars($addresses[0]->street_name) ?>" required/><br>
                 <label>STREET NUMBER *</label><br>
-                <input type="number" name="street_number" min="0" max="999"  required /><br>
+                <input type="number" name="street_number" min="0" max="999" value="<?= $addresses[0]->street_number ?>"
+                       required/><br>
                 <label>CITY *</label><br>
-                <select name="city"  required>
-                    <option value="" selected disabled hidden>Choose here</option>
-                    <option value="1">Sofia</option>
-                    <option value="2">Plovdiv</option>
-                    <option value="3">Varna</option>
+                <select name="city" readonly>
+                    <option value="<?= $addresses[0]->city_id ?>"><?=$addresses[0]->city_name ?></option>
                 </select><br>
-                <label >PHONE NUMBER *</label><br>
-                <input type="tel" name="phone_number"  minlength="9" maxlength="15" required   /><br>
+                <label>PHONE NUMBER *</label><br>
+                <input type="tel" name="phone_number" minlength="9" maxlength="15"
+                       value="<?= $addresses[0]->phone_number ?>" required/><br>
                 <label>FLOOR</label><br>
-                <input type="number" name="floor" min="0" max="999" /><br>
+                <input type="number" name="floor" min="0" max="999" value="<?= $addresses[0]->floor ?>"/><br>
                 <label>BUILDING NUMBER</label><br>
-                <input type="text" name="building_number"  maxlength="6" /><br>
+                <input type="text" name="building_number" maxlength="6"
+                       value="<?= $addresses[0]->building_number ?>"/><br>
                 <label>APARTMENT NUMBER</label><br>
-                <input type="text" name="apartment_number"  maxlength="6" /><br>
+                <input type="text" name="apartment_number" maxlength="6" value="<?= $addresses[0]->apartment_number ?>"/><br>
                 <label>ENTRANCE</label><br>
-                <input type="text" name="entrance"  maxlength="6"  /><br><br>
-
+                <input type="text" name="entrance" maxlength="6" value="<?= $addresses[0]->entrance ?>"/><br><br>
+                <input type="hidden" name="id" value="<?= $addresses[0]->id ?>"/>
+                <div style="float: left ;width: 30%; margin-right: 8px;">
+                    <img src="uploads/green_check.svg" width="30px" height="30px" alt="Change"/><br>
+                    <input type="submit" onclick="submitForm('index.php?target=address&action=change')"
+                           value="Change"
+                           name="change">
+                </div>
+                <div style="float: left; width: 30%;">
+                    <img src="uploads/delete_cross.svg" width="30px" height="30px" alt="Delete"/><br>
+                    <input type="submit" onclick="submitForm('index.php?target=address&action=delete')"
+                           value="Delete"
+                           name="delete">
+                </div>
             </form>
+
     <?php
-    }
+    } else {
+
+        }
     ?>
 </div>
 

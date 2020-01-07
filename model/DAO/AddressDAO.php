@@ -40,7 +40,8 @@ class AddressDAO extends BaseDAO {
 
     function get($user_id) {
         $pdo = parent::getPDO();
-        $sql ="SELECT * FROM addresses as a JOIN users_have_addresses as uha ON a.id = uha.address_id
+        $sql ="SELECT a.id,a.phone_number,a.city_id,c.name AS city_name,a.name,a.street_name,a.street_number,a.building_number,a.entrance,a.floor,a.apartment_number
+ FROM addresses as a JOIN users_have_addresses as uha ON a.id = uha.address_id JOIN cities AS c ON (c.id=a.city_id)
                         WHERE uha.user_id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$user_id]);
@@ -81,7 +82,8 @@ class AddressDAO extends BaseDAO {
             //CHANGED FK in DB to be ON DELETE CASCADE in uha - address_id
             $pdo = parent::getPDO();
             $pdo->beginTransaction();
-            $sql = "DELETE FROM addresses WHERE id= ?";
+            $sql = "UPDATE addresses SET phone_number = NULL,name=NULL,street_name=NULL,street_number=NULL,building_number=NULL,
+                     entrance=NULL,floor=NULL,apartment_number=NULL WHERE id= ?";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([$id]);
             $sql2="DELETE FROM users_have_addresses WHERE address_id =?";
@@ -94,6 +96,19 @@ class AddressDAO extends BaseDAO {
         catch (PDOException $e) {
             $pdo->rollBack();
             throw $e;
+        }
+    }
+
+    function getCities() {
+        $pdo = parent::getPDO();
+        $sql ="SELECT * FROM cities;";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_OBJ);
+        if (empty($rows)) {
+            return false;
+        } else {
+            return $rows;
         }
     }
 }
