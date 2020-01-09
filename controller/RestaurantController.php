@@ -12,7 +12,6 @@ class RestaurantController
     }
 
     function getRestaurants() {
-        //todo try catch
         $restaurantDAO= new RestaurantDAO();
         $restaurants = $restaurantDAO->getAll();
         echo json_encode($restaurants, JSON_UNESCAPED_UNICODE);

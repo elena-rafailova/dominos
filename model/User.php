@@ -12,7 +12,8 @@ class User implements \JsonSerializable
     private $email;
     private $password;
 
-   public function __construct($first_name,$last_name,$email,$password) {
+   public function __construct($id=null,$first_name,$last_name,$email,$password=null) {
+       $this->id = $id;
        $this->first_name = $first_name;
        $this->last_name  = $last_name;
        $this->email      = $email;
@@ -46,11 +47,6 @@ class User implements \JsonSerializable
     public function getPassword()
     {
         return $this->password;
-    }
-
-    public function setPassword($password): void
-    {
-        $this->password = $password;
     }
 
     public function jsonSerialize()

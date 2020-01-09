@@ -3,6 +3,7 @@
 
 namespace controller;
 
+use exceptions\AuthorizationException;
 use model\Cart;
 use model\DAO\UserDAO;
 use model\User;
@@ -17,7 +18,6 @@ class UserController
     function register()
     {
         include_once "view/register.php";
-        //todo try catch for DAO
         $userDAO = new UserDAO();
         if (isset($_POST["register"])) {
             if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email'])
@@ -32,6 +32,7 @@ class UserController
                     header("Location: index.php?target=user&action=register");
                 } else {
                     $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
+                    /** @var User $user */
                     $user = new User($_POST["first_name"], $_POST["last_name"], $_POST["email"], $password);
                     $userDAO->addUser($user);
                     $_SESSION["logged_user"] = json_encode($user);
@@ -46,7 +47,6 @@ class UserController
     function login()
     {
         include_once "view/login.php";
-        //todo try catch for DAO
         $userDAO = new UserDAO();
 
         if (isset($_POST['login'])) {
@@ -55,16 +55,19 @@ class UserController
                 $password = $_POST['password'];
                 $userObj = $userDAO->checkUser($email);
                 if (!$userObj) {
-                    echo "Invalid password or email! Try again.";
+                throw  new AuthorizationException("purvo vlizam tuk Invalid password or email! Try again.");
+                   // echo "Invalid password or email! Try again.";
                 } else {
-                    if (password_verify($password, $userObj->password)) {
+                    if (password_verify($password, $userObj->getPassword())) {
+                        /** @var User $user */
                         $user = json_encode($userObj);
                         $_SESSION['logged_user'] = $user;
                         $_SESSION["cart"] = new Cart();
                         echo "Successful login! <br>";
                         header("Location: index.php?target=pizza&action=showAll");
                     } else {
-                        echo 'Invalid email or password.Try again.';
+                        throw new AuthorizationException("posle tuk Invalid password or email! Try again.");
+                       // echo 'Invalid email or password.Try again.';
                     }
                 }
             }
@@ -74,7 +77,6 @@ class UserController
     function edit()
     {
         include_once "view/edit.php";
-        //todo try catch for DAO
         $userDAO = new UserDAO();
         if (isset($_POST['edit'])) {
             if (isset($_POST['first_name']) && isset($_POST['last_name'])) {
@@ -192,7 +194,6 @@ class UserController
     {
         $msg = '';
         include_once "view/forgot_password.php";
-        //todo try catch for DAO
         $userDAO = new UserDAO();
         if (isset($_POST['forgot_password'])) {
             if (isset($_POST['email'])) {
@@ -204,7 +205,7 @@ class UserController
                     if (!$user) {
                         $msg .= "User with that email doesn't exist! <br>";
                     } else {
-                        $user_id = $user->id;
+                        $user_id = $user->getId();
                         $token = bin2hex(random_bytes(50));
                         $expFormat = mktime(
                             date("H") + 1, date("i"), date("s"), date("m"), date("d"), date("Y"));
@@ -224,7 +225,6 @@ class UserController
     function resetPassword()
     {
         //from email
-        //todo try catch for DAO
         $userDAO = new UserDAO();
         if (isset($_GET['token'])) {
             $token = $_GET['token'];
@@ -251,7 +251,6 @@ class UserController
 
     function changePassword()
     {
-        //todo try catch for DAO
         $userDAO = new UserDAO();
         if (isset($_POST['change_password'])) {
             $password = $_POST['new_password'];
@@ -290,16 +289,6 @@ class UserController
         if (isset($_POST["addrId"])) {
             $_SESSION["delivery"] = $_POST["addrId"];
         }
-    }
-
-    function showOrders()
-    {
-        //todo try catch
-        $user_id = json_decode($_SESSION['logged_user'])->id;
-        $userDAO = new UserDAO();
-        $orders = $userDAO->getOrders($user_id);
-        include_once "view/orders.php";
-
     }
 
 }

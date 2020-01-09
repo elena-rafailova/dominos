@@ -1,4 +1,5 @@
 <?php
+use model\City;
 include_once "main.php";
 
 if(!isset($cities)) {
@@ -19,8 +20,9 @@ if(!isset($cities)) {
         <label>CITY *</label><br>
         <select name="city" required>
            <option value='' selected disabled hidden>Choose here</option>
-            <?php foreach($cities as $city) {
-            echo "<option value='$city->id'>$city->name</option>";
+            <?php /** @var City $city */
+            foreach($cities as $city) {
+            echo "<option value='".$city->getId()."'>".$city->getName()."</option>";
             }?>
         </select><br>
         <label >PHONE NUMBER *</label><br>

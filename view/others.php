@@ -60,7 +60,7 @@ if(isset($_GET['category_id'])) {
 } ?>
 <table id="others">
 <?php
- /** @var Other $other $other */
+ /** @var Other $other */
 foreach ($others as $other) {
         echo "<tr>";
         echo "<td><img src='".$other->getImgUrl()."' /><br>";
