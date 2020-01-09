@@ -56,4 +56,16 @@ class OrderController {
         }
 
     }
+
+    function showOrders()
+    {
+        $user_id = json_decode($_SESSION['logged_user'])->id;
+        $orderDAO = new OrderDAO();
+        $orders = $orderDAO->getOrders($user_id);
+        $counts = array_count_values(array_column($orders, "id"));
+        $result = [];
+        foreach ($orders as $order) {
+
+        }
+        include_once "view/orders.php";
 }

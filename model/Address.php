@@ -16,7 +16,6 @@ class Address implements \JsonSerializable
     private $entrance;
     private $floor;
     private $apartment_number;
-    private $date_created;
     private $latitude;
     private $longitude;
 

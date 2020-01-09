@@ -61,4 +61,23 @@ class OrderDAO extends BaseDAO {
             throw $e;
         }
     }
+
+    function getOrders($user_id) {
+        $pdo = parent::getPDO();
+        $sql ="SELECT ord.id, ord.date_created, ord.total_price, IF(ohp.order_id= ord.id, p.name, NULL) AS product
+                FROM orders AS ord JOIN orders_have_pizzas AS ohp
+                ON (ord.id = ohp.order_id) JOIN pizzas as p ON (ohp.pizza_id = p.id) WHERE ord.user_id = ?
+                UNION 
+                SELECT ord.id,ord.date_created, ord.total_price, IF(oho.order_id= ord.id, o.name, NULL) AS product
+                FROM orders AS ord JOIN orders_have_others AS oho
+                ON (ord.id = oho.order_id) JOIN others as o ON (oho.other_id = o.id) WHERE ord.user_id  = ?;";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$user_id, $user_id]);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if (empty($rows)) {
+            return false;
+        } else {
+            return $rows;
+        }
+    }
 }

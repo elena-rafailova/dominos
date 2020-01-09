@@ -3,10 +3,12 @@
 namespace model\DAO;
 
 use model\Address;
+use model\City;
 use PDO;
 use PDOException;
 
 class AddressDAO extends BaseDAO {
+
     function add(Address $address, $user_id){
         $phone_number = $address->getPhoneNumber();
         $city_id  = $address->getCityId();
@@ -40,16 +42,17 @@ class AddressDAO extends BaseDAO {
 
     function get($user_id) {
         $pdo = parent::getPDO();
-        $sql ="SELECT a.id,a.phone_number,a.city_id,c.name AS city_name,a.name,a.street_name,a.street_number,a.building_number,a.entrance,a.floor,a.apartment_number
- FROM addresses as a JOIN users_have_addresses as uha ON a.id = uha.address_id JOIN cities AS c ON (c.id=a.city_id)
-                        WHERE uha.user_id = ?";
+        $sql ="SELECT a.id,a.phone_number,a.city_id,c.name AS city_name,a.name,a.street_name,
+                a.street_number, a.building_number,a.entrance,a.floor,a.apartment_number
+                FROM addresses as a JOIN users_have_addresses as uha ON a.id = uha.address_id
+                JOIN cities AS c ON (c.id=a.city_id)
+                WHERE uha.user_id = ? ;";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$user_id]);
         $rows = $stmt->fetchAll(PDO::FETCH_OBJ);
         if (empty($rows)) {
             return false;
         } else {
-            //todo make $rows = new Address()
             return $rows;
         }
     }
@@ -66,9 +69,9 @@ class AddressDAO extends BaseDAO {
         $apartment_number   = $address->getApartmentNumber();
 
         $pdo = parent::getPDO();
-        $sql = "UPDATE addresses SET phone_number=?, city_id=? , name=?, street_name=?, street_number=?, building_number=?,
-                entrance=?, floor=?, apartment_number=?
-               WHERE id= ?";
+        $sql = "UPDATE addresses SET phone_number=?, city_id=? , name=?, street_name=?, street_number=?,
+                building_number=?, entrance=?, floor=?, apartment_number=?
+                WHERE id= ? ;";
         $stmt = $pdo->prepare($sql);
         $stmt->execute(array($phone_number, $city_id, $name, $street_name, $street_number, $building_number, $entrance, $floor, $apartment_number, $id));
         return true;
@@ -76,17 +79,14 @@ class AddressDAO extends BaseDAO {
 
     function delete($id){
         try {
-            //DELETE addresses, users_have_addresses FROM addresses
-            // JOIN users_have_addresses ON addresses.id=users_have_addresses.address_id WHERE addresses.id=?;
-            //
             //CHANGED FK in DB to be ON DELETE CASCADE in uha - address_id
             $pdo = parent::getPDO();
             $pdo->beginTransaction();
             $sql = "UPDATE addresses SET phone_number = NULL,name=NULL,street_name=NULL,street_number=NULL,building_number=NULL,
-                     entrance=NULL,floor=NULL,apartment_number=NULL WHERE id= ?";
+                     entrance=NULL,floor=NULL,apartment_number=NULL WHERE id= ? ;";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([$id]);
-            $sql2="DELETE FROM users_have_addresses WHERE address_id =?";
+            $sql2="DELETE FROM users_have_addresses WHERE address_id =? ;";
             $stmt2= $pdo->prepare($sql2);
             $stmt2->execute([$id]);
 
@@ -101,14 +101,18 @@ class AddressDAO extends BaseDAO {
 
     function getCities() {
         $pdo = parent::getPDO();
-        $sql ="SELECT * FROM cities;";
+        $sql ="SELECT id,name FROM cities ;";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
-        $rows = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $cities = [];
+        foreach ($rows as $row) {
+            $cities[] = new City($row["id"], $row["name"]);
+        }
         if (empty($rows)) {
             return false;
         } else {
-            return $rows;
+            return $cities;
         }
     }
 }

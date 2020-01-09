@@ -5,6 +5,7 @@ namespace controller;
 
 use model\Address;
 use model\DAO\AddressDAO;
+use model\DAO\CityDAO;
 
 class AddressController
 {
@@ -31,14 +32,12 @@ function add () {
             } else {
                 $address = new Address($phone_number, $city, $name, $street_name, $street_number, $building_number, $entrance, $floor, $apartment_number);
                 $user_id = json_decode($_SESSION['logged_user'])->id;
-                //todo try catch
                 $addressDAO = new AddressDAO();
                 $addressDAO->add($address, $user_id);
                 header("Location: index.php?target=address&action=show");
             }
         }
     } else {
-        //todo try catch
         $addressDAO = new AddressDAO();
         $cities= $addressDAO->getCities();
         include_once "view/add_address.php";
@@ -70,7 +69,6 @@ function change()
             } else {
                 $id = $_POST['id'];
                 $address = new Address($phone_number, $city, $name, $street_name, $street_number, $building_number, $entrance, $floor, $apartment_number);
-                //todo try catch
                 $addressDAO = new AddressDAO();
                 $addressDAO->change($address, $id);
 
@@ -81,7 +79,6 @@ function change()
 }
 
 function delete(){
-    //todo try catch
     $addressDAO = new AddressDAO();
     if(isset($_POST['delete'])){
         $id = $_POST['id'];
@@ -91,7 +88,6 @@ function delete(){
 }
 
 function show() {
-    //todo try catch
     $user_id = json_decode($_SESSION['logged_user'])->id;
     $addressDAO = new AddressDAO();
     $addresses = $addressDAO->get($user_id);
@@ -99,7 +95,6 @@ function show() {
 }
 
 function getAddresses() {
-    //todo try catch
     $user_id = json_decode($_SESSION['logged_user'])->id;
     $addressDAO = new AddressDAO();
     $addresses = $addressDAO->get($user_id);
