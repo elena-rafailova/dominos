@@ -17,6 +17,7 @@ $fileNotFoundFlag = false;
 $controllerName = isset($_GET["target"]) ? $_GET["target"] : "base";
 $methodName     = isset($_GET["action"]) ? $_GET["action"] : "baseFunc";
 
+//TODO ExceptionHandler
 //$view           = isset($_GET["view"]) ? $_GET["view"] : "main";
 
 $controllerClassName = "\\controller\\" . ucfirst($controllerName) . "Controller";

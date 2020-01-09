@@ -5,7 +5,7 @@ namespace Controller;
 
 
 use model\DAO\IngredientDAO;
-use model\DAO\OthersDAO;
+use model\DAO\OtherDAO;
 use model\DAO\PizzaDAO;
 
 
@@ -69,11 +69,8 @@ class CartController {
                 $id = $_POST["other_id"];
                 $category_id = $_POST["category_id"];
 
-                $user = json_decode($_SESSION['logged_user']);
-                $id = $_POST["other_id"];
-                $category_id = $_POST["category_id"];
-                $othersDAO = new OthersDAO();
-                $other = $othersDAO->getOther($_POST["other_id"], $_POST["category_id"]);
+                $otherDAO = new OtherDAO();
+                $other = $otherDAO->getOther($_POST["other_id"], $_POST["category_id"]);
 
                 if (isset($_POST["quantity"]) && $_POST["quantity"] >= MIN_QUANTITY && $_POST["quantity"] <= MAX_QUANTITY) {
                     $other->setQuantity($_POST["quantity"]);
@@ -82,17 +79,21 @@ class CartController {
                     die();
                 }
 
-                if ($category_id == 8 && isset($_POST["size"])) {
-                    $price_for_one = $_POST["size"];
+                if ($category_id == 8 && isset($_POST["drink_size"])) {
+                    $price_for_one = $_POST["drink_size"];
                 } else {
                     $price_for_one = $other->getPrice();
                 }
-                $other->setPrice($price_for_one);
+                $other->setPrice($price_for_one * $_POST["quantity"]);
 
                 $_SESSION["cart"]->addProduct($other);
                 header("Location: index.php?target=cart&action=seeCart");
                 die();
-            }
+            }else {
+                    //ToDo error
+                    //header("Location: index.php?target=pizza&action=showAll");
+                    die();
+                }
         }
     }
 }

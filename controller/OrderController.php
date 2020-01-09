@@ -5,7 +5,7 @@ namespace controller;
 use model\Cart;
 use model\DAO\IngredientDAO;
 use model\DAO\OrderDAO;
-use model\DAO\OthersDAO;
+use model\DAO\OtherDAO;
 use model\DAO\PizzaDAO;
 use model\Dough;
 use model\Ingredient;
@@ -154,7 +154,7 @@ class OrderController {
 //                $id= $_POST["other_id"];
 //                $category_id = $_POST["category_id"];
 //                //todo try catch
-//                $othersDAO = new OthersDAO();
+//                $othersDAO = new OtherDAO();
 //                $other = $othersDAO->getOther($_POST["other_id"],$_POST["category_id"]);
 //
 //                if (isset($_POST["quantity"]) && $_POST["quantity"] >= MIN_QUANTITY && $_POST["quantity"] <= MAX_QUANTITY) {
