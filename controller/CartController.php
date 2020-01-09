@@ -61,19 +61,15 @@ class CartController {
                     die();
                 } else {
                     //ToDo error
-                    //header("Location: index.php?target=pizza&action=showAll");
+                    header("Location: index.php?target=pizza&action=showAll");
                     die();
                 }
             } else if (isset($_POST["other_id"]) && isset($_POST["category_id"])) {
-                $user = json_decode($_SESSION['logged_user']);
                 $id = $_POST["other_id"];
                 $category_id = $_POST["category_id"];
 
-                $user = json_decode($_SESSION['logged_user']);
-                $id = $_POST["other_id"];
-                $category_id = $_POST["category_id"];
                 $othersDAO = new OthersDAO();
-                $other = $othersDAO->getOther($_POST["other_id"], $_POST["category_id"]);
+                $other = $othersDAO->getOther($_POST[$id], $_POST[$category_id]);
 
                 if (isset($_POST["quantity"]) && $_POST["quantity"] >= MIN_QUANTITY && $_POST["quantity"] <= MAX_QUANTITY) {
                     $other->setQuantity($_POST["quantity"]);

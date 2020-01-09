@@ -25,8 +25,9 @@ echo $user->first_name."<br>";
 
     <script src="view/js/map.js"></script>
     <script src="view/js/pizzas-view.js"></script>
-    <script src="view/js/others-view.js"></script>
-
+    <script src="view/js/others-view.js">
+        checkCart();
+    </script>
     <div id="shopping_cart">
      <?php if ($_SESSION["cart"]->isCartEmpty()) {
          echo "<a href='index.php?target=cart&action=seeCart'><img class='shopping_cart_img' src='uploads/empty_cart.png'></a>";

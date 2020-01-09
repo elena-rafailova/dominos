@@ -23,3 +23,6 @@ if (!$cart->isCartEmpty()) {
     echo "<h1>Your shopping cart is empty!</h1>";
 }
 
+?>
+
+
