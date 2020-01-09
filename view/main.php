@@ -23,17 +23,15 @@ echo $user->first_name."<br>";
     </ul>
     <br><br>
 
+
+    <div id="shopping_cart_icon">
+        <p id="sess_var"> <?php echo json_encode($_SESSION['cart']); ?></p>
+    </div>
+
     <script src="view/js/map.js"></script>
     <script src="view/js/pizzas-view.js"></script>
-    <script src="view/js/others-view.js">
-        checkCart();
-    </script>
-    <div id="shopping_cart">
-     <?php if ($_SESSION["cart"]->isCartEmpty()) {
-         echo "<a href='index.php?target=cart&action=seeCart'><img class='shopping_cart_img' src='uploads/empty_cart.png'></a>";
-     } else {
-         echo "<a href='index.php?target=cart&action=seeCart'><img class='shopping_cart_img' src='uploads/full_cart.png'></a>";
-     }?>
-    </div>
+    <script src="view/js/others-view.js"></script>
+    <script src="view/js/cart.js"></script>
+    <script>checkCart();</script>
 </body>
 </html>

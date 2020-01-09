@@ -76,11 +76,9 @@ class Pizza extends Product implements \JsonSerializable {
         $this->size = new Size($id);
     }
 
-
     public function jsonSerialize() {
         return get_object_vars($this);
     }
-
 
     public function getModified() {
         return $this->modified;

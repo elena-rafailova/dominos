@@ -8,8 +8,9 @@ class Cart implements \JsonSerializable {
     private $products;
     private $price = 0;
 
-    public function __construct($products = []) {
+    public function __construct($products = [], $price = 0) {
         $this->products = $products;
+        $this->price = $price;
     }
     
     public function getProducts() {
@@ -26,6 +27,19 @@ class Cart implements \JsonSerializable {
         $this->price += $product->getPrice();
     }
 
+    public function decreaseQuantity($key) {
+        $this->products[$key]->subtractOneFromQuantity();
+        $this->price -= $this->products[$key]->getPrice();
+        if ($this->products[$key]->getQuantity() == 0) {
+            $this->removeProduct($this->products[$key]);
+        }
+    }
+
+    public function increaseQuantity($key) {
+        $this->products[$key]->addOneToQuantity();
+        $this->price += $this->products[$key]->getPrice();
+    }
+
     /** @var Product $product */
     public function removeProduct($product) {
         foreach ($this->products as $key=>$prod) {
@@ -38,7 +52,15 @@ class Cart implements \JsonSerializable {
     }
 
     public function isCartEmpty() {
-        return empty($this->products);
+        if (empty($this->products)) {
+            return true;
+        }
+        foreach ($this->products as $product) {
+            if ($product->getQuantity() != 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public function jsonSerialize() {

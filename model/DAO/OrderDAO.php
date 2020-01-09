@@ -2,7 +2,7 @@
 
 namespace model\DAO;
 
-use model\Others;
+use model\Other;
 use model\Pizza;
 use model\Order;
 use PDO;
@@ -44,7 +44,7 @@ class OrderDAO extends BaseDAO {
                     $sql1 = "INSERT INTO orders_have_pizzas(order_id, pizza_id, quantity, size_id, dough_id) VALUES (?, ?, ?, ?, ?)";
                     $stmt1 = $pdo->prepare($sql1);
                     $stmt1->execute($itemValues);
-                } else if ($item instanceof Others) {
+                } else if ($item instanceof Other) {
                     $itemValues = [];
                     $itemValues[] = $orderId;
                     $itemValues[] = $item->getId();

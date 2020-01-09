@@ -13,6 +13,7 @@ function getPizzas(filter) {
                 var br = document.createElement("br");
 
                 var img = document.createElement("img");
+                img.setAttribute("class", "product_img");
                 img.src = pizzas[key]["img_url"];
                 td.appendChild(img);
 

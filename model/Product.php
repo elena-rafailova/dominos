@@ -4,7 +4,7 @@
 namespace model;
 
 
-class Product {
+class Product implements \JsonSerializable {
     protected $id;
     protected $name;
     protected $img_url;
@@ -51,4 +51,15 @@ class Product {
         $this->quantity = $quantity;
     }
 
+    public function addOneToQuantity() {
+        $this->quantity++;
+    }
+
+    public function subtractOneFromQuantity() {
+        $this->quantity--;
+    }
+
+    public function jsonSerialize() {
+        return get_object_vars($this);
+    }
 }
