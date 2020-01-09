@@ -68,4 +68,5 @@ class OrderController {
 
         }
         include_once "view/orders.php";
+    }
 }

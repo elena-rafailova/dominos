@@ -4,6 +4,8 @@
 namespace controller;
 
 use exceptions\AuthorizationException;
+use exceptions\BadRequestException;
+use exceptions\NotFoundException;
 use model\Cart;
 use model\DAO\UserDAO;
 use model\User;
@@ -25,11 +27,9 @@ class UserController
                 $msg = $this->validationOfInput($_POST['first_name'], $_POST['last_name'], $_POST['email'],
                     $_POST['password'], $_POST['verify_password']);
                 if ($userDAO->checkUser($_POST["email"])) {
-                    echo "User with that email already exists";
-                    header("Location: index.php?target=user&action=register");
+                    throw new BadRequestException( "User with that email already exists");
                 } elseif ($msg != '') {
-                    echo $msg;
-                    header("Location: index.php?target=user&action=register");
+                    throw new BadRequestException("$msg");
                 } else {
                     $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
                     /** @var User $user */
@@ -37,7 +37,7 @@ class UserController
                     $userDAO->addUser($user);
                     $_SESSION["logged_user"] = json_encode($user);
                     $_SESSION["cart"] = new Cart();
-                    echo "Successful registration. <br>";
+                    //echo "Successful registration. <br>";
                     header("Location: index.php?target=pizza&action=showAll");
                 }
             }
@@ -55,8 +55,7 @@ class UserController
                 $password = $_POST['password'];
                 $userObj = $userDAO->checkUser($email);
                 if (!$userObj) {
-                throw  new AuthorizationException("purvo vlizam tuk Invalid password or email! Try again.");
-                   // echo "Invalid password or email! Try again.";
+                throw  new AuthorizationException("Invalid password or email! Try again.");
                 } else {
                     if (password_verify($password, $userObj->getPassword())) {
                         /** @var User $user */
@@ -66,8 +65,7 @@ class UserController
                         echo "Successful login! <br>";
                         header("Location: index.php?target=pizza&action=showAll");
                     } else {
-                        throw new AuthorizationException("posle tuk Invalid password or email! Try again.");
-                       // echo 'Invalid email or password.Try again.';
+                        throw new AuthorizationException("Invalid password or email! Try again.");
                     }
                 }
             }
@@ -87,8 +85,7 @@ class UserController
                             $msg = $this->validationOfInput($_POST['first_name'], $_POST['last_name'], $_POST['email'],
                                 $_POST['new_password'], $_POST['verify_password']);
                             if ($msg != '') {
-                                echo $msg;
-                                //header("Location: index.php?target=pizza");
+                                throw new BadRequestException("$msg");
                             } else {
                                 $password = password_hash($_POST['new_password'], PASSWORD_BCRYPT);
                                 $email = json_decode($_SESSION['logged_user'])->email;
@@ -100,14 +97,12 @@ class UserController
                             }
                         }
                     } else {
-                        echo "The current password you've entered is wrong!";
-                        //header("Location: index.php?target=pizza&action=showAll");
+                        throw new BadRequestException("The current password you've entered is wrong!");
                     }
                 } else {
                     $msg = $this->validationOfInput($_POST['first_name'], $_POST['last_name'], $_POST['email']);
                     if ($msg != '') {
-                        echo $msg;
-                        //header("Location: index.php?target=pizza&action=showAll");
+                        throw new BadRequestException("$msg");
                     } else {
                         $email = json_decode($_SESSION['logged_user'])->email;
                         $user = new User($_POST["first_name"], $_POST["last_name"], $email, $password);
@@ -115,7 +110,6 @@ class UserController
                         $userDAO->editUser($user);
                         $_SESSION['logged_user'] = json_encode($user);
                         echo "Profile changed successfully. <br>";
-                        //header("Location: index.php?target=pizza&action=showAll");
                     }
                 }
             }
@@ -126,7 +120,7 @@ class UserController
     {
         unset($_SESSION);
         session_destroy();
-        header("Location: index.php?view=login");
+        header("Location: index.php?target=user&action=login");
         exit;
     }
 
@@ -188,6 +182,9 @@ class UserController
 
         // Send the message
         $result = $mailer->send($message);
+        if($result == 0) {
+            throw new NotFoundException("Failed to send mail.Please try again.");
+        }
     }
 
     function forgotPassword()
@@ -217,9 +214,9 @@ class UserController
                 }
             }
         }
-//    if($msg!= '') {
-//        echo $msg;
-//    }
+    if($msg!= '') {
+       throw new BadRequestException("$msg");
+    }
     }
 
     function resetPassword()
@@ -231,9 +228,9 @@ class UserController
             $curDate = date("Y-m-d H:i:s");
             $user = $userDAO->getUserByToken($token);
             if (!$user) {
-                echo "<h2>Invalid Link</h2>
-        <p>The link is invalid/expired or you have already used the link in which case it is 
-        deactivated.</p>";
+                throw new BadRequestException("<h2>Invalid Link</h2>
+                        <p>The link is invalid/expired or you have already used the link in which case it is 
+                        deactivated.</p>");
             } else {
                 $_SESSION['id'] = $user->id;
                 $expDate = $user->exp_date;
@@ -241,9 +238,9 @@ class UserController
                     include_once "view/reset_password.php";
                 } else {
                     $userDAO->deleteToken($_SESSION['id']);
-                    echo "<h2>Invalid Link</h2>
-                <p>The link is expired.You are trying to use the expired link which 
-                    is valid only 1 hour.<br /><br /></p>";
+                    throw new BadRequestException("<h2>Invalid Link</h2>
+                        <p>The link is expired.You are trying to use the expired link which 
+                         is valid only 1 hour.<br /><br /></p>");
                 }
             }
         }
@@ -268,14 +265,14 @@ class UserController
                     if ($update) {
                         header("Location: index.php?view=login");
                     } else {
-                        echo 'Mistake in UserDAO!';
+                        throw new BadRequestException("Something went wrong. Pleas try again.");
                     }
                 }
             } else {
                 $msg .= " Passwords don't match! <br> ";
             }
             if ($msg != '') {
-                echo $msg;
+                throw new BadRequestException("$msg");
             }
 
         }
