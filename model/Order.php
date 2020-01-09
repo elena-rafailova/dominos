@@ -4,8 +4,6 @@
 namespace model;
 
 
-use model\DAO\OrderDAO;
-
 class Order
 {
     private $id;

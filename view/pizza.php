@@ -1,7 +1,6 @@
 <?php
 include_once "main.php";
 ?>
-<body>
 <script src="view/js/pizzas-view.js"></script>
 
     <img id="img"/><br>
@@ -64,4 +63,3 @@ include_once "main.php";
 <script>
     initializePizza();
 </script>
-</body>

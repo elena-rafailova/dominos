@@ -63,7 +63,7 @@ if(isset($_GET['category_id'])) {
  /** @var Other $other */
 foreach ($others as $other) {
         echo "<tr>";
-        echo "<td><img src='".$other->getImgUrl()."' /><br>";
+        echo "<td><img src='".$other->getImgUrl()."' class='product_img' /><br>";
         echo $other->getName() . "<br>";
         echo "<hr>";
         echo $other->getDescription() . "<br>";

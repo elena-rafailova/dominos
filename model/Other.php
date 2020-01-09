@@ -27,4 +27,8 @@ class Other extends Product {
     {
         return $this->img_url;
     }
+
+    public function jsonSerialize() {
+        return get_object_vars($this);
+    }
 }

@@ -2,4 +2,4 @@
 include_once "main.php";
 ?>
 
-<p>order!</p>
+<p>Your order is completed!</p>
