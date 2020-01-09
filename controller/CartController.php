@@ -38,13 +38,13 @@ class CartController {
                 }
                 if (isset($_POST["quantity"]) && $_POST["quantity"] >= MIN_QUANTITY && $_POST["quantity"] <= MAX_QUANTITY) {
                     $pizza->setQuantity($_POST["quantity"]);
-                    $pizza->setPrice($price_for_one * $_POST["quantity"]);
+                    $pizza->setPrice($price_for_one);
                     $_SESSION["cart"]->addProduct($pizza);
                     header("Location: index.php?target=cart&action=seeCart");
                     die();
                 } else {
                     //ToDo error
-                    //header("Location: index.php?target=pizza&action=showAll");
+                    header("Location: index.php?target=pizza&action=showAll");
                     die();
                 }
             } else if (isset($_POST["other_id"]) && isset($_POST["category_id"])) {
@@ -64,12 +64,14 @@ class CartController {
                 } else {
                     $price_for_one = $other->getPrice();
                 }
+                $other->setPrice($price_for_one);
+                //$other->setPrice($price_for_one * $_POST["quantity"]);
                 $_SESSION["cart"]->addProduct($other);
                 header("Location: index.php?target=cart&action=seeCart");
                 die();
             }else {
                 //ToDo error
-                //header("Location: index.php?target=pizza&action=showAll");
+                header("Location: index.php?target=pizza&action=showAll");
                 die();
             }
         }
@@ -84,6 +86,7 @@ class CartController {
     function subtractQuantity() {
         if (isset($_GET["id"])) {
             $_SESSION["cart"]->decreaseQuantity($_GET["id"]);
+            $_SESSION["cart"]->setProducts(array_values($_SESSION["cart"]->getProducts()));
             if ($_SESSION["cart"]->isCartEmpty()) {
                 $_SESSION["cart"] = new Cart();
             }

@@ -12,7 +12,12 @@ class Cart implements \JsonSerializable {
         $this->products = $products;
         $this->price = $price;
     }
-    
+
+    public function setProducts(array $products): void
+    {
+        $this->products = $products;
+    }
+
     public function getProducts() {
         return $this->products;
     }
@@ -23,8 +28,23 @@ class Cart implements \JsonSerializable {
     
     /** @var Product $product */
     public function addProduct($product) {
+        foreach ($this->products as $original_product) {
+            if (($original_product instanceof Pizza && $product instanceof Pizza &&
+                $original_product->getName() === $product->getName() &&
+                $original_product->getIngredients() == $product->getIngredients() &&
+                $original_product->getSize() == $product->getSize() &&
+                $original_product->getDough() == $product->getDough()) ||
+                ($original_product instanceof Other && $product instanceof Other &&
+                $original_product == $product)
+            ) {
+                $original_product_quantity = $original_product->getQuantity();
+                $original_product->setQuantity($original_product_quantity + $product->getQuantity());
+                $this->price += $product->getPrice() * $product->getQuantity();
+                return;
+            }
+        }
         $this->products[] = $product;
-        $this->price += $product->getPrice();
+        $this->price += $product->getPrice() * $product->getQuantity();
     }
 
     public function decreaseQuantity($key) {
@@ -45,7 +65,7 @@ class Cart implements \JsonSerializable {
         foreach ($this->products as $key=>$prod) {
             if ($prod == $product) {
                 unset($this->products[$key]);
-                $this->price -= $product->getPrice();
+                $this->price -= $product->getPrice() * $product->getQuantity();
                 return;
             }
         }
