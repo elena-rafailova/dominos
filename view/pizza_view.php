@@ -1,5 +1,5 @@
 <?php
-include_once "main.php";
+include_once "header.php";
 ?>
 <script src="view/js/pizzas-view.js"></script>
 
@@ -15,7 +15,7 @@ include_once "main.php";
         </select><br>
 
         <input type="hidden" id="price_for_one" name="price_for_one" value="0">
-        <div>Price: <span id="price"></span> lv</div>
+        <div>Price: <span id="price"></span> BGN</div>
 
         <h6>Quantity</h6>
 

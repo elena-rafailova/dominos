@@ -12,7 +12,7 @@ define("PAYMENT_TYPE_CASH", 1);
 
 class CartController {
     public function seeCart() {
-        include_once "view/view_cart.php";
+        include_once "view/cart_view.php";
     }
     public function addToCart()
     {
@@ -41,7 +41,7 @@ class CartController {
                     $pizza->setQuantity($_POST["quantity"]);
                     $pizza->setPrice($price_for_one);
                     $_SESSION["cart"]->addProduct($pizza);
-                    header("Location: index.php?target=cart&action=seeCart");
+                    header("Location: index.php?target=pizza&action=showAll");
                     die();
                 } else {
                     //ToDo error

@@ -1,5 +1,5 @@
 <?php
-include_once 'main.php';
+include_once 'header.php';
 $user = json_decode($_SESSION['logged_user']);
 ?>
 

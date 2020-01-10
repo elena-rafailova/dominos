@@ -1,6 +1,6 @@
 <?php
-include_once "main.php";
-include_once "menu-list.php";
+include_once "header.php";
+include_once "products_nav_view.php";
 
 ?>
 

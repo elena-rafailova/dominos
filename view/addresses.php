@@ -1,6 +1,6 @@
 <?php
 
-include_once "main.php";
+include_once "header.php";
 
 if (!isset($addresses)) {
     header("index.php?target=address&action=show");

@@ -19,7 +19,7 @@ class UserController
 {
     function register()
     {
-        include_once "view/register.php";
+        include_once "view/register_view.php";
         $userDAO = new UserDAO();
         if (isset($_POST["register"])) {
             if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email'])
@@ -46,7 +46,7 @@ class UserController
 
     function login()
     {
-        include_once "view/login.php";
+        include_once "view/login_view.php";
         $userDAO = new UserDAO();
 
         if (isset($_POST['login'])) {
@@ -189,7 +189,7 @@ class UserController
     function forgotPassword()
     {
         $msg = '';
-        include_once "view/forgot_password.php";
+        include_once "view/forgot_password_view.php";
         $userDAO = new UserDAO();
         if (isset($_POST['forgot_password'])) {
             if (isset($_POST['email'])) {
@@ -208,7 +208,7 @@ class UserController
                         $expDate = date("Y-m-d H:i:s", $expFormat);
                         $userDAO->addToken($user_id, $token, $expDate);
                         $this->sendMail($email, $token);
-                        include_once "view/forgot_message.php";
+                        include_once "view/forgot_message_view.php";
                     }
                 }
             }
@@ -234,7 +234,7 @@ class UserController
                 $_SESSION['id'] = $user->id;
                 $expDate = $user->exp_date;
                 if ($expDate >= $curDate) {
-                    include_once "view/reset_password.php";
+                    include_once "view/reset_password_view.php";
                 } else {
                     $userDAO->deleteToken($_SESSION['id']);
                     throw new BadRequestException("<h2>Invalid Link</h2>

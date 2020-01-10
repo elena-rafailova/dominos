@@ -110,7 +110,7 @@ function getDoughs() {
                 if (key == 0) { option.selected = true; }
                 option.value = list[key]["id"];
                 option.innerText = list[key]["name"];
-                if (list[key]["price"] != 0) option.innerText += " (+" + list[key]["price"] + "lv)";
+                if (list[key]["price"] != 0) option.innerText += " (+" + list[key]["price"] + " BGN)";
                 doughs.appendChild(option);
             }
         }

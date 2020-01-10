@@ -1,5 +1,5 @@
 <?php
-include_once "main.php";
+include_once "header.php";
 ?>
 
 <p class="alert alert-success alert-dismissible">

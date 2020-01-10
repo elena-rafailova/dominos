@@ -1,6 +1,6 @@
 <?php
 use model\City;
-include_once "main.php";
+include_once "header.php";
 
 if(!isset($cities)) {
     header("Location : index.php?target=address&action=add");

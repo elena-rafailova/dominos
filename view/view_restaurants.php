@@ -1,5 +1,5 @@
 <?php
-//include_once "main.php";
+//include_once "header.php";
 //include_once "model/DAO/config.php";
 //
 ////if (!isset($restaurants)) {
