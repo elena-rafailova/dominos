@@ -21,7 +21,7 @@ include_once "products_nav_view.php";
 <div id="carryOut">
     <select id="restaurants">
     </select>
-    <br><br><div id="map"></div>
+    <br><br><div id="map"  class="map-container"></div>
     <input type="button" value="Order Now!" name="chooseOrdMethod" onclick="carryOutF()">
 
 </div>
@@ -29,11 +29,15 @@ include_once "products_nav_view.php";
             async defer></script>
 <?php } ?>
 
+
 <h1>Our pizzas: </h1>
+
+
+
 <button onclick="getPizzas(1)">New</button></a>
 <button onclick="getPizzas(2)">Vegetarian</button></a>
 <button onclick="getPizzas(3)">Spicy</button></a>
-<div id="pizzas" class="container">
+<div id="pizzas" class="container card-group">
 </div>
 
 

@@ -2,50 +2,55 @@ function getPizzas(filter) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            var table = document.getElementById("pizzas");
-            table.innerHTML = "";
+            var container = document.getElementById("pizzas");
+            container.innerHTML = "";
             var pizzas = this.responseText;
             pizzas = JSON.parse(pizzas);
 
-            var tr = document.createElement("div");
-            tr.setAttribute("class", "row");
+            var row = document.createElement("div");
+            row.setAttribute("class", "row ");
             for (var key in pizzas) {
-                var td = document.createElement("div");
-                td.setAttribute("class", "col-sm-4");
+                var pizza_element = document.createElement("a");
+                pizza_element.href = "index.php?target=pizza&action=show&id=" + pizzas[key]["id"];
+                pizza_element.setAttribute("class", "col-lg-3 col-sm-5 col-xs-6 card text-decoration-none");
                 var br = document.createElement("br");
 
                 var img = document.createElement("img");
-                img.setAttribute("class", "product_img");
+                img.setAttribute("class", "product_img card-img-top");
                 img.src = pizzas[key]["img_url"];
-                td.appendChild(img);
+                pizza_element.appendChild(img);
 
                 var str = [];
                 for (var ingr in pizzas[key]["ingredients"]) {
                     str[ingr] = pizzas[key]["ingredients"][ingr]["name"];
                 }
 
-                var p1 = document.createElement("p");
+                var card_body = document.createElement("div");
+                card_body.setAttribute("class", "card-body text-center font-weight-light ");
+
+                var p1 = document.createElement("h4");
                 p1.innerText = pizzas[key]["name"];
-                td.appendChild(p1);
+                p1.setAttribute("class", "cart-title text-uppercase");
+                card_body.appendChild(p1);
 
                 var p2 = document.createElement("p");
                 p2.innerText = str.join(", ");
-                td.appendChild(p2);
-
-                var form = document.createElement("form");
-                form.action = "index.php?target=pizza&action=show&id=" + pizzas[key]["id"];
-                form.method = "post";
+                p2.setAttribute("class", "card-text");
+                card_body.appendChild(p2);
 
 
-                var button = document.createElement("button");
+                pizza_element.appendChild(card_body);
+
+                var button = document.createElement("a");
+                button.type = "button";
+                button.setAttribute("class", "btn btn-primary ");
+                button.href = "index.php?target=pizza&action=show&id=" + pizzas[key]["id"];
                 button.innerText = "Choose";
-                form.appendChild(button);
 
-                td.appendChild(form);
-
-                tr.appendChild(td);
+                pizza_element.appendChild(button);
+                row.appendChild(pizza_element);
             }
-            table.appendChild(tr);
+            container.appendChild(row);
         }
     };
 
