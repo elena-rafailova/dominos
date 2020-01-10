@@ -53,7 +53,7 @@ class CartController {
                 $id = $_POST["other_id"];
                 $category_id = $_POST["category_id"];
                 $otherDAO = new OtherDAO();
-                $other = $otherDAO->getOther($_POST["other_id"], $_POST["category_id"]);
+                $other = $otherDAO->getOther($id, $category_id );
                 if (isset($_POST["quantity"]) && $_POST["quantity"] >= MIN_QUANTITY && $_POST["quantity"] <= MAX_QUANTITY) {
                     $other->setQuantity($_POST["quantity"]);
                 } else {
@@ -68,7 +68,7 @@ class CartController {
                 $other->setPrice($price_for_one);
                 //$other->setPrice($price_for_one * $_POST["quantity"]);
                 $_SESSION["cart"]->addProduct($other);
-                header("Location: index.php?target=cart&action=seeCart");
+                header("Location: index.php?target=pizza&action=showAll");
                 die();
             }else {
                 //ToDo error

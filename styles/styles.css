@@ -1,3 +1,8 @@
+
+body {
+    background-image: url('../uploads/background.jpg');
+}
+
 .product_img {
     width: 100px;
 }
@@ -18,8 +23,8 @@ td,th {
 }
 
 #map {
-    height: 40%;
-    width: 30%;
+    height: 300px;
+    width: 100%;
 }
 
 

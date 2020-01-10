@@ -3,6 +3,7 @@ include_once "header.php";
 ?>
 <script src="view/js/pizzas-view.js"></script>
 
+<div class="container">
     <img id="img" class="product_img"/><br>
     <p id="name"></p>
 
@@ -61,6 +62,7 @@ include_once "header.php";
         <input type="submit" name="add_to_cart" value="Add">
 
     </form>
+</div>
 <script>
     initializePizza();
 </script>

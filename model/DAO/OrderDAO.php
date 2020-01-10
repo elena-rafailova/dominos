@@ -103,7 +103,3 @@ class OrderDAO extends BaseDAO {
         }
     }
 }
-//  UNION
-//                SELECT ord.id,ord.date_created, ord.total_price,ord.status_id, IF(oho.order_id= ord.id, o.name, NULL) AS product
-//                FROM orders AS ord JOIN orders_have_others AS oho
-//                ON (ord.id = oho.order_id) JOIN others as o ON (oho.other_id = o.id) WHERE ord.user_id  = ?;

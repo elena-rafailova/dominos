@@ -28,7 +28,7 @@ function add () {
             $msg = $this->validationOfInput($street_name, $name, $phone_number, $building_number, $apartment_number, $entrance);
             if ($msg != '') {
                 echo $msg;
-                include_once "view/add_address.php";
+                include_once "view/add_address_view.php";
             } else {
                 $address = new Address($phone_number, $city, $name, $street_name, $street_number, $building_number, $entrance, $floor, $apartment_number);
                 $user_id = json_decode($_SESSION['logged_user'])->id;
@@ -40,7 +40,7 @@ function add () {
     } else {
         $addressDAO = new AddressDAO();
         $cities= $addressDAO->getCities();
-        include_once "view/add_address.php";
+        include_once "view/add_address_view.php";
     }
 }
 
@@ -91,7 +91,7 @@ function show() {
     $user_id = json_decode($_SESSION['logged_user'])->id;
     $addressDAO = new AddressDAO();
     $addresses = $addressDAO->get($user_id);
-    include_once "view/addresses.php";
+    include_once "view/addresses_view.php";
 }
 
 function getAddresses() {

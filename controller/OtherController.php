@@ -8,9 +8,9 @@ use model\DAO\OtherDAO;
 
 class OtherController
 {
-    //    function showOthers() {
-    //     include_once "view/others_view.php";
-    //    }
+        function showOthers() {
+         include_once "view/others_view.php";
+        }
 
     function getOthersInfo() {
         if (!(isset($_GET["filter"])) && isset($_GET["category_id"])) {
@@ -27,15 +27,8 @@ class OtherController
         else {
             throw new BadRequestException("Error- the products you search for cannot be found!");
         }
-//        echo json_encode($others, JSON_UNESCAPED_UNICODE);
-        include_once "view/others_view.php";
+
+        echo json_encode($others, JSON_UNESCAPED_UNICODE);
     }
 
-
-//    function getOther() {
-//        if (isset($_GET["id"]) && isset($_GET["category_id"])) {
-//            $other = Other::getOtherById($_GET["id"], $_GET["category_id"]);
-//            echo json_encode($other, JSON_UNESCAPED_UNICODE);
-//        }
-//    }
 }

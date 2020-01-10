@@ -74,7 +74,7 @@ class UserController
 
     function edit()
     {
-        include_once "view/edit.php";
+        include_once "view/edit_view.php";
         $userDAO = new UserDAO();
         if (isset($_POST['edit'])) {
             if (isset($_POST['first_name']) && isset($_POST['last_name'])) {
