@@ -33,8 +33,8 @@ include_once "menu-list.php";
 <button onclick="getPizzas(1)">New</button></a>
 <button onclick="getPizzas(2)">Vegetarian</button></a>
 <button onclick="getPizzas(3)">Spicy</button></a>
-<table id="pizzas">
-</table>
+<div id="pizzas" class="container">
+</div>
 
 
 <script>

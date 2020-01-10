@@ -7,9 +7,11 @@ function getPizzas(filter) {
             var pizzas = this.responseText;
             pizzas = JSON.parse(pizzas);
 
+            var tr = document.createElement("div");
+            tr.setAttribute("class", "row");
             for (var key in pizzas) {
-                var tr = document.createElement("tr");
-                var td = document.createElement("td");
+                var td = document.createElement("div");
+                td.setAttribute("class", "col-sm-4");
                 var br = document.createElement("br");
 
                 var img = document.createElement("img");
@@ -42,8 +44,8 @@ function getPizzas(filter) {
                 td.appendChild(form);
 
                 tr.appendChild(td);
-                table.appendChild(tr);
             }
+            table.appendChild(tr);
         }
     };
 
@@ -104,6 +106,7 @@ function getDoughs() {
             var list = JSON.parse(this.responseText);
             for (var key in list) {
                 var option = document.createElement("option");
+                option.setAttribute("class", "dropdown-item");
                 if (key == 0) { option.selected = true; }
                 option.value = list[key]["id"];
                 option.innerText = list[key]["name"];

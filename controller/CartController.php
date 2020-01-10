@@ -4,6 +4,7 @@ use model\Cart;
 use model\DAO\IngredientDAO;
 use model\DAO\OtherDAO;
 use model\DAO\PizzaDAO;
+
 define("MIN_QUANTITY", 1);
 define("MAX_QUANTITY", 100);
 define("STATUS_PENDING", 1);
