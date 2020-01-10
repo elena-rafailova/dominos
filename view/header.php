@@ -17,7 +17,6 @@ echo $user->first_name."<br>";
 </head>
 <body>
     <a href="index.php?target=pizza&action=showAll"><input type="button" value="Order"></a>
-    <!--<a href="index.php?target=restaurant&action=show"><button>Restaurants</button></a>-->
     <ul id="buttons">
         <li><a href="index.php?target=user&action=edit"><button>My Profile (edit) </button></a></li>
         <li><a href="index.php?target=address&action=show"><button>My Addresses</button></a></li>
@@ -32,8 +31,8 @@ echo $user->first_name."<br>";
     </div>
 
     <script src="view/js/map.js"></script>
-    <script src="view/js/pizzas-view.js"></script>
-    <script src="view/js/others-view.js"></script>
+    <script src="view/js/pizzas.js"></script>
+    <script src="view/js/others.js"></script>
     <script src="view/js/cart.js"></script>
     <script src="view/js/orders.js"></script>
     <script>checkCart();</script>

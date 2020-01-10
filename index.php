@@ -14,7 +14,7 @@ spl_autoload_register(function ($class){
     require_once  $class;
 });
 
-set_exception_handler("handleExceptions");
+//set_exception_handler("handleExceptions");
 session_start();
 
 $fileNotFoundFlag = false;

@@ -29,14 +29,6 @@ class OtherController
         }
 
         echo json_encode($others, JSON_UNESCAPED_UNICODE);
-        //include_once "view/others.php";
     }
 
-
-//    function getOther() {
-//        if (isset($_GET["id"]) && isset($_GET["category_id"])) {
-//            $other = Other::getOtherById($_GET["id"], $_GET["category_id"]);
-//            echo json_encode($other, JSON_UNESCAPED_UNICODE);
-//        }
-//    }
 }
