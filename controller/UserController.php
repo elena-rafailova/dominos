@@ -144,7 +144,6 @@ class UserController
                 $msg .= " Passwords don't match! <br> ";
             }
         }
-
         return $msg;
     }
 
@@ -265,7 +264,7 @@ class UserController
                     if ($update) {
                         header("Location: index.php?view=login");
                     } else {
-                        throw new BadRequestException("Something went wrong. Pleas try again.");
+                        throw new BadRequestException("Something went wrong. Please try again.");
                     }
                 }
             } else {

@@ -4,6 +4,8 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 use exceptions\BaseException;
+use exceptions\NotFoundException;
+
 require_once './vendor/autoload.php';
 
 //AUTOCOMPLETE
@@ -23,7 +25,7 @@ $controllerClassName = "\\controller\\" . ucfirst($controllerName) . "Controller
 
 function handleExceptions(Exception $exception){
     $status = $exception instanceof BaseException ? $exception->getStatusCode() : 500;
-   $msg = $exception->getMessage();
+    $msg = $exception->getMessage();
     $html = "<h3>$msg</h3>";
     http_response_code($status);
     include_once "view/error.php" ;
@@ -87,7 +89,7 @@ $controller = new $controllerClassName();
     $fileNotFoundFlag = true;
 }
 if ($fileNotFoundFlag){
-   // header("Location: TO ERROR MESSAGE PAGE");
+   throw new NotFoundException("File not found!");
 }
 
 ?>

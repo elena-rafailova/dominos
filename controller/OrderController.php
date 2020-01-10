@@ -59,14 +59,35 @@ class OrderController {
 
     function showOrders()
     {
+        include_once "view/orders.php";
+    }
+
+    function getOrders()
+    {
         $user_id = json_decode($_SESSION['logged_user'])->id;
         $orderDAO = new OrderDAO();
         $orders = $orderDAO->getOrders($user_id);
         $counts = array_count_values(array_column($orders, "id"));
         $result = [];
-        foreach ($orders as $order) {
 
+        /** @var Order $order */
+        foreach ($orders as $order) {
+            $isAlreadyThere = false;
+            /** @var Order $res */
+            foreach ($result as $key => $res) {
+                if ($res->getId() == $order->getId()) {
+                    $isAlreadyThere = $key;
+                    break;
+                }
+            }
+            if ($isAlreadyThere === false) {
+                $result[] = $order;
+            } else {
+                $items = $result[$isAlreadyThere]->getItems();
+                $items[] = $order->getItems();
+                $result[$isAlreadyThere]->setItems($items);
+            }
         }
-        include_once "view/orders.php";
+        echo json_encode($result);
     }
 }

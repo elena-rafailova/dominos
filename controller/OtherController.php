@@ -3,6 +3,7 @@
 
 namespace controller;
 
+use exceptions\BadRequestException;
 use model\DAO\OtherDAO;
 
 class OtherController
@@ -24,7 +25,7 @@ class OtherController
             $others = $otherDAO->getAll($category_id,$filter);
         }
         else {
-            $others="Error";
+            throw new BadRequestException("Error- the products you search for cannot be found!");
         }
 //        echo json_encode($others, JSON_UNESCAPED_UNICODE);
         include_once "view/others.php";

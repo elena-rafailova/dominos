@@ -4,7 +4,7 @@
 namespace model;
 
 
-class Order
+class Order implements \JsonSerializable
 {
     private $id;
     private $user_id;
@@ -47,6 +47,11 @@ class Order
         return $this->items;
     }
 
+    public function setItems($items): void
+    {
+        $this->items = $items;
+    }
+
     public function getPaymentType() {
         return $this->payment_type;
     }
@@ -61,5 +66,10 @@ class Order
 
     public function getDeliveryAddress() {
         return $this->delivery_address;
+    }
+
+    public function jsonSerialize()
+    {
+       return get_object_vars($this);
     }
 }
