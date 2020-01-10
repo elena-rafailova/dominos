@@ -4,10 +4,9 @@ include_once "main.php";
 
 //print_r($orders);
 ?>
-<body>
 <h4>My orders</h4>
-    <div class="container"></div>
-</body>
+<div class="container" id="orders-container"></div>
+<script>loadOrders();</script>
 
 
 

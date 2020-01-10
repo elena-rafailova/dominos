@@ -6,7 +6,9 @@ use model\Cart;
 use model\DAO\OrderDAO;
 use model\DAO\PizzaDAO;
 use model\Order;
+use model\Other;
 use model\Pizza;
+use model\Product;
 
 
 define("MIN_QUANTITY", 1);
@@ -68,26 +70,50 @@ class OrderController {
         $orderDAO = new OrderDAO();
         $orders = $orderDAO->getOrders($user_id);
         $counts = array_count_values(array_column($orders, "id"));
-        $result = [];
+        $orderArray = [];
 
         /** @var Order $order */
         foreach ($orders as $order) {
             $isAlreadyThere = false;
             /** @var Order $res */
-            foreach ($result as $key => $res) {
+            foreach ($orderArray as $key => $res) {
                 if ($res->getId() == $order->getId()) {
                     $isAlreadyThere = $key;
                     break;
                 }
             }
             if ($isAlreadyThere === false) {
-                $result[] = $order;
+                $orderArray[] = $order;
             } else {
-                $items = $result[$isAlreadyThere]->getItems();
-                $items[] = $order->getItems();
-                $result[$isAlreadyThere]->setItems($items);
+                $items = $orderArray[$isAlreadyThere]->getItems();
+                foreach ($order->getItems() as $product) {
+                    $items[] = $product;
+                }
+                $orderArray[$isAlreadyThere]->setItems($items);
             }
         }
+
+        usort($orderArray, array("controller\\OrderController", "date_sort"));
+        $result = [];
+        /** @var Order $order */
+        foreach ($orderArray as $order) {
+            $productsArray = [];
+            foreach ($order->getItems() as $item) {
+                if ($item instanceof Pizza) {
+                    $productsArray[] = $item->getQuantity() . "x " . $item->getSize()->getName() . " " .  $item->getDough()->getName() . " " .$item->getName();
+                } else if ($item instanceof Other) {
+                    $productsArray[] =  $item->getQuantity() . "x " . $item->getName();
+                }
+            }
+            $productsArray = implode(";<br>", $productsArray);
+
+            $result[] = ["date_created" => $order->getDateCreated(), "total_price" => $order->getPrice(), "status" => $order->getStatusName(), "items" => $productsArray];
+        }
         echo json_encode($result);
+    }
+
+
+    function date_sort($a, $b) {
+        return (strtotime($a->getDateCreated()) - strtotime($b->getDateCreated()));
     }
 }

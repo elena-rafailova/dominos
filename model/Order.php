@@ -47,6 +47,16 @@ class Order implements \JsonSerializable
         return $this->items;
     }
 
+    public function getDateCreated()
+    {
+        return $this->date_created;
+    }
+
+    public function getStatusName()
+    {
+        return $this->status_name;
+    }
+
     public function setItems($items): void
     {
         $this->items = $items;

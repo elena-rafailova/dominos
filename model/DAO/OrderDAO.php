@@ -66,21 +66,20 @@ class OrderDAO extends BaseDAO {
 
     function getOrders($user_id) {
         $pdo = parent::getPDO();
-        $sql ="SELECT ord.id, ord.date_created, ord.total_price,st.name AS status_name, p.name AS product, s.name AS size ,d.name AS dough
+        $sql ="SELECT ord.id, ord.date_created, ord.total_price,st.name AS status_name, p.name AS product, s.name AS size ,d.name AS dough, ohp.quantity
                 FROM orders AS ord JOIN orders_have_pizzas AS ohp
                 ON (ord.id = ohp.order_id) JOIN pizzas as p ON (ohp.pizza_id = p.id)
                 JOIN sizes AS s ON (s.id=ohp.size_id)
                 JOIN doughs AS d ON (d.id=ohp.dough_id)
                 JOIN statuses AS st ON (ord.status_id = st.id)
-                WHERE ord.user_id = ? 
-                ORDER BY ord.date_created ASC;";
+                WHERE ord.user_id = ?;";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$user_id]);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $orders=[];
         foreach ($rows as $row) {
             $pizza = new Pizza(null, $row["product"],null,null,null,
-                null,new Dough(null, $row['dough']), new Size(null,$row['size']));
+                null,new Dough(null, $row['dough']), new Size(null,$row['size']), $row["quantity"]);
             $orders[]=new Order($row["id"], $user_id, $row["date_created"], $row["status_name"],
                 null,null,null, $row["total_price"], [$pizza], null );
         }
@@ -88,8 +87,7 @@ class OrderDAO extends BaseDAO {
                 FROM orders AS ord JOIN orders_have_others AS oho
                 ON (ord.id = oho.order_id) JOIN others as oth ON (oho.other_id = oth.id)
                 JOIN statuses AS st ON (ord.status_id = st.id)
-                WHERE ord.user_id = ? 
-                ORDER BY ord.date_created ASC;";
+                WHERE ord.user_id = ?;";
         $stmt2 = $pdo->prepare($sql2);
         $stmt2->execute([$user_id]);
         $rows = $stmt2->fetchAll(PDO::FETCH_ASSOC);
