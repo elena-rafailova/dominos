@@ -9,7 +9,7 @@ use model\DAO\OtherDAO;
 class OtherController
 {
         function showOthers() {
-         include_once "view/others.php";
+         include_once "view/others_view.php";
         }
 
     function getOthersInfo() {
@@ -27,6 +27,7 @@ class OtherController
         else {
             throw new BadRequestException("Error- the products you search for cannot be found!");
         }
+
         echo json_encode($others, JSON_UNESCAPED_UNICODE);
         //include_once "view/others.php";
     }

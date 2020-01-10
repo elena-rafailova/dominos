@@ -12,12 +12,12 @@ use model\Ingredient;
 class PizzaController
 {
     function showAll() {
-        include_once "view/pizzas.php";
+        include_once "view/pizzas_view.php";
     }
 
     function show() {
         if (isset($_GET["id"])) {
-            include_once "view/pizza.php";
+            include_once "view/pizza_view.php";
         }
     }
 

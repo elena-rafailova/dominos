@@ -28,7 +28,7 @@ function handleExceptions(Exception $exception){
     $msg = $exception->getMessage();
     $html = "<h3>$msg</h3>";
     http_response_code($status);
-    include_once "view/error.php" ;
+    include_once "view/error_view.php";
     echo $html;
 
 //    $obj = new stdClass();

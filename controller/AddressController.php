@@ -65,7 +65,7 @@ function change()
             $msg = $this->validationOfInput($street_name, $name, $phone_number, $building_number, $apartment_number, $entrance);
             if ($msg != '') {
                 echo $msg;
-                include_once "view/main.php";
+                include_once "view/header.php";
             } else {
                 $id = $_POST['id'];
                 $address = new Address($phone_number, $city, $name, $street_name, $street_number, $building_number, $entrance, $floor, $apartment_number);

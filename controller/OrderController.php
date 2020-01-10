@@ -50,7 +50,7 @@ class OrderController {
                 $orderDAO = new OrderDAO();
                 $orderDAO->placeOrder($order);
                 $_SESSION["cart"] = new Cart();
-                include_once "view/orderStatus.php";
+                include_once "view/finished_order_view.php";
             } else {
                 header("Location: index.php?target=pizza&action=showAll");
                 die();
@@ -61,7 +61,7 @@ class OrderController {
 
     function showOrders()
     {
-        include_once "view/orders.php";
+        include_once "view/order_history_view.php";
     }
 
     function getOrders()

@@ -8,7 +8,7 @@ use model\DAO\RestaurantDAO;
 class RestaurantController
     {
     function show() {
-        include_once "view/restaurants.php";
+        include_once "view/view_restaurants.php";
     }
 
     function getRestaurants() {

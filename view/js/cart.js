@@ -111,7 +111,7 @@ function viewCart() {
 
             var price_container = document.createElement("h3");
             var lv_addition = document.createElement("span");
-            lv_addition.innerText = " lv";
+            lv_addition.innerText = " BGN";
             var price_for_item_el = document.createElement("span");
             price_for_item_el.id = "price_for_one_item" + key;
             price_for_item_el.innerText = (items_quantity.value * items[key].price).toFixed(2);
@@ -128,7 +128,7 @@ function viewCart() {
         }
         var price_container = document.createElement("h1");
         var lv_addition = document.createElement("span");
-        lv_addition.innerText = " lv";
+        lv_addition.innerText = " BGN";
 
         var price_tag = document.createElement("span");
         price_tag.innerText = price.toFixed(2);
@@ -153,6 +153,7 @@ function viewCart() {
     } else {
         var empty_cart_message = document.createElement("h3");
         empty_cart_message.innerText = "Your cart is empty!";
+        //empty_cart_message.
         shopping_cart_div.appendChild(empty_cart_message);
     }
 }
