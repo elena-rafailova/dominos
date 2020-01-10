@@ -9,7 +9,7 @@ class Order
     private $id;
     private $user_id;
     private $date_created;
-    private $status_id;
+    private $status_name;
     private $delivery_address;
     private $restaurant;
     private $payment_type;
@@ -17,12 +17,12 @@ class Order
     private $items;
     private $comment;
 
-    public function __construct($id, $user_id, $date_created, $status_id, $delivery_address, $restaurant,
-                                $payment_type, $price, $items, $comment) {
+    public function __construct($id, $user_id, $date_created, $status_name, $delivery_address, $restaurant,
+                                $payment_type, $price, $items, $comment = null) {
         $this->id = $id;
         $this->user_id = $user_id;
         $this->date_created = $date_created;
-        $this->status_id = $status_id;
+        $this->status_name = $status_name;
         $this->delivery_address = $delivery_address;
         $this->restaurant = $restaurant;
         $this->payment_type = $payment_type;

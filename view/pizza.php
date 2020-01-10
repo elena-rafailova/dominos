@@ -3,7 +3,7 @@ include_once "main.php";
 ?>
 <script src="view/js/pizzas-view.js"></script>
 
-    <img id="img"/><br>
+    <img id="img" class="product_img"/><br>
     <p id="name"></p>
 
     <form action="index.php?target=cart&action=addToCart" method="post">
@@ -18,9 +18,10 @@ include_once "main.php";
         <div>Price: <span id="price"></span> lv</div>
 
         <h6>Quantity</h6>
-        <input type="button" value="-" onclick="decrementVal()">
+
+        <img src="uploads/minus.png" onclick="decrementVal()" class="icons">
         <input type="text" min="1" max="100" name="quantity" id="quantity" value="1" required readonly>
-        <input type="button" value="+" onclick="incrementVal()">
+        <img src="uploads/plus.png" onclick="incrementVal()" class="icons">
 
         <h6>Toppings:</h6>
         <div id="toppings"></div>
