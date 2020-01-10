@@ -34,6 +34,7 @@ function loadOrders() {
                 status.innerText = orders[key].status;
                 orderRecord.appendChild(status);
 
+                container.appendChild(document.createElement("hr"));
                 container.appendChild(orderRecord);
             }
             //container.appendChild(row);

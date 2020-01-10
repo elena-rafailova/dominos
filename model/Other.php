@@ -4,7 +4,7 @@
 namespace model;
 
 
-class Other extends Product {
+class Other extends Product implements \JsonSerializable {
     private $description;
     private $others_category_id;
 
