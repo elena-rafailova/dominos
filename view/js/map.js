@@ -157,6 +157,7 @@ function carryOutF() {
     var selectedRes = select.options[select.selectedIndex].value;
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("alert_if_delivery_empty").style.display = "none";
             //carryOut.style.display = "none";
         }
     };
@@ -171,6 +172,7 @@ function deliveryF() {
     var selectedRes = select.options[select.selectedIndex].value;
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("alert_if_delivery_empty").style.display = "none";
             //document.getElementById("delivery").style.display = "none";
         }
     };

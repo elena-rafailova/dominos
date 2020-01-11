@@ -153,22 +153,14 @@ function viewCart() {
         input_submit.name = "order";
         input_submit.value = "Order";
         input_submit.setAttribute("class", "w-50 btn btn-primary ");
+        // input_submit.onclick = function() { deliveryAlert(); };
+
         submit_form.appendChild(input_submit);
 
         shopping_cart_div.appendChild(submit_form);
     } else {
-        var container = document.createElement("p");
-        container.setAttribute("class", "alert alert-warning alert-dismissible fade show mt-3");
-
-        container.innerText = "Your shopping cart is empty!";
-        var dismiss = document.createElement("button");
-        dismiss.type = "button";
-        dismiss.innerText = "×";
-        dismiss.setAttribute("class", "close");
-        dismiss.setAttribute("data-dismiss", "alert");
-        dismiss.setAttribute("aria-label", "Close");
-        container.appendChild(dismiss);
-        shopping_cart_div.appendChild(container);
+        var container = document.getElementById("empty_cart_warning");
+        container.style.display = "block";
     }
 }
 
@@ -197,4 +189,39 @@ function checkCart() {
     a.appendChild(p);
     var shopping_cart_div = document.getElementById("shopping_cart_icon");
     shopping_cart_div.appendChild(a);
+}
+
+function deliveryAlert() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if (this.responseText.length != 0) {
+                var container = document.getElementById("alert_if_delivery_empty");
+                container.setAttribute("class", "alert alert-warning alert-dismissible fade show mt-3");
+                container.innerText = this.responseText;
+
+                var dismiss = document.createElement("button");
+                dismiss.type = "button";
+                dismiss.innerText = "×";
+                dismiss.setAttribute("class", "close");
+                dismiss.setAttribute("data-dismiss", "alert");
+                dismiss.setAttribute("aria-label", "Close");
+                container.appendChild(dismiss);
+            }
+        }
+    };
+
+    xhttp.open("GET", "index.php?target=order&action=checkDelivery", true);
+    xhttp.send();
+}
+
+function finishedOrder() {
+    var query = window.location.search.substring(1);
+    var arr = query.split("&");
+    if (arr.pop() == "finish") {
+
+        document.getElementById("finished_order").style.display="block";
+        document.getElementById("alert_if_delivery_empty").style.display="none";
+        document.getElementById("empty_cart_warning").style.display = "none";
+    }
 }

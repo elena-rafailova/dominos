@@ -6,7 +6,7 @@ include_once "products_nav_view.php";
 <div class="container  mx-auto mt-5">
 
     <h1 id="name"></h1>
-    <div id="pizza_info" class="container">
+    <div id="pizza_info" class="container pb-2">
         <form action="index.php?target=cart&action=addToCart" method="post">
             <div id="pizza-background">
                 <div class="container ">
@@ -31,9 +31,8 @@ include_once "products_nav_view.php";
                         </div>
                     </div>
 
-                    <div class="row">
-                        <h6>Toppings:</h6>
-                        <div id="toppings"></div>
+                    <div class="row mt-1">
+                        <h5 id="toppings"></h5>
                     </div>
 
                     <button type="button" onclick="hideOrShow()" class="btn btn-primary ">Customize</button><br>
@@ -68,7 +67,6 @@ include_once "products_nav_view.php";
                 </div>
             </div>
             <input type="submit" name="add_to_cart" value="Add to cart" class="btn btn-primary mt-3">
-
         </form>
     </div>
 </div>

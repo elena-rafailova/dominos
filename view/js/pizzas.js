@@ -156,7 +156,7 @@ function getPizza(id) {
             var pizza_container = document.getElementById("pizza-background");
             pizza_container.style.backgroundImage = "url("+pizza["img_url"]+")";
             pizza_container.style.backgroundRepeat = "no-repeat";
-            pizza_container.style.backgroundPosition = "50% 90%";
+            pizza_container.style.backgroundPosition = "50% 100%";
 
             var pizza_info = document.getElementById("pizza_info");
             pizza_info.style.backgroundColor = "rgba(201,234,255,0.5)";
@@ -168,11 +168,12 @@ function getPizza(id) {
             pid.value = id;
 
             var toppings = document.getElementById("toppings");
+            toppings.style.backgroundColor = "rgba(175,155,203,0.35)";
             var str = [];
             for (var ingr in pizza["ingredients"]) {
                 str[ingr] = pizza["ingredients"][ingr]["name"];
             }
-            toppings.innerText = str.join(", ");
+            toppings.innerText = "Toppings: " + str.join(", ");
 
             var price_for_one = document.getElementById("price_for_one");
             price_for_one.value = pizza["price"].toFixed(2);
