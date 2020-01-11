@@ -4,9 +4,8 @@ body {
 }
 
 .product_img {
-    width: 100px;
+    min-width: 285px;
 }
-
 
 #buttons li {
     float: left;

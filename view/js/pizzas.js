@@ -12,7 +12,7 @@ function getPizzas(filter) {
             for (var key in pizzas) {
                 var pizza_element = document.createElement("a");
                 pizza_element.href = "index.php?target=pizza&action=show&id=" + pizzas[key]["id"];
-                pizza_element.setAttribute("class", "col-lg-3 col-sm-5 col-xs-6 card text-decoration-none mb-2");
+                pizza_element.setAttribute("class", "col-lg-3 col-md-4 col-sm-5 col-xs-6 card text-decoration-none mb-2");
 
 
                 var img = document.createElement("img");
