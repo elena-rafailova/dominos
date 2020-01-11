@@ -22,7 +22,6 @@ class UserController
     }
     function register()
     {
-        //include_once "view/register_view.php";
         $userDAO = new UserDAO();
         if (isset($_POST["register"])) {
             if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email'])
@@ -51,7 +50,6 @@ class UserController
 
     function login()
     {
-        //include_once "view/login_view.php";
         $userDAO = new UserDAO();
         if (isset($_POST['login'])) {
             if (isset($_POST['email']) && isset($_POST['password'])) {

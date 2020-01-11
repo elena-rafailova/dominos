@@ -3,52 +3,81 @@
 include_once "header.php";
 
 ?>
+<div class="container text-center center" >
+    <h3 class="font-weight-bold text-center">MODIFY YOUR DETAILS, ADD OR DELETE AN ADDRESS</h3>
+    <div id="addresses"  style="margin-right: 5px;float: left;width: 25%;"  >
 
-<div id="addresses" >
+    </div>
+    <div id="address_form_div" style="width: 50%;margin-right: 5px;float: left" >
+        <form id="edit_address" method="post" action="">
+            <div class="col-md-10 mx-auto " >
+                <div class="input-group mb-1">
+                    <div class="form-group mx-auto">
+                        <label class="font-weight-bold">ADDRESS NAME</label>
+                        <input  id="address_name" class="form-control " type="text" name="name" placeholder="e.g: Home" maxlength="40"
+                            value=""/>
+                    </div>
+                    <div class="form-group mr-2 ml-2 ">
+                        <label class="font-weight-bold">STREET NAME *</label>
+                        <input id="street_name" class="form-control " type="text" name="street_name" maxlength="40"
+                            value="" required/>
+                    </div>
+                    <div class="form-group  mr-2 ml-2 ">
+                        <label class="font-weight-bold">STREET NUMBER *</label>
+                        <input id="street_number" class="form-control " type="number" name="street_number" min="0" max="999" value=""
+                            required/>
+                    </div>
+                    <div class="form-group mx-auto">
+                        <label class="font-weight-bold">CITY *</label>
+                        <select name="city" class="form-control " readonly>
+                            <option id="city_select" value=""></option>
+                        </select>
+                    </div>
+                    <div class="form-group mr-2 ml-2 ">
+                        <label class="font-weight-bold">PHONE NUMBER *</label>
+                        <input id="phone_number" class="form-control " type="tel" name="phone_number" minlength="9" maxlength="15"
+                               value="" required/>
+                    </div>
+                    <div class="form-group  mx-auto">
+                        <label class="font-weight-bold">FLOOR</label>
+                        <input id="floor" class="form-control " type="number" name="floor" min="0" max="999" value=""/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-11 mx-auto " >
+                <div class="input-group mb-1">
 
-</div>
-<div id="address_form_div" >
-    <form id="edit_address" method="post" action="">
-        <label>ADDRESS NAME</label><br>
-        <input  id="address_name" type="text" name="name" placeholder="e.g: Home" maxlength="40"
-               value=""/><br>
-        <label>STREET NAME *</label><br>
-        <input id="street_name" type="text" name="street_name" maxlength="40"
-               value="" required/><br>
-        <label>STREET NUMBER *</label><br>
-        <input id="street_number" type="number" name="street_number" min="0" max="999" value=""
-               required/><br>
-        <label>CITY *</label><br>
-        <select name="city" readonly>
-            <option id="city_select" value=""></option>
-        </select><br>
-        <label>PHONE NUMBER *</label><br>
-        <input id="phone_number" type="tel" name="phone_number" minlength="9" maxlength="15"
-               value="" required/><br>
-        <label>FLOOR</label><br>
-        <input id="floor" type="number" name="floor" min="0" max="999" value=""/><br>
-        <label>BUILDING NUMBER</label><br>
-        <input id="building_number" type="text" name="building_number" maxlength="6"
-               value=""/><br>
-        <label>APARTMENT NUMBER</label><br>
-        <input id="apartment_number" type="text" name="apartment_number" maxlength="6" value=""/><br>
-        <label>ENTRANCE</label><br>
-        <input id="entrance" type="text" name="entrance" maxlength="6" value=""/><br><br>
-        <input id="address_id" type="hidden" name="id" value=""/>
-        <div id="change" style="float: left ;width: 30%; margin-right: 8px;">
-            <img src="uploads/green_check.svg" width="30px" height="30px" alt="Change"/><br>
-            <input type="submit" onclick="submitForm('index.php?target=address&action=change')"
-                   value="Change"
-                   name="change">
+                    <div class="form-group mx-auto">
+                        <label class="font-weight-bold">BUILDING NUMBER</label>
+                        <input id="building_number" class="form-control " type="text" name="building_number" maxlength="6"
+                               value=""/>
+                    </div>
+                    <div class="form-group ml-2 mr-2">
+                        <label class="font-weight-bold">APARTMENT NUMBER</label>
+                        <input id="apartment_number" class="form-control " type="text" name="apartment_number" maxlength="6" value=""/>
+                    </div>
+                    <div class="form-group mx-auto">
+                        <label class="font-weight-bold">ENTRANCE</label>
+                        <input id="entrance" class="form-control" type="text" name="entrance" maxlength="6" value=""/>
+                    </div>
+                        <input id="address_id" type="hidden" name="id" value=""/>
+                </div>
+            </div>
+    </div>
+        <div class="text-center col-xs-12 col-md-7 " style="float: left;width: 22%">
+            <div id="change" class="col-md-12 " style="margin-bottom: 120px;margin-top: 120px" >
+                <input type="submit" class="btn btn-outline-success" onclick="submitForm('index.php?target=address&action=change')"
+                       value="Change" name="change">
+            </div>
+            <div id="delete"class="col-md-12 " style="margin-bottom: 120px">
+                <input type="submit" class="btn btn-outline-danger" onclick="submitForm('index.php?target=address&action=delete')"
+                       value="Delete" name="delete">
+            </div>
         </div>
-        <div id="delete" style="float: left; width: 30%;">
-            <img src="uploads/delete_cross.svg" width="30px" height="30px" alt="Delete"/><br>
-            <input type="submit" onclick="submitForm('index.php?target=address&action=delete')"
-                   value="Delete"
-                   name="delete">
-        </div>
+
     </form>
 </div>
+
     <script>viewAddresses();</script>
 <script type="text/javascript">
     function submitForm(action) {

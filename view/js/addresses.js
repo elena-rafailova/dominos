@@ -9,28 +9,26 @@ function viewAddresses() {
             var addresses = this.responseText;
             addresses = JSON.parse(addresses);
 
-            var h4 = document.createElement("h4");
-            h4.innerHTML = "MODIFY YOUR DETAILS, ADD OR DELETE AN ADDRESS";
-            h4.setAttribute("class", "cart-title text-uppercase");
-            addresses_body.appendChild(h4);
-
             var my_addresses = document.createElement("div");
-            my_addresses.style.cssFloat = 'left';
-            my_addresses.style.marginRight = "35px";
 
-            var title = document.createElement("span");
-            title.innerHTML = "My addresses";
-            my_addresses.appendChild(title);
+
+            var p = document.createElement("p");
+            p.innerHTML = "My addresses";
+            p.setAttribute("class", "font-weight-bold text-center");
+            my_addresses.appendChild(p);
 
             var ul = document.createElement("ul");
+            ul.setAttribute("class", "list-group");
 
             if (addresses === false) {
                 var li = document.createElement("li");
+                li.setAttribute("class", "list-group-item list-group-item-action w-55 p-1 ");
                 li.innerHTML = "You've no addresses yet. <br> Please add new address.";
                 ul.appendChild(li);
             } else {
                 for (var key in addresses) {
                     var li1 = document.createElement("li");
+                    li1.setAttribute("class", "list-group-item list-group-item-action w-55 p-1");
                     var a = document.createElement("a");
                     a.href = 'index.php?target=address&action=show&id=' + addresses[key].id;
                     a.innerHTML = addresses[key].name;
@@ -40,26 +38,26 @@ function viewAddresses() {
             }
             my_addresses.appendChild(ul);
 
-            var span = document.createElement("span");
-            span.innerHTML = "Add a new address <br>";
 
-            var add_address = document.createElement("img");
-            add_address.src = "uploads/add_cross.svg";
-            add_address.style.width = "25px";
+            var add_address = document.createElement("button");
+            add_address.setAttribute("class", "btn" );
             add_address.onclick = function () {
                 location.href = 'index.php?target=address&action=add';
             };
-            add_address.setAttribute("class", "icons");
-            span.appendChild(add_address);
+            var i= document.createElement("i");
+            i.setAttribute("class","fas fa-plus");
+            var span = document.createElement("span");
+            span.innerHTML = "  Add a new address <br>";
+            span.setAttribute("class", "font-weight-bold text-center")
 
-            my_addresses.appendChild(span);
+           add_address.appendChild(i);
+            i.appendChild(span);
+
+
+
 
             addresses_body.appendChild(my_addresses);
-
-            var address_form_div = document.getElementById("address_form_div");
-            address_form_div.style.cssFloat = 'left';
-            address_form_div.style.width = "300px";
-            address_form_div.style.backgroundColor = "lilac";
+            addresses_body.appendChild(add_address);
 
             var url = window.location.search.substr(1);
             url = url.split("&");
