@@ -8,11 +8,11 @@ function getOthers(category_id, filter) {
             others = JSON.parse(others);
 
             var tr = document.createElement("div");
-            tr.setAttribute("class", "row")
+            tr.setAttribute("class", "row");
             for (var key in others) {
                 var other_element = document.createElement("div");
-                other_element.setAttribute("class", "col-lg-3 col-sm-5 col-xs-6 card text-decoration-none mb-2")
-                var br = document.createElement("br");
+                other_element.setAttribute("class", " col-lg-3 col-sm-5 card text-decoration-none mb-2")
+                //var br = document.createElement("br");
 
                 var img = document.createElement("img");
                 img.setAttribute("class", "product_img card-img-top");
@@ -23,7 +23,7 @@ function getOthers(category_id, filter) {
                 card_body.onclick = function() {getOptions(category_id, this.id)};
                 card_body.setAttribute("class", "card-body text-center font-weight-light ");
 
-                var p1 = document.createElement("p");
+                var p1 = document.createElement("h4");
                 p1.innerText = others[key].name;
                 p1.setAttribute("class", "cart-title text-uppercase");
                 card_body.appendChild(p1);
