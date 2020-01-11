@@ -141,14 +141,14 @@ function getAddresses() {
 }
 
 function seeAddresses() {
-    delivery.style.display = "block";
+    //delivery.style.display = "block";
     //deliveryPopUp.style.display = "none";
 }
 
 function seeRestaurants() {
-    carryOut.style.display = "block";
+    //carryOut.style.display = "block";
     //deliveryPopUp.style.display = "none";
-    document.getElementById("map").style.display = "block";
+    //document.getElementById("map").style.display = "block";
 }
 
 function carryOutF() {
@@ -171,7 +171,7 @@ function deliveryF() {
     var selectedRes = select.options[select.selectedIndex].value;
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            //delivery.style.display = "none";
+            //document.getElementById("delivery").style.display = "none";
         }
     };
     xhttp.open("POST", "index.php?target=user&action=deliveryMethod", true);

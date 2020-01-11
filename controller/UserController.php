@@ -280,9 +280,11 @@ class UserController
     function deliveryMethod()
     {
         if (isset($_POST["resId"])) {
+            unset($_SESSION["delivery"]);
             $_SESSION["carry_out"] = $_POST["resId"];
         }
         if (isset($_POST["addrId"])) {
+            unset($_SESSION["carry_out"]);
             $_SESSION["delivery"] = $_POST["addrId"];
         }
     }

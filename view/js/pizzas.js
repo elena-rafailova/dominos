@@ -13,7 +13,7 @@ function getPizzas(filter) {
                 var pizza_element = document.createElement("a");
                 pizza_element.href = "index.php?target=pizza&action=show&id=" + pizzas[key]["id"];
                 pizza_element.setAttribute("class", "col-lg-3 col-sm-5 col-xs-6 card text-decoration-none mb-2");
-                var br = document.createElement("br");
+
 
                 var img = document.createElement("img");
                 img.setAttribute("class", "product_img card-img-top");
@@ -153,8 +153,13 @@ function getPizza(id) {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var pizza = JSON.parse(this.responseText);
-            var img = document.getElementById("img");
-            img.src = pizza["img_url"];
+            var pizza_container = document.getElementById("pizza-background");
+            pizza_container.style.backgroundImage = "url("+pizza["img_url"]+")";
+            pizza_container.style.backgroundRepeat = "no-repeat";
+            pizza_container.style.backgroundPosition = "50% 90%";
+
+            var pizza_info = document.getElementById("pizza_info");
+            pizza_info.style.backgroundColor = "rgba(201,234,255,0.5)";
 
             var name = document.getElementById("name");
             name.innerText = pizza["name"];
@@ -397,7 +402,7 @@ function getPriceOfSize(size_id, price_for_one) {
 }
 
 
-function incrementVal() {
+function incrementValPizza() {
     var value = parseInt(document.getElementById('quantity').value, 10);
     value = isNaN(value) ? 1 : value;
     value++;
@@ -409,7 +414,7 @@ function incrementVal() {
     document.getElementById('quantity').value = value;
 }
 
-function decrementVal() {
+function decrementValPizza() {
     var value = parseInt(document.getElementById('quantity').value, 10);
     value = isNaN(value) ? 1 : value;
     if (value > 1) {

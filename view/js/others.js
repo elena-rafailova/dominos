@@ -7,34 +7,44 @@ function getOthers(category_id, filter) {
             var others = this.responseText;
             others = JSON.parse(others);
 
+            var tr = document.createElement("div");
+            tr.setAttribute("class", "row")
             for (var key in others) {
-                var tr = document.createElement("tr");
-                var td = document.createElement("td");
+                var other_element = document.createElement("div");
+                other_element.setAttribute("class", "col-lg-3 col-sm-5 col-xs-6 card text-decoration-none mb-2")
                 var br = document.createElement("br");
 
                 var img = document.createElement("img");
+                img.setAttribute("class", "product_img card-img-top");
                 img.src = others[key].img_url;
-                td.appendChild(img);
+                other_element.appendChild(img);
+
+                var card_body = document.createElement("a");
+                card_body.onclick = function() {getOptions(category_id, this.id)};
+                card_body.setAttribute("class", "card-body text-center font-weight-light ");
 
                 var p1 = document.createElement("p");
                 p1.innerText = others[key].name;
-
-                var hr = document.createElement("hr");
-
+                p1.setAttribute("class", "cart-title text-uppercase");
+                card_body.appendChild(p1);
+                //
+                // var hr = document.createElement("hr");
+                // card_body.appendChild(p1);
 
                 var p2 = document.createElement("p");
+                p2.setAttribute("class", "card-text");
                 p2.innerText = others[key].description;
+                card_body.appendChild(p2);
 
-                td.appendChild(p1);
-                td.appendChild(hr);
-                td.appendChild(p2);
+                other_element.appendChild(card_body);
 
                 var button = document.createElement("input");
                 button.type = "button";
                 button.value = "Choose";
+                button.setAttribute("class", "btn btn-primary ");
                 button.id = others[key].id + 'choose';
                 button.onclick= function() {getOptions(category_id, this.id)}
-                td.appendChild(button);
+                other_element.appendChild(button);
 
                 var order_form = document.createElement("form");
                 order_form.id= others[key].id + "order";
@@ -76,12 +86,19 @@ function getOthers(category_id, filter) {
                 quantity.innerHTML= "Quantity";
                 order_form.appendChild(quantity);
 
-                var minus_button = document.createElement("input");
-                minus_button.type = "button";
-                minus_button.id = "m" + others[key].id;
-                minus_button.value = "-";
-                minus_button.onclick = function () {decrementVal(this.id);};
-                order_form.appendChild(minus_button);
+                var minus = document.createElement("img");
+                minus.src = "uploads/minus.png";
+                minus.id = "m" + others[key].id;
+                minus.onclick = function () { decrementVal(this.id); };
+                minus.setAttribute("class", "icons float-left")
+                order_form.appendChild(minus);
+
+                // var minus_button = document.createElement("input");
+                // minus_button.type = "button";
+                // minus_button.id = "m" + others[key].id;
+                // minus_button.value = "-";
+                // minus_button.onclick = function () {decrementVal(this.id);};
+                // order_form.appendChild(minus_button);
 
                 var quantity_text = document.createElement("input");
                 quantity_text.type = "text";
@@ -92,26 +109,35 @@ function getOthers(category_id, filter) {
                 quantity_text.value = "1";
                 quantity_text.readOnly = true;
                 quantity_text.required = true;
+                quantity_text.setAttribute("class", "float-left form-control w-50")
                 order_form.appendChild(quantity_text);
 
-                var plus_button = document.createElement("input");
-                plus_button.type = "button";
-                plus_button.id = "p" + others[key].id;
-                plus_button.value = "+";
-                plus_button.onclick =  function () {incrementVal(this.id);};
-                order_form.appendChild(plus_button);
+                var plus = document.createElement("img");
+                plus.src = "uploads/plus.png";
+                plus.id = "p" + others[key].id;
+                plus.onclick = function () { incrementVal(this.id); };
+                plus.setAttribute("class", "float-left ")
+                order_form.appendChild(plus);
+
+                // var plus_button = document.createElement("input");
+                // plus_button.type = "button";
+                // plus_button.id = "p" + others[key].id;
+                // plus_button.value = "+";
+                // plus_button.onclick =  function () {incrementVal(this.id);};
+                // order_form.appendChild(plus_button);
 
                 var submit = document.createElement("input");
                 submit.type = "submit";
                 submit.name = "add_to_cart";
+                submit.setAttribute("class", "float-right m-2 btn btn-primary ");
                 submit.value = "Add";
                 order_form.appendChild(submit);
 
-                td.appendChild(order_form);
+                other_element.appendChild(order_form);
 
-                tr.appendChild(td);
-                table.appendChild(tr);
+                tr.appendChild(other_element);
             }
+            table.appendChild(tr);
         }
     };
     if(filter!= null) {
