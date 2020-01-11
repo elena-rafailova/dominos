@@ -17,9 +17,12 @@ use Swift_SmtpTransport;
 require_once 'model/DAO/config.php';
 class UserController
 {
+    function main() {
+        include_once "view/main.php";
+    }
     function register()
     {
-        include_once "view/register_view.php";
+        //include_once "view/register_view.php";
         $userDAO = new UserDAO();
         if (isset($_POST["register"])) {
             if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email'])
@@ -33,12 +36,14 @@ class UserController
                 } else {
                     $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
                     /** @var User $user */
-                    $user = new User($_POST["first_name"], $_POST["last_name"], $_POST["email"], $password);
-                    $userDAO->addUser($user);
-                    $_SESSION["logged_user"] = json_encode($user);
-                    $_SESSION["cart"] = new Cart();
-                    //echo "Successful registration. <br>";
-                    header("Location: index.php?target=pizza&action=showAll");
+                    $user = new User(null,$_POST["first_name"], $_POST["last_name"], $_POST["email"], $password);
+                    $newUser= $userDAO->addUser($user);
+                    if($newUser != false) {
+                        $_SESSION["logged_user"] = json_encode($newUser);
+                        $_SESSION["cart"] = new Cart();
+                        //echo "Successful registration. <br>";
+                        header("Location: index.php?target=pizza&action=showAll");
+                    }
                 }
             }
         }
@@ -46,9 +51,8 @@ class UserController
 
     function login()
     {
-        include_once "view/login_view.php";
+        //include_once "view/login_view.php";
         $userDAO = new UserDAO();
-
         if (isset($_POST['login'])) {
             if (isset($_POST['email']) && isset($_POST['password'])) {
                 $email = $_POST['email'];
@@ -62,8 +66,7 @@ class UserController
                         $user = json_encode($userObj);
                         $_SESSION['logged_user'] = $user;
                         $_SESSION["cart"] = new Cart();
-                        echo "Successful login! <br>";
-                        header("Location: index.php?target=pizza&action=showAll");
+                       header("Location: index.php?target=pizza&action=showAll");
                     } else {
                         throw new AuthorizationException("Invalid password or email! Try again.");
                     }
@@ -120,7 +123,7 @@ class UserController
     {
         unset($_SESSION);
         session_destroy();
-        header("Location: index.php?target=user&action=login");
+        header("Location: index.php?target=user&action=main");
         exit;
     }
 
