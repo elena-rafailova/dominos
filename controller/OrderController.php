@@ -50,9 +50,10 @@ class OrderController {
                 $orderDAO = new OrderDAO();
                 $orderDAO->placeOrder($order);
                 $_SESSION["cart"] = new Cart();
-                include_once "view/finished_order_view.php";
+                header("Location: index.php?target=cart&action=seeCart&finish");
+                //include_once "view/finished_order_view.php";
             } else {
-                header("Location: index.php?target=pizza&action=showAll");
+                header("Location: index.php?target=cart&action=seeCart");
                 die();
             }
         }
@@ -114,6 +115,12 @@ class OrderController {
 
 
     function date_sort($a, $b) {
-        return (strtotime($a->getDateCreated()) - strtotime($b->getDateCreated()));
+        return (strtotime($b->getDateCreated()) - strtotime($a->getDateCreated()));
+    }
+
+    function checkDelivery() {
+        if (!isset($_SESSION["delivery"]) && !isset($_SESSION["carry_out"])) {
+            echo "Please, choose a delivery method before ordering!";
+        }
     }
 }
