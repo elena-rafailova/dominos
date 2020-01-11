@@ -5,7 +5,6 @@ namespace controller;
 
 use model\Address;
 use model\DAO\AddressDAO;
-use model\DAO\CityDAO;
 
 class AddressController
 {
@@ -88,11 +87,12 @@ function delete(){
 }
 
 function show() {
-    $user_id = json_decode($_SESSION['logged_user'])->id;
-    $addressDAO = new AddressDAO();
-    $addresses = $addressDAO->get($user_id);
+//    $user_id = json_decode($_SESSION['logged_user'])->id;
+//    $addressDAO = new AddressDAO();
+//    $addresses = $addressDAO->get($user_id);
     include_once "view/addresses_view.php";
 }
+
 
 function getAddresses() {
     $user_id = json_decode($_SESSION['logged_user'])->id;

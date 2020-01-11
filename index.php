@@ -14,7 +14,7 @@ spl_autoload_register(function ($class){
     require_once  $class;
 });
 
-//set_exception_handler("handleExceptions");
+set_exception_handler("handleExceptions");
 session_start();
 
 $fileNotFoundFlag = false;
@@ -37,31 +37,6 @@ function handleExceptions(Exception $exception){
 //    echo json_encode($obj);
 }
 
-//
-//if($controllerName == "base" && $methodName == "baseFunc"){
-//    if(!isset($_SESSION["logged_user"])) {
-//        header("Location: index.php?target=user&action=login");
-//    } else {
-//        header("Location: index.php?target=pizza&action=showAll");
-//    }
-//}
-//elseif (class_exists($controllerClassName)){
-//    $controller = new $controllerClassName();
-//     if (method_exists($controller,$methodName)){
-//        if (!($controllerName == "user" && in_array($methodName,array("login","register","forgotPassword","resetPassword", "changePassword")))){
-//            if (!isset($_SESSION["logged_user"])){
-//                header("Location: index.php?target=user&action=login");
-//                die();
-//            }
-//            if (isset($_SESSION["logged_user"]) &&
-//                in_array($methodName,array("login", "register", "forgotPassword", "resetPassword", "changePassword"))) {
-//                header("Location: index.php?target=pizza&action=showAll");
-//                die();
-//            }
-//        }
-//        else {
-//            $controller->$methodName();
-//        }
 if (class_exists($controllerClassName)){
 $controller = new $controllerClassName();
     if (isset($_SESSION["logged_user"])) {
@@ -70,13 +45,13 @@ $controller = new $controllerClassName();
                 die();
         }
     } if (method_exists($controller,$methodName)){
-        if (!($controllerName == "user" && in_array($methodName,array("login","register","forgotPassword","resetPassword", "changePassword")))){
+        if (!($controllerName == "user" && in_array($methodName,array("main","login","register","forgotPassword","resetPassword", "changePassword")))){
             if (!isset($_SESSION["logged_user"])){
-                header("Location: index.php?target=user&action=login");
+                header("Location: index.php?target=user&action=main");
                 die();
             }
         }
-        if (isset($_SESSION["logged_user"]) && in_array($methodName,array("login", "register", "forgotPassword", "resetPassword", "changePassword"))) {
+        if (isset($_SESSION["logged_user"]) && in_array($methodName,array("main","login", "register", "forgotPassword", "resetPassword", "changePassword"))) {
             header("Location: index.php?target=pizza&action=showAll");
             die();
         } else {

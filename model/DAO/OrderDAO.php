@@ -90,16 +90,19 @@ class OrderDAO extends BaseDAO {
                 WHERE ord.user_id = ?;";
         $stmt2 = $pdo->prepare($sql2);
         $stmt2->execute([$user_id]);
-        $rows = $stmt2->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($rows as $row) {
+        $rows2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($rows2 as $row) {
             $other = new Other(null,$row["product"],null,null,null,null,null,$row["quantity"]);
             $orders[]=new Order($row["id"], $user_id, $row["date_created"], $row["status_name"],
                 null,null,null, $row["total_price"], [$other], null );
         }
-        if (empty($rows)) {
-            return false;
-        } else {
+
+        if(count($orders) > 0) {
             return $orders;
         }
+        else {
+            return false;
+        }
+
     }
 }

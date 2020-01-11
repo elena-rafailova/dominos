@@ -2,31 +2,40 @@
 include_once 'header.php';
 $user = json_decode($_SESSION['logged_user']);
 ?>
-
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit Profile</title>
-</head>
-<body>
+<div class="container text-center" >
 <form action="index.php?target=user&action=edit" method="post">
-    <label>First name: * </label><br>
-    <input type="text" name="first_name" value="<?= $user->first_name ?>" required><br>
-    <label>Last name: * </label><br>
-    <input type="text" name="last_name"  value="<?= $user->last_name ?>" required><br>
-    <label>Email: * </label><br>
-    <input type="email" name="email"  value="<?= $user->email ?>" readonly><br>
-    <label>Current password:</label><br>
-    <input type="password" name="password" placeholder="Enter password" ><br>
-    <label>New password:</label><br>
-    <input type="password" name="new_password" placeholder="Enter new password" ><br>
-    <label>Verify password:</label><br>
-    <input type="password"  name="verify_password" placeholder="Verify password" ><br>
-    <input type="submit" name="edit" value="Edit" ><br>
+    <div class="form-row">
+        <div class="form-group col-md-3 mx-auto">
+            <div class="input-group mb-3">
+    <div class="form-group">
+    <label class="font-weight-bold">First name: * </label><br>
+    <input type="text" class="form-control " name="first_name" value="<?= $user->first_name ?>" required><br>
+    </div>
+    <div class="form-group">
+    <label class="font-weight-bold">Last name: * </label><br>
+    <input type="text" class="form-control" name="last_name"  value="<?= $user->last_name ?>" required><br>
+    </div>
+    <div class="form-group">
+    <label class="font-weight-bold">Email: * </label><br>
+    <input type="email" class="form-control" name="email"  value="<?= $user->email ?>" readonly><br>
+    </div>
+    <div class="form-group">
+    <label class="font-weight-bold">Current password:</label><br>
+    <input type="password" class="form-control" name="password" placeholder="Enter password" ><br>
+    </div>
+    <div class="form-group">
+    <label class="font-weight-bold">New password:</label><br>
+    <input type="password" class="form-control" name="new_password" placeholder="Enter new password" ><br>
+    </div>
+    <div class="form-group">
+    <label class="font-weight-bold">Verify password:</label><br>
+    <input type="password" class="form-control" name="verify_password" placeholder="Verify password" ><br>
+    </div>
+    <div class="input-group">
+        <input type="submit" class="btn btn-primary " name="edit" value="Edit" ><br>
+    </div>
+            </div>
+        </div>
+    </div>
 </form>
-</body>
-</html>
+</div>

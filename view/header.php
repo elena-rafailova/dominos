@@ -11,7 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"></head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
 </head>
 <body>
@@ -37,8 +37,10 @@
     <script src="view/js/map.js"></script>
     <script src="view/js/pizzas.js"></script>
     <script src="view/js/others.js"></script>
+    <script src="view/js/others.js"></script>
     <script src="view/js/cart.js"></script>
     <script src="view/js/orders.js"></script>
+    <script src="view/js/addresses.js"></script>
     <script>checkCart();</script>
 </body>
 </html>

@@ -47,7 +47,7 @@ if(isset($_GET['category_id'])) {
             break;
         case 6:
             echo "<h1>Our dips: </h1>
-            <button onclick='getOthers(6)' class='btn btn-primary'>All</button>
+             <button onclick='getOthers(6)' class='btn btn-primary'>All</button>
              <button onclick='getOthers(6,1)' class='btn btn-primary'>New</button>
              <button onclick='getOthers(6,3)' class='btn btn-primary'>Spicy</button>";
             break;

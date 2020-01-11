@@ -22,7 +22,7 @@ class UserDAO extends BaseDAO {
         $stmt->execute(array($first_name, $last_name, $email, $password));
         $user->setId($pdo->lastInsertId());
             if($pdo->lastInsertId() > 0){
-                return true;
+                return $user;
             }
             else{
                 return false;

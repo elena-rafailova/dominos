@@ -2,130 +2,54 @@
 
 include_once "header.php";
 
-if (!isset($addresses)) {
-    header("index.php?target=address&action=show");
-}
 ?>
-    <h4>MODIFY YOUR DETAILS, ADD OR DELETE AN ADDRESS</h4>
-<div style="float: left; margin-right: 30px">
-    <p>
-        <span>My addresses</span>
-    </p>
-    <ul>
-    <?php
-    if(!$addresses) {
-        echo "You've no addresses yet. Please add new address";
-    }
-    else {
-        foreach ($addresses as $address) {
-            echo " <li><a href='index.php?target=address&action=show&id=$address->id'> ". $address->name." </li></a>";
-        }
-    }
-    ?>
-    </ul>
-    <a href="index.php?target=address&action=add"><button>ADD A NEW ADDRESS</button></a>
+
+<div id="addresses" >
+
 </div>
-<div style="float: left" >
-    <?php
-    if($addresses) {
-        foreach ($addresses as $address) {
-            if (isset($_GET['id']) && $_GET['id'] == $address->id) {
-                ?>
-                <form id="edit_address" method="post" action="">
-                    <label>ADDRESS NAME</label><br>
-                    <input type="text" name="name" placeholder="e.g: Home" maxlength="40"
-                           value="<?= $address->name ?>"/><br>
-                    <label>STREET NAME *</label><br>
-                    <input type="text" name="street_name" maxlength="40"
-                           value="<?= htmlspecialchars($address->street_name) ?>" required/><br>
-                    <label>STREET NUMBER *</label><br>
-                    <input type="number" name="street_number" min="0" max="999" value="<?= $address->street_number ?>"
-                           required/><br>
-                    <label>CITY *</label><br>
-                    <select name="city" readonly>
-                        <option value="<?= $address->city_id ?>"><?=$address->city_name ?></option>
-                    </select><br>
-                    <label>PHONE NUMBER *</label><br>
-                    <input type="tel" name="phone_number" minlength="9" maxlength="15"
-                           value="<?= $address->phone_number ?>" required/><br>
-                    <label>FLOOR</label><br>
-                    <input type="number" name="floor" min="0" max="999" value="<?= $address->floor ?>"/><br>
-                    <label>BUILDING NUMBER</label><br>
-                    <input type="text" name="building_number" maxlength="6"
-                           value="<?= $address->building_number ?>"/><br>
-                    <label>APARTMENT NUMBER</label><br>
-                    <input type="text" name="apartment_number" maxlength="6" value="<?= $address->apartment_number ?>"/><br>
-                    <label>ENTRANCE</label><br>
-                    <input type="text" name="entrance" maxlength="6" value="<?= $address->entrance ?>"/><br><br>
-                    <input type="hidden" name="id" value="<?= $address->id ?>"/>
-                    <div style="float: left ;width: 30%; margin-right: 8px;">
-                        <img src="uploads/green_check.svg" width="30px" height="30px" alt="Change"/><br>
-                        <input type="submit" onclick="submitForm('index.php?target=address&action=change')"
-                               value="Change"
-                               name="change">
-                    </div>
-                    <div style="float: left; width: 30%;">
-                        <img src="uploads/delete_cross.svg" width="30px" height="30px" alt="Delete"/><br>
-                        <input type="submit" onclick="submitForm('index.php?target=address&action=delete')"
-                               value="Delete"
-                               name="delete">
-                    </div>
-                </form>
-                <?php
-            }
-        }
-    }
-        if(!isset($_GET['id']) && $addresses) {
-            ?>
-            <form id="edit_address" method="post" action="">
-                <label>ADDRESS NAME</label><br>
-                <input type="text" name="name" placeholder="e.g: Home" maxlength="40"
-                       value="<?= $addresses[0]->name ?>"/><br>
-                <label>STREET NAME *</label><br>
-                <input type="text" name="street_name" maxlength="40"
-                       value="<?= htmlspecialchars($addresses[0]->street_name) ?>" required/><br>
-                <label>STREET NUMBER *</label><br>
-                <input type="number" name="street_number" min="0" max="999" value="<?= $addresses[0]->street_number ?>"
-                       required/><br>
-                <label>CITY *</label><br>
-                <select name="city" readonly>
-                    <option value="<?= $addresses[0]->city_id ?>"><?=$addresses[0]->city_name ?></option>
-                </select><br>
-                <label>PHONE NUMBER *</label><br>
-                <input type="tel" name="phone_number" minlength="9" maxlength="15"
-                       value="<?= $addresses[0]->phone_number ?>" required/><br>
-                <label>FLOOR</label><br>
-                <input type="number" name="floor" min="0" max="999" value="<?= $addresses[0]->floor ?>"/><br>
-                <label>BUILDING NUMBER</label><br>
-                <input type="text" name="building_number" maxlength="6"
-                       value="<?= $addresses[0]->building_number ?>"/><br>
-                <label>APARTMENT NUMBER</label><br>
-                <input type="text" name="apartment_number" maxlength="6" value="<?= $addresses[0]->apartment_number ?>"/><br>
-                <label>ENTRANCE</label><br>
-                <input type="text" name="entrance" maxlength="6" value="<?= $addresses[0]->entrance ?>"/><br><br>
-                <input type="hidden" name="id" value="<?= $addresses[0]->id ?>"/>
-                <div style="float: left ;width: 30%; margin-right: 8px;">
-                    <img src="uploads/green_check.svg" width="30px" height="30px" alt="Change"/><br>
-                    <input type="submit" onclick="submitForm('index.php?target=address&action=change')"
-                           value="Change"
-                           name="change">
-                </div>
-                <div style="float: left; width: 30%;">
-                    <img src="uploads/delete_cross.svg" width="30px" height="30px" alt="Delete"/><br>
-                    <input type="submit" onclick="submitForm('index.php?target=address&action=delete')"
-                           value="Delete"
-                           name="delete">
-                </div>
-            </form>
-
-    <?php
-    } else {
-
-        }
-    ?>
+<div id="address_form_div" >
+    <form id="edit_address" method="post" action="">
+        <label>ADDRESS NAME</label><br>
+        <input  id="address_name" type="text" name="name" placeholder="e.g: Home" maxlength="40"
+               value=""/><br>
+        <label>STREET NAME *</label><br>
+        <input id="street_name" type="text" name="street_name" maxlength="40"
+               value="" required/><br>
+        <label>STREET NUMBER *</label><br>
+        <input id="street_number" type="number" name="street_number" min="0" max="999" value=""
+               required/><br>
+        <label>CITY *</label><br>
+        <select name="city" readonly>
+            <option id="city_select" value=""></option>
+        </select><br>
+        <label>PHONE NUMBER *</label><br>
+        <input id="phone_number" type="tel" name="phone_number" minlength="9" maxlength="15"
+               value="" required/><br>
+        <label>FLOOR</label><br>
+        <input id="floor" type="number" name="floor" min="0" max="999" value=""/><br>
+        <label>BUILDING NUMBER</label><br>
+        <input id="building_number" type="text" name="building_number" maxlength="6"
+               value=""/><br>
+        <label>APARTMENT NUMBER</label><br>
+        <input id="apartment_number" type="text" name="apartment_number" maxlength="6" value=""/><br>
+        <label>ENTRANCE</label><br>
+        <input id="entrance" type="text" name="entrance" maxlength="6" value=""/><br><br>
+        <input id="address_id" type="hidden" name="id" value=""/>
+        <div id="change" style="float: left ;width: 30%; margin-right: 8px;">
+            <img src="uploads/green_check.svg" width="30px" height="30px" alt="Change"/><br>
+            <input type="submit" onclick="submitForm('index.php?target=address&action=change')"
+                   value="Change"
+                   name="change">
+        </div>
+        <div id="delete" style="float: left; width: 30%;">
+            <img src="uploads/delete_cross.svg" width="30px" height="30px" alt="Delete"/><br>
+            <input type="submit" onclick="submitForm('index.php?target=address&action=delete')"
+                   value="Delete"
+                   name="delete">
+        </div>
+    </form>
 </div>
-
-
+    <script>viewAddresses();</script>
 <script type="text/javascript">
     function submitForm(action) {
         var form = document.getElementById('edit_address');
