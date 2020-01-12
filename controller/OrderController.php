@@ -15,6 +15,7 @@ define("MIN_QUANTITY", 1);
 define("MAX_QUANTITY", 100);
 define("STATUS_PENDING", 1);
 define("PAYMENT_TYPE_CASH", 1);
+define("ROWS_PER_PAGE", 5);
 
 
 class OrderController {
@@ -67,10 +68,13 @@ class OrderController {
 
     function getOrders()
     {
+        $page = 1;
+        if (isset($_GET["page"])) {
+            $page = $_GET["page"];
+        }
         $user_id = json_decode($_SESSION['logged_user'])->id;
         $orderDAO = new OrderDAO();
-        $orders = $orderDAO->getOrders($user_id);
-        $counts = array_count_values(array_column($orders, "id"));
+        $orders = $orderDAO->getOrders($user_id, $page);
         $orderArray = [];
 
         /** @var Order $order */
@@ -95,6 +99,10 @@ class OrderController {
         }
 
         usort($orderArray, array("controller\\OrderController", "date_sort"));
+        $maxPage = ceil(count($orderArray) / ROWS_PER_PAGE);
+        if ($page > $maxPage) $page = $maxPage;
+        if ($page < 1) $page = 1;
+        $orderArray = array_slice($orderArray, ($page-1) * ROWS_PER_PAGE, ROWS_PER_PAGE);
         $result = [];
         /** @var Order $order */
         foreach ($orderArray as $order) {
@@ -108,8 +116,12 @@ class OrderController {
             }
             $productsArray = implode(";<br>", $productsArray);
 
-            $result[] = ["date_created" => $order->getDateCreated(), "total_price" => $order->getPrice(), "status" => $order->getStatusName(), "items" => $productsArray];
+            $result["orders"][] = ["date_created" => $order->getDateCreated(),
+                        "total_price" => $order->getPrice(),
+                        "status" => $order->getStatusName(),
+                        "items" => $productsArray];
         }
+        $result["max_pages"] = $maxPage;
         echo json_encode($result);
     }
 
