@@ -3,6 +3,7 @@
 
 namespace controller;
 
+use exceptions\NotFoundException;
 use model\DAO\DoughDAO;
 use model\DAO\IngredientDAO;
 use model\DAO\PizzaDAO;
@@ -17,6 +18,11 @@ class PizzaController
 
     function show() {
         if (isset($_GET["id"])) {
+            $pizzaDAO = new PizzaDAO();
+            $pizza = $pizzaDAO->getPizza($_GET["id"]);
+            if ($pizza === false) {
+                throw new NotFoundException("You are trying to reach non-existing pizza!");
+            }
             include_once "view/pizza_view.php";
         }
     }
@@ -35,6 +41,7 @@ class PizzaController
         if (isset($_GET["id"])) {
             $pizzaDAO = new PizzaDAO();
             $pizza = $pizzaDAO->getPizza($_GET["id"]);
+
 
             $price = 0;
             /** @var Ingredient $ingredient */

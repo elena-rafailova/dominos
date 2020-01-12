@@ -25,6 +25,9 @@ class OtherDAO extends BaseDAO {
             }
 
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (count($rows) == 0) {
+                return false;
+            }
             $others = [];
             foreach ($rows as $row) {
                 $others [] = new Other($row["id"], $row["name"] , $row["img_url"],

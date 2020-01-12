@@ -80,7 +80,7 @@ class PizzaDAO extends BaseDAO {
     public function getPizza($id) {
         $pdo = parent::getPDO();
 
-        $sql = "SELECT id, name, img_url, category FROM pizzas WHERE id=?;";
+        $sql = "SELECT id, name, img_url, category, modified FROM pizzas WHERE id=?;";
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$id]);
@@ -89,11 +89,15 @@ class PizzaDAO extends BaseDAO {
         $pizza = $stmt->fetch(PDO::FETCH_ASSOC);
         $ingredients = $this->getIngredients($id);
 
+        if (!$pizza || $pizza["modified"] == 1) {
+            return false;
+        }
 
         $pizza = new Pizza($pizza["id"], $pizza["name"], $pizza["img_url"], NOT_MODIFIED_PIZZA,
             $ingredients, $pizza["category"], new Dough(TRADITIONAL_DOUGH_ID), new Size(LARGE_SIZE_ID));
 
         return $pizza;
+
     }
 
 

@@ -4,13 +4,19 @@
 namespace controller;
 
 use exceptions\BadRequestException;
+use exceptions\NotFoundException;
 use model\DAO\OtherDAO;
 
 class OtherController
 {
-        function showOthers() {
-         include_once "view/others_view.php";
+    function showOthers() {
+        $otherDAO = new OtherDAO();
+        $others = $otherDAO->getAll($_GET["category_id"]);
+        if ($others === false) {
+            throw new NotFoundException("You are trying to reach not existing products!");
         }
+         include_once "view/others_view.php";
+    }
 
     function getOthersInfo() {
         if (!(isset($_GET["filter"])) && isset($_GET["category_id"])) {

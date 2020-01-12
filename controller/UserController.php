@@ -132,6 +132,9 @@ class UserController
         if (!(ctype_alpha($first_name)) || !(ctype_alpha($last_name))) {
             $msg .= " Invalid name format. It should contain only letters. <br> ";
         }
+        if (mb_strlen($first_name) < 3 || mb_strlen($last_name) < 3) {
+            $msg .= " Invalid first or last name. They should be at least 3 characters. <br> ";
+        }
         if (!(filter_var($email, FILTER_VALIDATE_EMAIL))) {
             $msg .= " Invalid email format. <br> ";
         }
