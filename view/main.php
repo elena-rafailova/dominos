@@ -22,33 +22,39 @@
     </div>
 </div>
 
-
-
-<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img class="w-100" src="uploads/main.jpg" alt="First slide">
+            <img class="w-100 carousel-img" src="uploads/banner1.jpg" alt="First slide">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Try our new wholegrain dough</h5>
+                <p>Order NOW medium size pizza italian style!</p>
+            </div>
         </div>
         <div class="carousel-item">
-            <img class="w-100" src="uploads/main2.jpg" alt="Second slide">
+            <img class="w-100" src="uploads/banner3.jpg" alt="Second slide">
         </div>
         <div class="carousel-item">
-            <img class="w-100" src="uploads/main3.jpg" alt="Third slide">
-        </div>
-        <div class="carousel-item">
-            <img class=" w-100" src="uploads/main4.jpg" alt="Third slide">
+            <img class=" w-100" src="uploads/banner4.jpg" alt="Third slide">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Our new dough with Philadelphia</h5>
+            </div>
         </div>
     </div>
-    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
     </a>
-    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
 </div>
-
 
 
 <div id="login" class="modal fade" role="dialog">
