@@ -78,13 +78,13 @@ $controller = new $controllerClassName();
                 die();
         }
     } if (method_exists($controller,$methodName)){
-        if (!($controllerName == "user" && in_array($methodName,array("main","login","register","forgotPassword","resetPassword", "changePassword")))){
+        if (!($controllerName == "user" && in_array($methodName,array("userExists","main","login","register","forgotPassword","resetPassword", "changePassword")))){
             if (!isset($_SESSION["logged_user"])){
                 header("Location: index.php?target=user&action=main");
                 die();
             }
         }
-        if (isset($_SESSION["logged_user"]) && in_array($methodName,array("main","login", "register", "forgotPassword", "resetPassword", "changePassword"))) {
+        if (isset($_SESSION["logged_user"]) && in_array($methodName,array("userExists", "main","login", "register", "forgotPassword", "resetPassword", "changePassword"))) {
             header("Location: index.php?target=pizza&action=showAll");
             die();
         } else {

@@ -59,18 +59,20 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body text-center center">
+                <div id="user_exists"></div>
                 <form action="index.php?target=user&action=login" method="post">
                     <label class=" w-100 font-weight-bold">Email:</label>
-                    <input class="form-control w-50 mx-auto"  type="email" name="email" placeholder="Enter email" required>
+                    <input class="form-control w-50 mx-auto" id="login_email" type="email" name="email" placeholder="Enter email" required>
                     <br>
                     <label class=" w-100 font-weight-bold" >Password:</label>
                     <input class="form-control w-50 mx-auto " type="password" name="password" placeholder="Enter password" required>
                     <br>
-                <h5><small class=" w-100"><a href="index.php?target=user&action=forgotPassword">Forgotten your password? Click here!</a> </small></h5>
+                <h5><small class=" w-100"><a href="#forgot_password" data-dismiss="modal" data-toggle="modal" >
+                            Forgotten your password? Click here!</a> </small></h5>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <input type="submit" name="login" value="Login" class="btn btn-primary ">
+                <input type="submit" id="login_button" name="login" value="Login" class="btn btn-primary ">
             </div>
             </form>
         </div>
@@ -85,13 +87,14 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body text-center center">
+                <div id="email_exists" ></div>
                 <form action="index.php?target=user&action=register" id="register_form" method="post">
                     <label class=" w-100 font-weight-bold">First name: * </label>
                     <input class="form-control w-50 mx-auto " id="first_name" type="text" name="first_name" placeholder="Enter first name"
-                           required pattern="[a-zA-Z]+$" title="First name should contain only letters!">
+                           required pattern="([a-zA-Z]){3,20}" title="First name should contain only letters, at least 3!">
                     <label class=" w-100 font-weight-bold">Last name: * </label>
                     <input class="form-control w-50 mx-auto" id="last_name" type="text" name="last_name" placeholder="Enter last name"
-                           required pattern="[a-zA-Z]+$" title="Last name should contain only letters!">
+                           required pattern="([a-zA-Z]){3,20}" title="Last name should contain only letters,at least 3!">
                     <label class=" w-100 font-weight-bold">Email: * </label>
                     <input class="form-control w-50 mx-auto " id="email" type="email" name="email" placeholder="Enter email"
                            required pattern="^[^@]+@[^@]+\.[^@]+$" title="Please enter a valid email address!">
@@ -108,13 +111,38 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <input type="submit" name="register" value="Register" class="btn btn-primary ">
+                <input type="submit" name="register" id="register_button" value="Register" class="btn btn-primary ">
             </div>
             </form>
         </div>
     </div>
 </div>
 
-<script src="view/js/registerValidation.js"></script>
+<div id="forgot_password" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100 text-center">Forgot Password</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body text-center center">
+                <p>Please enter your email so we can assist you in resetting your password.</p>
+                <form action="" id="forgot_form" method="post">
+                    <label class=" w-100 font-weight-bold">Email:</label>
+                    <input class="form-control w-50 mx-auto" id="forgot_email" type="email" name="forgot_email" placeholder="Enter email" required>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <input type="submit"  name="forgot_password" value="Send an email" onclick="forgotPass();"
+                        class="btn btn-primary ">
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="view/js/userValidation.js"></script>
+
 </body>
 

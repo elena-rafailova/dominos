@@ -66,11 +66,11 @@ include_once "header.php";
     </div>
         <div id="mod_buttons" class="text-center col-xs-12 col-md-7 ">
             <div id="change" class="col-md-12 "  >
-                <input type="submit" class="btn btn-outline-success" onclick="submitForm('index.php?target=address&action=change')"
+                <input id="change_button" type="submit" class="btn btn-outline-success " onclick="submitForm('index.php?target=address&action=change')"
                        value="Change" name="change">
             </div>
-            <div id="delete"class="col-md-12 " >
-                <input type="submit" class="btn btn-outline-danger" onclick="submitForm('index.php?target=address&action=delete')"
+            <div id="delete" class="col-md-12 " >
+                <input id="delete_button" type="submit" class="btn btn-outline-danger" onclick="submitForm('index.php?target=address&action=delete')"
                        value="Delete" name="delete">
             </div>
         </div>
