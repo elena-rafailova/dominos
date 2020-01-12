@@ -41,7 +41,7 @@
                     <a href="index.php?target=address&action=show" class="nav-link  mr-2  border bg-light rounded">My Addresses</a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.php?target=order&action=showOrders" class="nav-link mr-2  border bg-light rounded">My Orders</a>
+                    <a href="index.php?target=order&action=showOrders&page=1" class="nav-link mr-2  border bg-light rounded">My Orders</a>
                 </li>
                 <li class="nav-item">
                     <a href="index.php?target=user&action=logout" class="nav-link  mr-2  border bg-light rounded">Logout</a>
