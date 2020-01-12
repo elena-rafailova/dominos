@@ -17,6 +17,7 @@ use Swift_SmtpTransport;
 require_once 'model/DAO/config.php';
 class UserController
 {
+
     function main() {
         include_once "view/main.php";
     }
@@ -72,6 +73,22 @@ class UserController
                 }
             }
         }
+    }
+
+    function userExists() {
+        $userDAO = new UserDAO();
+        if (isset($_GET["email"])){
+            $email = $_GET["email"];
+        $userObj = $userDAO->checkUser($email);
+        if($userObj) {
+            $msg="exists";
+            echo json_encode($msg);
+            }
+        else {
+            $msg="doesn't";
+            echo json_encode($msg);
+        }
+         }
     }
 
     function edit()
@@ -194,11 +211,11 @@ class UserController
     function forgotPassword()
     {
         $msg = '';
-        include_once "view/forgot_password_view.php";
+        //include_once "view/forgot_password_view.php";
         $userDAO = new UserDAO();
-        if (isset($_POST['forgot_password'])) {
-            if (isset($_POST['email'])) {
-                $email = $_POST['email'];
+//        if (isset($_POST['forgot_password'])) {
+            if (isset($_POST['forgot_email'])) {
+                $email = $_POST['forgot_email'];
                 if (!(filter_var($email, FILTER_VALIDATE_EMAIL))) {
                     $msg .= " Invalid email format. <br> ";
                 } else {
@@ -213,11 +230,10 @@ class UserController
                         $expDate = date("Y-m-d H:i:s", $expFormat);
                         $userDAO->addToken($user_id, $token, $expDate);
                         $this->sendMail($email, $token);
-                        include_once "view/forgot_message_view.php";
                     }
                 }
             }
-        }
+//        }
     if($msg!= '') {
        throw new BadRequestException("$msg");
     }

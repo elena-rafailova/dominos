@@ -1,5 +1,6 @@
 <?php
 namespace Controller;
+use exceptions\BadRequestException;
 use model\Cart;
 use model\DAO\IngredientDAO;
 use model\DAO\OtherDAO;
@@ -36,6 +37,8 @@ class CartController {
                 $price_for_one = 0;
                 if (isset($_POST["price_for_one"])) {
                     $price_for_one = $_POST["price_for_one"];
+                } else {
+                    throw new BadRequestException("The action could not be completed. Please try again.");
                 }
                 if (isset($_POST["quantity"]) && $_POST["quantity"] >= MIN_QUANTITY && $_POST["quantity"] <= MAX_QUANTITY) {
                     $pizza->setQuantity($_POST["quantity"]);
@@ -44,12 +47,11 @@ class CartController {
                     header("Location: index.php?target=pizza&action=showAll");
                     die();
                 } else {
-                    //ToDo error
-                    header("Location: index.php?target=pizza&action=showAll");
-                    die();
+
+                   throw new BadRequestException("The action could not be completed. Please try again.");
                 }
             } else if (isset($_POST["other_id"]) && isset($_POST["category_id"])) {
-                $user = json_decode($_SESSION['logged_user']);
+                json_decode($_SESSION['logged_user']);
                 $id = $_POST["other_id"];
                 $category_id = $_POST["category_id"];
                 $otherDAO = new OtherDAO();
@@ -57,8 +59,7 @@ class CartController {
                 if (isset($_POST["quantity"]) && $_POST["quantity"] >= MIN_QUANTITY && $_POST["quantity"] <= MAX_QUANTITY) {
                     $other->setQuantity($_POST["quantity"]);
                 } else {
-                    header("Location: index.php");
-                    die();
+                    throw new BadRequestException("The action could not be completed. Please try again.");
                 }
                 if ($category_id == 8 && isset($_POST["drink_size"])) {
                     $price_for_one = $_POST["drink_size"];
@@ -71,9 +72,7 @@ class CartController {
                 header("Location: index.php?target=pizza&action=showAll");
                 die();
             }else {
-                //ToDo error
-                header("Location: index.php?target=pizza&action=showAll");
-                die();
+                throw new BadRequestException("The action could not be completed. Please try again.");
             }
         }
     }
