@@ -75,6 +75,11 @@ class OrderController {
         $user_id = json_decode($_SESSION['logged_user'])->id;
         $orderDAO = new OrderDAO();
         $orders = $orderDAO->getOrders($user_id, $page);
+
+        if ($orders === false) {
+            echo json_encode(["orders" => "empty"]);
+            die();
+        }
         $orderArray = [];
 
         /** @var Order $order */

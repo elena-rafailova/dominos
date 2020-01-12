@@ -9,11 +9,22 @@ function loadOrders(page) {
             var orders = this.responseText;
             orders = JSON.parse(orders);
 
+            var container = document.getElementById("orders-container");
+            container.innerHTML = "";
+
+            if (orders.orders == "empty") {
+                var empty_msg = document.createElement("h6");
+                empty_msg.setAttribute("class", "font-weight-bold")
+                empty_msg.innerText = "Your order history is empty!";
+                container.appendChild(empty_msg);
+                document.getElementById("prev").disabled = true;
+                document.getElementById("next").disabled = true;
+                return;
+            }
+
             var max_page = orders.max_pages;
             orders = orders.orders;
 
-            var container = document.getElementById("orders-container");
-            container.innerHTML = "";
             //var row = document.createElement("div");
             //row.setAttribute("class", "row");
             for (var key in orders){

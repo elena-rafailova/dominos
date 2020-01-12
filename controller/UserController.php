@@ -284,14 +284,19 @@ class UserController
 
     function deliveryMethod()
     {
-        if (isset($_POST["resId"])) {
+        if (isset($_POST["resId"]) && $_POST["resId"] != "ERR-NO-ADDR") {
             unset($_SESSION["delivery"]);
             $_SESSION["carry_out"] = $_POST["resId"];
+            echo json_encode(["msg" => "success"]);
+            die();
         }
-        if (isset($_POST["addrId"])) {
+        if (isset($_POST["addrId"]) && $_POST["addrId"] != "ERR-NO-ADDR") {
             unset($_SESSION["carry_out"]);
             $_SESSION["delivery"] = $_POST["addrId"];
+            echo json_encode(["msg" => "success"]);
+            die();
         }
+        echo json_encode(["msg" => "error"]);
     }
 
 }

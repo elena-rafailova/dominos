@@ -6,8 +6,8 @@ include_once "header.php";
     <div class="container mx-auto">
         <div id="deliveryPopUp">
             CHOOSE YOUR ORDER METHOD<br>
-            <input type="button" value="Free Delivery" data-toggle="modal" class="btn btn-primary btn-info btn-lg" onclick="seeAddresses()" data-target="#delivery">
-            <input type="button" value="Carry Out" data-toggle="modal" class="btn btn-primary btn-info btn-lg" onclick="seeRestaurants()" data-target="#carryOut">
+            <input type="button" value="Free Delivery" data-toggle="modal" class="btn btn-primary btn-info btn-lg" data-target="#delivery">
+            <input type="button" value="Carry Out" data-toggle="modal" class="btn btn-primary btn-info btn-lg" data-target="#carryOut">
         </div>
 
         <div id="delivery" class="modal fade" role="dialog">
@@ -18,7 +18,7 @@ include_once "header.php";
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <select name="address" id="addresses" class="browser-default custom-select" >
+                        <select name="address" id="addresses" class="browser-default custom-select w-100" >
 
                         </select>
                     </div>
@@ -66,7 +66,7 @@ include_once "header.php";
             document.getElementById("finished_order").style.display="none";
 
             getAddresses();
-            getRestaurants();
+            //getRestaurants();
             deliveryAlert();
         </script>
         <div id="shopping_cart" class="container mt-5">

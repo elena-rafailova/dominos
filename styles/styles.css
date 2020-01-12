@@ -54,9 +54,9 @@ a, input[type=button] {
 }
 #main_img {
     height: 85vh;
-    background-image: url("../uploads/main_1.png");
-    background-repeat: no-repeat;
-    background-size: cover;
+    /*//background-image: url("../uploads/main_1.png");*/
+    /*//background-repeat: no-repeat;*/
+    /*background-size: cover;*/
 }
 #error_img {
     height: 70vh;
