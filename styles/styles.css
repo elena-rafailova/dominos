@@ -3,9 +3,17 @@ body {
     background-image: url('../uploads/background.jpg');
 }
 
-.product_img {
-    min-width: 285px;
+@media screen and (min-width: 992px) {
+    .card {
+        min-width: 265px !important;
+        max-width: 265px !important;
+    }
 }
+
+.card {
+    margin-left: 3px;
+}
+
 
 #buttons li {
     float: left;

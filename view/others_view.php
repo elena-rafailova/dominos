@@ -61,7 +61,7 @@ if(isset($_GET['category_id'])) {
             echo "<h1>Our drinks: </h1>";
             break;
     }?>
-    <div id="others" class="card-group  mt-2">
+    <div id="others" class="container card-group  mt-2">
     </div>
 
     <script type="text/javascript">
