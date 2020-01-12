@@ -20,6 +20,7 @@ class UserController
     function main() {
         include_once "view/main.php";
     }
+
     function register()
     {
         $userDAO = new UserDAO();
@@ -57,7 +58,7 @@ class UserController
                 $password = $_POST['password'];
                 $userObj = $userDAO->checkUser($email);
                 if (!$userObj) {
-                throw  new AuthorizationException("Invalid password or email! Try again.");
+                throw  new AuthorizationException("User with that email doesn't exist.");
                 } else {
                     if (password_verify($password, $userObj->getPassword())) {
                         /** @var User $user */

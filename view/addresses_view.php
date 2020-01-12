@@ -64,7 +64,7 @@ include_once "header.php";
                 </div>
             </div>
     </div>
-        <div class="text-center col-xs-12 col-md-7 " style="float: left;width: 22%">
+        <div id="mod_buttons" class="text-center col-xs-12 col-md-7 " style="float: left;width: 22%">
             <div id="change" class="col-md-12 " style="margin-bottom: 120px;margin-top: 120px" >
                 <input type="submit" class="btn btn-outline-success" onclick="submitForm('index.php?target=address&action=change')"
                        value="Change" name="change">

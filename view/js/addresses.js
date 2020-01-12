@@ -130,6 +130,12 @@ function viewAddresses() {
                         address_id.value = addresses[0].id;
                     }
                 }
+            } else {
+                var div_to_hide = document.getElementById("address_form_div");
+                var div2_to_hide = document.getElementById("mod_buttons");
+                div_to_hide.style.display = "none";
+                div2_to_hide.style.display = "none";
+
             }
         }
     };

@@ -23,7 +23,7 @@
 </div>
 
 <div>
-    <img width="100%" height="700vh" src="uploads/main.jpg">
+    <img width="100%" height="620px"  src="uploads/main_1.png">
 </div>
 
 <div id="login" class="modal fade" role="dialog">
@@ -35,11 +35,12 @@
             </div>
             <div class="modal-body text-center center">
                 <form action="index.php?target=user&action=login" method="post">
-                    <label class=" w-100 ">Email:</label><br>
-                    <input class=" w-50 " type="email" name="email" placeholder="Enter email" required><br>
-                    <label class=" w-100" >Password:</label><br>
-                    <input class=" w-50 " type="password" name="password" placeholder="Enter password" required><br>
-                <h6 class=" w-100 ">Forgotten your password? Click <a href="index.php?target=user&action=forgotPassword">here!</a> </h6>
+                    <label class=" w-100 font-weight-bold">Email:</label>
+                    <input class=" w-50 "  type="email" name="email" placeholder="Enter email" required>
+                    <label class=" w-100 font-weight-bold" >Password:</label>
+                    <input class=" w-50 " type="password" name="password" placeholder="Enter password" required>
+                    <br><br>
+                <h5><small class=" w-100"><a href="index.php?target=user&action=forgotPassword">Forgotten your password? Click here!</a> </small></h5>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -58,17 +59,26 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body text-center center">
-                <form action="index.php?target=user&action=register" method="post">
-                    <label class=" w-100 ">First name: * </label><br>
-                    <input class=" w-50 " type="text" name="first_name" placeholder="Enter first name" required><br>
-                    <label class=" w-100 ">Last name: * </label><br>
-                    <input class=" w-50" type="text" name="last_name" placeholder="Enter last name" required><br>
-                    <label class=" w-100 ">Email: * </label><br>
-                    <input class=" w-50 " type="email" name="email" placeholder="Enter email" required><br>
-                    <label class=" w-100 ">New password: * </label><br>
-                    <input class=" w-50" type="password" name="password" placeholder="Enter password" required><br>
-                    <label class=" w-100 ">Verify password: * </label><br>
-                    <input class=" w-50 " type="password"  name="verify_password" placeholder="Verify password" required><br>
+                <form action="index.php?target=user&action=register" id="register_form" method="post">
+                    <label class=" w-100 font-weight-bold">First name: * </label>
+                    <input class=" w-50 " id="first_name" type="text" name="first_name" placeholder="Enter first name"
+                           required pattern="[a-zA-Z]+$" title="First name should contain only letters!">
+                    <label class=" w-100 font-weight-bold">Last name: * </label>
+                    <input class=" w-50" id="last_name" type="text" name="last_name" placeholder="Enter last name"
+                           required pattern="[a-zA-Z]+$" title="Last name should contain only letters!">
+                    <label class=" w-100 font-weight-bold">Email: * </label>
+                    <input class=" w-50 " id="email" type="email" name="email" placeholder="Enter email"
+                           required pattern="^[^@]+@[^@]+\.[^@]+$" title="Please enter a valid email address!">
+                    <label class=" w-100 font-weight-bold">New password: * </label>
+                    <input class=" w-50" id="password" type="password" name="password" placeholder="Enter password"
+                           required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&\*]){8,20}"
+                           title="Password should be at least 8 characters -
+                containing at least one lowercase, one uppercase letter, one digit
+                and one special character.">
+                    <label class=" w-100 font-weight-bold ">Verify password: * </label>
+                    <input class=" w-50 " id="verify_password" type="password"  name="verify_password" placeholder="Verify password"
+                           required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&\*]){8,20}"
+                           title="Please enter the same password as above.">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -78,6 +88,6 @@
         </div>
     </div>
 </div>
-
+<script src="view/js/registerValidation.js"></script>
 </body>
 
