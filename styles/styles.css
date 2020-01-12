@@ -49,3 +49,41 @@ a, input[type=button] {
     width: 50px;
 }
 
+#main_header {
+    height: 15vh;
+}
+#main_img {
+    height: 85vh;
+    background-image: url("../uploads/main_1.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#error_img {
+    height: 70vh;
+    background-image: url("../uploads/error_face_1.png");
+    /*background-image: url("../uploads/error.gif");*/
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: revert;
+}
+#addresses {
+    margin-right: 5px;
+    float: left;
+    width: 25%;
+}
+#address_form_div {
+    width: 50%;
+    margin-right: 5px;
+    float: left;
+}
+#mod_buttons {
+   float: left;
+    width: 22%;
+}
+#change {
+    margin-bottom: 120px;
+    margin-top: 120px;
+}
+#delete {
+    margin-bottom: 120px;
+}

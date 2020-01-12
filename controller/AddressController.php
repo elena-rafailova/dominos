@@ -3,6 +3,7 @@
 
 namespace controller;
 
+use exceptions\BadRequestException;
 use model\Address;
 use model\DAO\AddressDAO;
 
@@ -26,8 +27,7 @@ function add () {
             $entrance = $_POST['entrance'];
             $msg = $this->validationOfInput($street_name, $name, $phone_number, $building_number, $apartment_number, $entrance);
             if ($msg != '') {
-                echo $msg;
-                include_once "view/add_address_view.php";
+                throw new BadRequestException("$msg");
             } else {
                 $address = new Address($phone_number, $city, $name, $street_name, $street_number, $building_number, $entrance, $floor, $apartment_number);
                 $user_id = json_decode($_SESSION['logged_user'])->id;

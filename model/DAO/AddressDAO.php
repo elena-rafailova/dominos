@@ -46,7 +46,8 @@ class AddressDAO extends BaseDAO {
                 a.street_number, a.building_number,a.entrance,a.floor,a.apartment_number
                 FROM addresses as a JOIN users_have_addresses as uha ON a.id = uha.address_id
                 JOIN cities AS c ON (c.id=a.city_id)
-                WHERE uha.user_id = ? ;";
+                WHERE uha.user_id = ? 
+                ORDER BY  a.id ASC;";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$user_id]);
         $rows = $stmt->fetchAll(PDO::FETCH_OBJ);

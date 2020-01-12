@@ -5,10 +5,10 @@ include_once "header.php";
 ?>
 <div class="container text-center center" >
     <h3 class="font-weight-bold text-center">MODIFY YOUR DETAILS, ADD OR DELETE AN ADDRESS</h3>
-    <div id="addresses"  style="margin-right: 5px;float: left;width: 25%;"  >
+    <div id="addresses">
 
     </div>
-    <div id="address_form_div" style="width: 50%;margin-right: 5px;float: left" >
+    <div id="address_form_div"  >
         <form id="edit_address" method="post" action="">
             <div class="col-md-10 mx-auto " >
                 <div class="input-group mb-1">
@@ -24,7 +24,7 @@ include_once "header.php";
                     </div>
                     <div class="form-group  mr-2 ml-2 ">
                         <label class="font-weight-bold">STREET NUMBER *</label>
-                        <input id="street_number" class="form-control " type="number" name="street_number" min="0" max="999" value=""
+                        <input id="street_number" class="form-control  " type="number" name="street_number" min="0" max="999" value=""
                             required/>
                     </div>
                     <div class="form-group mx-auto">
@@ -64,12 +64,12 @@ include_once "header.php";
                 </div>
             </div>
     </div>
-        <div id="mod_buttons" class="text-center col-xs-12 col-md-7 " style="float: left;width: 22%">
-            <div id="change" class="col-md-12 " style="margin-bottom: 120px;margin-top: 120px" >
+        <div id="mod_buttons" class="text-center col-xs-12 col-md-7 ">
+            <div id="change" class="col-md-12 "  >
                 <input type="submit" class="btn btn-outline-success" onclick="submitForm('index.php?target=address&action=change')"
                        value="Change" name="change">
             </div>
-            <div id="delete"class="col-md-12 " style="margin-bottom: 120px">
+            <div id="delete"class="col-md-12 " >
                 <input type="submit" class="btn btn-outline-danger" onclick="submitForm('index.php?target=address&action=delete')"
                        value="Delete" name="delete">
             </div>
@@ -78,7 +78,7 @@ include_once "header.php";
     </form>
 </div>
 
-    <script>viewAddresses();</script>
+<script>viewAddresses();</script>
 <script type="text/javascript">
     function submitForm(action) {
         var form = document.getElementById('edit_address');
