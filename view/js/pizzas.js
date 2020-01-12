@@ -12,24 +12,24 @@ function getPizzas(filter) {
             for (var key in pizzas) {
                 var pizza_element = document.createElement("a");
                 pizza_element.href = "index.php?target=pizza&action=show&id=" + pizzas[key]["id"];
-                pizza_element.setAttribute("class", "col-lg-3 col-sm-5 col-xs-6 card text-decoration-none mb-2");
+                pizza_element.setAttribute("class", "col-lg-3 col-md-4 col-sm-5 col-xs-6 card text-decoration-none mb-2");
 
 
                 var img = document.createElement("img");
                 img.setAttribute("class", "product_img card-img-top");
-                img.src = pizzas[key]["img_url"];
+                img.src = pizzas[key].img_url;
                 pizza_element.appendChild(img);
 
                 var str = [];
-                for (var ingr in pizzas[key]["ingredients"]) {
-                    str[ingr] = pizzas[key]["ingredients"][ingr]["name"];
+                for (var ingr in pizzas[key].ingredients) {
+                    str[ingr] = pizzas[key].ingredients[ingr].name;
                 }
 
                 var card_body = document.createElement("div");
                 card_body.setAttribute("class", "card-body text-center font-weight-light ");
 
                 var p1 = document.createElement("h4");
-                p1.innerText = pizzas[key]["name"];
+                p1.innerText = pizzas[key].name;
                 p1.setAttribute("class", "cart-title text-uppercase");
                 card_body.appendChild(p1);
 

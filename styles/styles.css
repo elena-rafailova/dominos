@@ -3,8 +3,15 @@ body {
     background-image: url('../uploads/background.jpg');
 }
 
-.product_img {
-    width: 100px;
+@media screen and (min-width: 992px) {
+    .card {
+        min-width: 265px !important;
+        max-width: 265px !important;
+    }
+}
+
+.card {
+    margin-left: 3px;
 }
 
 

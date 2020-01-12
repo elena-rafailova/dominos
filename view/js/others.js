@@ -8,11 +8,11 @@ function getOthers(category_id, filter) {
             others = JSON.parse(others);
 
             var tr = document.createElement("div");
-            tr.setAttribute("class", "row")
+            tr.setAttribute("class", "row");
             for (var key in others) {
                 var other_element = document.createElement("div");
-                other_element.setAttribute("class", "col-lg-3 col-sm-5 col-xs-6 card text-decoration-none mb-2")
 
+                other_element.setAttribute("class", "col-lg-3 col-md-4 col-sm-5 col-xs-6 card text-decoration-none mb-2")
 
                 var img = document.createElement("img");
                 img.setAttribute("class", "product_img card-img-top");
