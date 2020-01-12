@@ -53,12 +53,6 @@ a, input[type=button] {
     height: 15vh;
 }
 
-#main_img {
-    height: 85vh;
-    /*//background-image: url("../uploads/main_1.png");*/
-    /*//background-repeat: no-repeat;*/
-    /*background-size: cover;*/
-}
 #error_img {
     height: 70vh;
     background-image: url("../uploads/error.gif");

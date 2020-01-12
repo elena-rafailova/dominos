@@ -32,17 +32,21 @@
         <div class="carousel-item active">
             <img class="w-100 carousel-img" src="uploads/banner1.jpg" alt="First slide">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Try our new wholegrain dough</h5>
-                <p>Order NOW medium size pizza italian style!</p>
+                <h5><span class="bg-light text-dark p-1 mb-5 shadow-lg rounded">Try our new wholegrain dough</span></h5>
+                <p><span class="bg-light text-dark p-1 mb-5 shadow-lg rounded">Order NOW medium size pizza italian style!</span></p>
             </div>
         </div>
         <div class="carousel-item">
-            <img class="w-100" src="uploads/banner3.jpg" alt="Second slide">
+            <img class="w-100" src="uploads/banner2.jpg" alt="Second slide">
+            <div class="carousel-caption d-none d-md-block">
+                <h5><span class="bg-light text-dark p-1 mb-5 shadow-lg rounded">Try our bestseller</span></h5>
+                <p><span class="bg-light text-dark p-1 mb-5 shadow-lg rounded">The vegetarian Pizza Beyond!</span></p>
+            </div>
         </div>
         <div class="carousel-item">
-            <img class=" w-100" src="uploads/banner4.jpg" alt="Third slide">
+            <img class=" w-100" src="uploads/banner3.jpg" alt="Third slide">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Our new dough with Philadelphia</h5>
+                <h5><span class="bg-light text-dark p-1 mb-5 shadow-lg rounded">Our new dough with Philadelphia</span></h5>
             </div>
         </div>
     </div>
