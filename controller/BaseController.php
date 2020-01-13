@@ -1,7 +1,7 @@
 <?php
 namespace controller;
 
-class basecontroller {
+class BaseController {
     public function basefunc() {
         if (isset($_session["logged_user"])) {
             header("location: index.php?target=pizza&action=showall");
