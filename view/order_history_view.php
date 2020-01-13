@@ -12,7 +12,7 @@ include_once "header.php";
 </script>
 
 <h3 class="font-weight-bold text-center">My orders</h3>
-<div class="container" id="orders-container">
+<div class="container  mb-3" id="orders-container">
 
 </div>
 <div id="pages" class="m-5">

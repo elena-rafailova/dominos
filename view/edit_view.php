@@ -3,7 +3,7 @@ include_once 'header.php';
 $user = json_decode($_SESSION['logged_user']);
 ?>
 
-<div class="container text-center" >
+<div class="container text-center  mb-3" >
     <h3 class="font-weight-bold text-center">Edit profile</h3>
 <form action="index.php?target=user&action=edit" method="post">
         <div class="form-group col-md-3  mx-auto" >

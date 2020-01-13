@@ -6,7 +6,7 @@ include_once "products_nav_view.php";
 <div class="container  mx-auto mt-5">
 
     <h1 id="name"></h1>
-    <div id="pizza_info" class="container pb-2">
+    <div id="pizza_info" class="container pb-2  mb-3">
         <form action="index.php?target=cart&action=addToCart" method="post">
             <div id="pizza-background">
                 <div class="container ">

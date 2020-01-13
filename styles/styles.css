@@ -97,3 +97,25 @@ a, input[type=button] {
 #user_exists {
     display: none;
 }
+
+/* HIDE RADIO */
+.payment {
+    box-sizing: border-box;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* IMAGE STYLES */
+.payment + .payment_img {
+    cursor: pointer;
+    padding: 20px;
+}
+
+/* CHECKED STYLES */
+.payment:checked + .payment_img {
+    box-shadow: 0 2pt 2pt 2pt #5f98ff;
+    border: 2px solid #5f98ff;
+    border-radius: 10px;
+}

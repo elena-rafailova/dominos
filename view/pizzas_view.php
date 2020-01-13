@@ -3,7 +3,7 @@ include_once "header.php";
 include_once "products_nav_view.php";
 
 ?>
-<div class="container mx-auto mt-5 ">
+<div class="container mx-auto mt-5  mb-3 ">
     <h1>Our pizzas: </h1>
 
     <button onclick="getPizzas(0)"  class="btn btn-primary ">All</button></a>

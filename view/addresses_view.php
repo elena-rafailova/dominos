@@ -3,7 +3,7 @@
 include_once "header.php";
 
 ?>
-<div class="container text-center center" >
+<div class="container text-center center  mb-3" >
     <h3 class="font-weight-bold text-center">MODIFY YOUR DETAILS, ADD OR DELETE AN ADDRESS</h3>
     <div id="addresses">
 

@@ -127,7 +127,10 @@ function viewCart() {
             product_container.appendChild(document.createElement("hr"));
 
             price += items_quantity.value * items[key].price;
+
             shopping_cart_div.appendChild(product_container);
+
+
         }
         var price_container = document.createElement("h1");
         price_container.innerText = "Total price: ";
@@ -147,6 +150,68 @@ function viewCart() {
         var submit_form = document.createElement("form");
         submit_form.method = "post";
         submit_form.action = "index.php?target=order&action=finish";
+
+        var comment = document.createElement("textarea");
+        comment.placeholder = "Additional info...";
+        comment.setAttribute("name", "comment");
+        comment.setAttribute("class", "form-control w-50 mb-2");
+        submit_form.appendChild(comment);
+
+        var payment_container = document.createElement("div");
+        payment_container.setAttribute("class", "mb-2 mt-2");
+
+        var payment_title = document.createElement("h6");
+        payment_title.innerText = "Select your payment type:";
+
+        payment_container.appendChild(payment_title);
+        var cash = document.createElement("input");
+        cash.type = "radio";
+        cash.value = "1";
+        cash.id = "cash";
+        cash.setAttribute("class", "payment");
+        cash.checked = true;
+        cash.name = "payment_type";
+
+        var label = document.createElement("label");
+        label.setAttribute("class", "payment_img m-3");
+        var icon = document.createElement("img");
+        icon.src = "uploads/cash.png";
+        label.appendChild(icon);
+        label.setAttribute("for", "cash");
+
+        payment_container.appendChild(cash);
+        payment_container.appendChild(label);
+
+        var text = document.createElement("span");
+        text.innerText = "(Cash)";
+        payment_container.appendChild(text);
+
+
+
+        var card = document.createElement("input");
+        card.type = "radio";
+        card.value = "2";
+        card.setAttribute("class", "payment ");
+        card.id = "card";
+        card.name = "payment_type";
+
+        var label_card = document.createElement("label");
+        label_card.setAttribute("class", "payment_img m-3 ml-5");
+        var icon = document.createElement("img");
+        icon.src = "uploads/card.png";
+        icon.setAttribute("class", "payment_img");
+        label_card.appendChild(icon);
+        label_card.setAttribute("for", "card");
+
+        payment_container.appendChild(card);
+        payment_container.appendChild(label_card);
+        var text = document.createElement("span");
+        text.innerText = "(Card)";
+        payment_container.appendChild(text);
+
+
+        submit_form.appendChild(payment_container);
+
 
         var input_submit = document.createElement("input");
         input_submit.type = "submit";

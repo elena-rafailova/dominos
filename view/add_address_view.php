@@ -8,7 +8,7 @@ if(!isset($cities)) {
 
 $user = json_decode($_SESSION['logged_user']);
 ?>
-<div class="container text-center">
+<div class="container text-center  mb-3">
     <h3 class="font-weight-bold text-center">Add new address</h3>
     <form action="index.php?target=address&action=add" method="post">
             <div class="col-md-8 mx-auto " >

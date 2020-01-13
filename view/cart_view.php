@@ -2,7 +2,7 @@
 include_once "header.php";
 ?>
 
-<div class="container mx-auto w-70 mt-2">
+<div class="container mx-auto w-70 mt-2 mb-3">
     <div class="container mx-auto">
         <div id="deliveryPopUp">
             CHOOSE YOUR ORDER METHOD<br>

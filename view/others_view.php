@@ -17,7 +17,7 @@ if(isset($_GET['category_id'])) {
 }
  ?>
 
-<div class="container  mx-auto mt-5 ">
+<div class="container  mx-auto mt-5  mb-3">
     <?php
     switch($category_id) {
         case 1:

@@ -14,7 +14,6 @@ use model\Product;
 define("MIN_QUANTITY", 1);
 define("MAX_QUANTITY", 100);
 define("STATUS_PENDING", 1);
-define("PAYMENT_TYPE_CASH", 1);
 define("ROWS_PER_PAGE", 5);
 
 
@@ -40,13 +39,23 @@ class OrderController {
                 }
             }
 
+            $comment = "";
+            if(isset($_POST["comment"])) {
+                $comment = $_POST["comment"];
+            }
+
+            $payment = 1;
+            if (isset($_POST["payment_type"])) {
+                $payment = intval($_POST["payment_type"]);
+            }
+
             $delivery_addr = $_SESSION["delivery"] ?? null;
             $restaurant_id = $_SESSION["carry_out"] ?? null;
 
             if ($restaurant_id || $delivery_addr) {
                 $order = new Order(null, $user->id, null, STATUS_PENDING,
-                    $delivery_addr, $restaurant_id,PAYMENT_TYPE_CASH, $cart->getPrice(),
-                    $cart->getProducts(), null);
+                    $delivery_addr, $restaurant_id, $payment, $cart->getPrice(),
+                    $cart->getProducts(), $comment);
 
                 $orderDAO = new OrderDAO();
                 $orderDAO->placeOrder($order);
