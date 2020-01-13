@@ -101,10 +101,10 @@
                 <form action="index.php?target=user&action=register" id="register_form" method="post">
                     <label class=" w-100 font-weight-bold">First name: * </label>
                     <input class="form-control w-50 mx-auto " id="first_name" type="text" name="first_name" placeholder="Enter first name"
-                           required pattern="([a-zA-Z]){3,20}" title="First name should contain only letters, at least 3!">
+                           required pattern="[a-zA-Z\u0400-\u04ff]{3,30}" title="First name should contain only letters, at least 3!">
                     <label class=" w-100 font-weight-bold">Last name: * </label>
                     <input class="form-control w-50 mx-auto" id="last_name" type="text" name="last_name" placeholder="Enter last name"
-                           required pattern="([a-zA-Z]){3,20}" title="Last name should contain only letters,at least 3!">
+                           required pattern="[a-zA-Z\u0400-\u04ff]{3,30}" title="Last name should contain only letters,at least 3!">
                     <label class=" w-100 font-weight-bold">Email: * </label>
                     <input class="form-control w-50 mx-auto " id="email" type="email" name="email" placeholder="Enter email"
                            required pattern="^[^@]+@[^@]+\.[^@]+$" title="Please enter a valid email address!">

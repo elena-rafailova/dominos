@@ -26,13 +26,20 @@ body {
     width: 100%;
 }
 
-a, input[type=button] {
+a {
     color:black !important;
-
 }
+
+a {
+    color:black !important;
+}
+
 
 .card-body:hover {
     color:grey !important;
+}
+.order-button {
+    color: white; !important;
 }
 
 /*.labels {*/
@@ -76,7 +83,7 @@ a, input[type=button] {
 }
 #change {
     margin-bottom: 120px;
-    margin-top: 120px;
+    margin-top: 60px;
 }
 #delete {
     margin-bottom: 120px;

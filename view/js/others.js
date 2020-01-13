@@ -15,7 +15,7 @@ function getOthers(category_id, filter) {
                 other_element.setAttribute("class", "col-lg-3 col-md-4 col-sm-5 col-xs-6 card text-decoration-none mb-2")
 
                 var img = document.createElement("img");
-                img.setAttribute("class", "product_img card-img-top");
+                img.setAttribute("class", "product_img card-img-top mt-3");
                 img.src = others[key].img_url;
                 other_element.appendChild(img);
 
@@ -41,7 +41,7 @@ function getOthers(category_id, filter) {
                 var button = document.createElement("input");
                 button.type = "button";
                 button.value = "Choose";
-                button.setAttribute("class", "btn btn-primary ");
+                button.setAttribute("class", "btn btn-primary  mb-2 ");
                 button.id = others[key].id + 'choose';
                 button.onclick= function() {getOptions(category_id, this.id)}
                 other_element.appendChild(button);
@@ -129,7 +129,7 @@ function getOthers(category_id, filter) {
                 var submit = document.createElement("input");
                 submit.type = "submit";
                 submit.name = "add_to_cart";
-                submit.setAttribute("class", "float-right m-2 btn btn-primary ");
+                submit.setAttribute("class", "float-right m-2 btn btn-primary");
                 submit.value = "Add to cart";
                 order_form.appendChild(submit);
 

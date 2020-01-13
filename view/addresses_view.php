@@ -12,47 +12,46 @@ include_once "header.php";
         <form id="edit_address" method="post" action="">
             <div class="col-md-10 mx-auto " >
                 <div class="input-group mb-1">
-                    <div class="form-group mx-auto">
+                    <div class="form-group mx-auto ">
                         <label class="font-weight-bold">ADDRESS NAME</label>
-                        <input  id="address_name" class="form-control " type="text" name="name" placeholder="e.g: Home" maxlength="40"
+                        <input  id="address_name" class="form-control " type="text" name="name" placeholder="e.g: Home" maxlength="30"
                             value=""/>
                     </div>
-                    <div class="form-group mr-2 ml-2 ">
+                    <div class="form-group mx-auto ">
                         <label class="font-weight-bold">STREET NAME *</label>
                         <input id="street_name" class="form-control " type="text" name="street_name" maxlength="40"
                             value="" required/>
                     </div>
-                    <div class="form-group  mr-2 ml-2 ">
-                        <label class="font-weight-bold">STREET NUMBER *</label>
-                        <input id="street_number" class="form-control  " type="number" name="street_number" min="0" max="999" value=""
+                    <div class="form-group mx-auto" style="width: 35%">
+                        <label class="font-weight-bold ">STREET NUMBER *</label>
+                        <input id="street_number" class="form-control w-50 mx-auto " type="text" name="street_number"  maxlength="4" value=""
                             required/>
                     </div>
-                    <div class="form-group mx-auto">
+                    <div class="form-group" >
                         <label class="font-weight-bold">CITY *</label>
                         <select name="city" class="form-control " readonly>
                             <option id="city_select" value=""></option>
                         </select>
                     </div>
-                    <div class="form-group mr-2 ml-2 ">
+                    <div class="form-group mx-auto" style="width: 35%;">
+                        <label class="font-weight-bold  ">FLOOR</label>
+                        <input id="floor" class="form-control w-50 mx-auto " type="text" name="floor" maxlength="4" value=""/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10 mx-auto " >
+                <div class="input-group mb-1">
+                    <div class="form-group mx-auto">
                         <label class="font-weight-bold">PHONE NUMBER *</label>
                         <input id="phone_number" class="form-control " type="tel" name="phone_number" minlength="9" maxlength="15"
                                value="" required/>
                     </div>
-                    <div class="form-group  mx-auto">
-                        <label class="font-weight-bold">FLOOR</label>
-                        <input id="floor" class="form-control " type="number" name="floor" min="0" max="999" value=""/>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-11 mx-auto " >
-                <div class="input-group mb-1">
-
                     <div class="form-group mx-auto">
                         <label class="font-weight-bold">BUILDING NUMBER</label>
                         <input id="building_number" class="form-control " type="text" name="building_number" maxlength="6"
                                value=""/>
                     </div>
-                    <div class="form-group ml-2 mr-2">
+                    <div class="form-group mx-auto">
                         <label class="font-weight-bold">APARTMENT NUMBER</label>
                         <input id="apartment_number" class="form-control " type="text" name="apartment_number" maxlength="6" value=""/>
                     </div>

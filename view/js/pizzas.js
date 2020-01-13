@@ -16,7 +16,7 @@ function getPizzas(filter) {
 
 
                 var img = document.createElement("img");
-                img.setAttribute("class", "product_img card-img-top");
+                img.setAttribute("class", "product_img card-img-top mt-3");
                 img.src = pizzas[key].img_url;
                 pizza_element.appendChild(img);
 
@@ -41,9 +41,9 @@ function getPizzas(filter) {
 
                 pizza_element.appendChild(card_body);
 
-                var button = document.createElement("a");
+                var button = document.createElement("button");
                 button.type = "button";
-                button.setAttribute("class", "btn btn-primary ");
+                button.setAttribute("class", "order-button btn btn-primary mb-2");
                 button.href = "index.php?target=pizza&action=show&id=" + pizzas[key]["id"];
                 button.innerText = "Choose";
 

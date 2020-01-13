@@ -25,7 +25,7 @@ function add () {
             $building_number = $_POST['building_number'];
             $apartment_number = $_POST['apartment_number'];
             $entrance = $_POST['entrance'];
-            $msg = $this->validationOfInput($street_name, $name, $phone_number, $building_number, $apartment_number, $entrance);
+            $msg = $this->validationOfInput($street_name, $name, $phone_number, $floor,$street_number, $building_number, $apartment_number, $entrance);
             if ($msg != '') {
                 throw new BadRequestException("$msg");
             } else {
@@ -60,8 +60,9 @@ function change()
             $building_number = $_POST['building_number'];
             $apartment_number = $_POST['apartment_number'];
             $entrance = $_POST['entrance'];
-
-            $msg = $this->validationOfInput($street_name, $name, $phone_number, $building_number, $apartment_number, $entrance);
+            echo $street_number;
+            echo $floor;
+            $msg = $this->validationOfInput($street_name, $name, $phone_number, $floor,$street_number, $building_number, $apartment_number, $entrance);
             if ($msg != '') {
                 echo $msg;
                 include_once "view/header.php";
@@ -101,30 +102,45 @@ function getAddresses() {
     echo json_encode($addresses, JSON_UNESCAPED_UNICODE);
 }
 
-function validationOfInput($street_name, $name , $phone_number, $building_number='' ,$apartment_number='' ,$entrance= '') {
+function validationOfInput($street_name, $name , $phone_number, $floor,$street_number, $building_number='' ,$apartment_number='' ,$entrance= '') {
     $msg = '';
 
-    if((preg_match("^[a-zA-Z0-9\s]+$^",$name)) !=1 ) {
+    $pattern  = "/^[a-zA-Z\p{Cyrillic}0-9\s\-]+$/u";
+//    $pattern1 = "/[^a-zA-Z\p{Cyrillic}]+$/";
+    if((preg_match($pattern,$name)) !=1 ) {
         $msg .= " Invalid address name format. <br> ";
     }
-    if((preg_match("^[a-zA-Z0-9\s.\"']+$^", $street_name)) != 1) {
+    if((preg_match("/^[a-zA-Z\p{Cyrillic}0-9\s\-.\"']+$/u", $street_name)) != 1) {
         $msg .= " Invalid street name format. <br> ";
     }
     if((preg_match("^[0-9\s+]+$^", $phone_number)) != 1) {
         $msg .= " Invalid phone number format. <br> ";
     }
+    if((substr($floor, 0, 1) === '-') ||
+    (substr($floor, 0, 1) === '0') ||  (substr($floor, 0, 2) === '00') ||
+   !is_numeric($floor)) {
+      $msg.= "Invalid floor number.";
+    }
+    if((substr($street_number, 0, 1) === '-') ||
+        (substr($street_number, 0, 1) === '0') ||  (substr($street_number, 0, 2) === '00') ||
+        !is_numeric($street_number)) {
+        $msg.= "Invalid street number.";
+    }
     if($building_number!= ''){
-        if(!ctype_alnum($building_number)){
+        if(!ctype_alnum($building_number) ||  (substr($apartment_number, 0, 1) === '-') ||
+            (substr($apartment_number, 0, 1) === '0') ||  (substr($apartment_number, 0, 2) === '00')){
             $msg .= " Invalid building number format.<br> ";
         }
     }
     if($apartment_number!= ''){
-        if(!ctype_alnum($apartment_number)){
+        if(!ctype_alnum($apartment_number) ||  (substr($apartment_number, 0, 1) === '-') ||
+            (substr($apartment_number, 0, 1) === '0') ||  (substr($apartment_number, 0, 2) === '00')){
             $msg .= " Invalid apartment number format. <br> ";
         }
     }
     if($entrance!= ''){
-        if(!ctype_alnum($entrance)){
+        if(!ctype_alnum($entrance) || (substr($apartment_number, 0, 1) === '-') ||
+            (substr($apartment_number, 0, 1) === '0') ||  (substr($apartment_number, 0, 2) === '00')) {
             $msg .= " Invalid entrance format. <br> ";
         }
     }

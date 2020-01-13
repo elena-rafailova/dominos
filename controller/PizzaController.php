@@ -12,11 +12,11 @@ use model\Ingredient;
 
 class PizzaController
 {
-    function showAll() {
+    public function showAll() {
         include_once "view/pizzas_view.php";
     }
 
-    function show() {
+    public function show() {
         if (isset($_GET["id"])) {
             $pizzaDAO = new PizzaDAO();
             $pizza = $pizzaDAO->getPizza($_GET["id"]);
@@ -27,17 +27,17 @@ class PizzaController
         }
     }
 
-    function getDoughs() {
+    public function getDoughs() {
         $doughDAO = new DoughDAO();
         echo json_encode($doughDAO->getAll(), JSON_UNESCAPED_UNICODE);
     }
 
-    function getSizes() {
+    public function getSizes() {
         $sizeDAO = new SizeDAO();
         echo json_encode($sizeDAO->getAll(), JSON_UNESCAPED_UNICODE);
     }
 
-    function getPizza() {
+    public function getPizza() {
         if (isset($_GET["id"])) {
             $pizzaDAO = new PizzaDAO();
             $pizza = $pizzaDAO->getPizza($_GET["id"]);
@@ -59,7 +59,7 @@ class PizzaController
         }
     }
 
-    function getIngr()
+    public function getIngr()
     {
         if (isset($_GET["category"])) {
             if (isset($_GET["pizza"])) {
@@ -85,7 +85,7 @@ class PizzaController
         }
     }
 
-    function getPizzasInfo() {
+    public function getPizzasInfo() {
         $pizzaDAO = new PizzaDAO();
         if (!isset($_GET["filter"])) {
             $pizzas = $pizzaDAO->getAll();
@@ -96,14 +96,14 @@ class PizzaController
         echo json_encode($pizzas, JSON_UNESCAPED_UNICODE);
     }
 
-    function getDoughPrice() {
+    public function getDoughPrice() {
         if (isset($_GET["id"])) {
             $doughDAO = new DoughDAO();
             echo $doughDAO->getPrice($_GET["id"]);
         }
     }
 
-    function getSizePrice() {
+    public function getSizePrice() {
         if (isset($_GET["id"])) {
             $sizeDAO = new SizeDAO();
 
@@ -111,7 +111,7 @@ class PizzaController
         }
     }
 
-    function getIngrPrice() {
+    public function getIngrPrice() {
         if (isset($_GET["id"])) {
             $ingredientDAO = new IngredientDAO();
             echo $ingredientDAO->getPrice($_GET["id"]);

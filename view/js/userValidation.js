@@ -41,15 +41,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // input key handlers
 
-        first_name_input.addEventListener("keyup", function(e) {
+        first_name_input.addEventListener("blur", function(e) {
             first_name_input.setCustomValidity(this.validity.patternMismatch ? first_name_input.title : "");
         }, false);
 
-        last_name_input.addEventListener("keyup", function(e) {
+        last_name_input.addEventListener("blur", function(e) {
             last_name_input.setCustomValidity(this.validity.patternMismatch ? last_name_input.title : "");
         }, false);
 
-        email.addEventListener("keyup", function(e) {
+        email.addEventListener("blur", function(e) {
             email.setCustomValidity(this.validity.patternMismatch ? email.title : "");
         }, false);
 

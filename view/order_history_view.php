@@ -11,7 +11,7 @@ include_once "header.php";
         page = page[page.length - 1];
 </script>
 
-<h3 class="font-weight-bold text-center">My orders</h3>
+<h3 class="font-weight-bold text-center text-uppercase">My orders</h3>
 <div class="container  mb-3" id="orders-container">
 
 </div>

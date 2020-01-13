@@ -108,8 +108,7 @@ class UserController
                             } else {
                                 $password = password_hash($_POST['new_password'], PASSWORD_BCRYPT);
                                 $email = json_decode($_SESSION['logged_user'])->email;
-                                $user = new User($_POST["first_name"], $_POST["last_name"], $email, $password);
-                                $user->setId(json_decode($_SESSION['logged_user'])->id);
+                                $user = new User(json_decode($_SESSION['logged_user'])->id,$_POST["first_name"], $_POST["last_name"], $email, $password);
                                 $userDAO->editUser($user);
                                 $_SESSION['logged_user'] = json_encode($user);
                                 echo "Profile changed successfully. <br>";
@@ -124,8 +123,7 @@ class UserController
                         throw new BadRequestException("$msg");
                     } else {
                         $email = json_decode($_SESSION['logged_user'])->email;
-                        $user = new User($_POST["first_name"], $_POST["last_name"], $email, $password);
-                        $user->setId(json_decode($_SESSION['logged_user'])->id);
+                        $user = new User(json_decode($_SESSION['logged_user'])->id,$_POST["first_name"], $_POST["last_name"], $email, $password);
                         $userDAO->editUser($user);
                         $_SESSION['logged_user'] = json_encode($user);
                         echo "Profile changed successfully. <br>";
@@ -145,8 +143,13 @@ class UserController
 
     function validationOfInput($first_name, $last_name, $email, $password = 1, $verify_password = 1)
     {
+        $pattern  = '/^[a-zA-Z\p{Cyrillic}\s\-]+$/u';
         $msg = '';
-        if (!(ctype_alpha($first_name)) || !(ctype_alpha($last_name))) {
+//        if (!(ctype_alpha($first_name)) || !(ctype_alpha($last_name))
+//            || !(preg_match("/^[a-zA-Z\p{Cyrillic}\s]+$/u",$first_name)) || !(preg_match("/^[a-zA-Z\p{Cyrillic}\s]+$/u",$last_name)) ) {
+//            $msg .= " Invalid name format. It should contain only letters. <br> ";
+//        }
+        if(!preg_match ($pattern, $first_name) || !preg_match ($pattern, $last_name)) {
             $msg .= " Invalid name format. It should contain only letters. <br> ";
         }
         if (mb_strlen($first_name) < 3 || mb_strlen($last_name) < 3) {
