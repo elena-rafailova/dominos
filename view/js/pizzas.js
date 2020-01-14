@@ -178,8 +178,6 @@ function getPizza(id) {
             var price_for_one = document.getElementById("price_for_one");
             price_for_one.value = pizza["price"].toFixed(2);
             document.getElementById("price").innerText =  pizza["price"].toFixed(2);
-        } else {
-            alert(this.responseText);
         }
     };
 
@@ -344,7 +342,6 @@ function removeIngrPrice(ingr_id) {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var price_for_one = document.getElementById("price_for_one");
-            //alert(price.innerText);
             var priceVal = parseFloat(price_for_one.value);
             priceVal -= parseFloat(this.responseText);
 
