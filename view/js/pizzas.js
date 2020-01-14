@@ -179,7 +179,7 @@ function getPizza(id) {
             price_for_one.value = pizza["price"].toFixed(2);
             document.getElementById("price").innerText =  pizza["price"].toFixed(2);
         } else {
-            alert(this.responseText);
+          //  alert(this.responseText);
         }
     };
 
