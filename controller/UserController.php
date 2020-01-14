@@ -42,7 +42,6 @@ class UserController
                     if($newUser != false) {
                         $_SESSION["logged_user"] = json_encode($newUser);
                         $_SESSION["cart"] = new Cart();
-                        //echo "Successful registration. <br>";
                         header("Location: index.php?target=pizza&action=showAll");
                     }
                 }
@@ -96,42 +95,48 @@ class UserController
         include_once "view/edit_view.php";
         $userDAO = new UserDAO();
         if (isset($_POST['edit'])) {
+        $logged_user= json_decode($_SESSION['logged_user']);
             if (isset($_POST['first_name']) && isset($_POST['last_name'])) {
-                $password = json_decode($_SESSION['logged_user'])->password;
-                if (isset($_POST['password']) && !empty($_POST['password'])) {
-                    if (password_verify($_POST['password'], $password)) {
-                        if (isset($_POST['new_password']) && isset($_POST['verify_password'])) {
-                            $msg = $this->validationOfInput($_POST['first_name'], $_POST['last_name'], $_POST['email'],
-                                $_POST['new_password'], $_POST['verify_password']);
-                            if ($msg != '') {
-                                throw new BadRequestException("$msg");
-                            } else {
-                                $password = password_hash($_POST['new_password'], PASSWORD_BCRYPT);
-                                $email = json_decode($_SESSION['logged_user'])->email;
-                                $user = new User(json_decode($_SESSION['logged_user'])->id,$_POST["first_name"], $_POST["last_name"], $email, $password);
-                                $userDAO->editUser($user);
-                                $_SESSION['logged_user'] = json_encode($user);
-                                echo "Profile changed successfully. <br>";
-                            }
+                $password =$logged_user->password;
+        if (isset($_POST['password']) && !empty($_POST['password']) && $_POST["password"]!= '' ) {
+            if (password_verify($_POST['password'], $password)) {
+                if (isset($_POST['new_password']) && isset($_POST['verify_password'])) {
+                    $msg = $this->validationOfInput($_POST['first_name'], $_POST['last_name'], $_POST['email'],
+                        $_POST['new_password'], $_POST['verify_password']);
+                    if ($msg != '') {
+                        throw new BadRequestException("$msg");
+                    } else {
+                        $password = password_hash($_POST['new_password'], PASSWORD_BCRYPT);
+                        $email = $logged_user->email;
+                        $user = new User($logged_user->id,$_POST["first_name"], $_POST["last_name"], $email, $password);
+                        $userDAO->editUser($user);
+                        $_SESSION['logged_user'] = json_encode($user);
+                       header("Location: index.php?target=user&action=edit");
+                    }
                         }
                     } else {
                         throw new BadRequestException("The current password you've entered is wrong!");
                     }
-                } else {
-                    $msg = $this->validationOfInput($_POST['first_name'], $_POST['last_name'], $_POST['email']);
-                    if ($msg != '') {
-                        throw new BadRequestException("$msg");
-                    } else {
-                        $email = json_decode($_SESSION['logged_user'])->email;
-                        $user = new User(json_decode($_SESSION['logged_user'])->id,$_POST["first_name"], $_POST["last_name"], $email, $password);
-                        $userDAO->editUser($user);
-                        $_SESSION['logged_user'] = json_encode($user);
-                        echo "Profile changed successfully. <br>";
+                } elseif($_POST["first_name"] == $logged_user->first_name &&
+                    $_POST['last_name'] == $logged_user->last_name &&
+                    $_POST['email'] == $logged_user->email) {
+                        header("Location: index.php?target=user&action=edit");
+                    } else{
+                    echo $logged_user->first_name. " ".$logged_user->last_name." ".$logged_user->email. " ";
+                        $msg = $this->validationOfInput($_POST['first_name'], $_POST['last_name'], $_POST['email']);
+                        if ($msg != '') {
+                            throw new BadRequestException("$msg");
+                        } else {
+                            $email =$logged_user->email;
+                            $user = new User($logged_user->id,$_POST["first_name"], $_POST["last_name"], $email, $password);
+                            $userDAO->editUser($user);
+                            $_SESSION['logged_user'] = json_encode($user);
+                            header("Location: index.php?target=user&action=edit");
+                        }
                     }
                 }
             }
         }
-    }
 
     function logout()
     {

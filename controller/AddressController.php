@@ -79,13 +79,13 @@ function add () {
 
 function change()
 {
-
+        if(isset($_POST["change"]))
         if (isset($_POST['street_name']) && isset($_POST['street_number']) && isset($_POST['phone_number'])) {
-//            if ($_POST['name'] != '') {
+            if ($_POST['name'] != '') {
                $name = $_POST['name'];
-//            } else {
-//                $name = 'Empty Title';
-//            }
+            } else {
+                $name = 'Empty Title';
+            }
             $street_name = $_POST['street_name'];
             $street_number = $_POST['street_number'];
             $city_id = $_POST['city'];
@@ -116,12 +116,11 @@ function change()
                         $user_address->city_id == $city_id && $user_address->phone_number == $phone_number && $user_address->floor == $floor &&
                         $user_address->building_number == $building_number && $user_address->apartment_number == $apartment_number &&
                         $user_address->entrance == $entrance) {
-                        echo json_encode("Unsuccessful");
-                        die();
+                        header("Location: index.php?target=address&action=show");
                     }
                 }
                     $addressDAO->change($address, $id);
-                    echo json_encode("Successful!");
+                    header("Location: index.php?target=address&action=show");
                 } else {
                     throw new NotFoundException("Addresses not found!");
                 }
@@ -184,27 +183,24 @@ function validationOfInput($street_name, $name , $phone_number, $floor,$street_n
     if((preg_match("^[0-9\s+]+$^", $phone_number)) != 1) {
         $msg .= " Invalid phone number format. <br> ";
     }
-    if((is_numeric($floor) && $floor < 0) || !is_numeric($floor)) {
+    if((is_numeric($floor) && $floor < 0) || !is_numeric($floor) || (is_numeric($floor) && $floor > 1000)) {
       $msg.= "Invalid floor number. <br>";
     }
-    if((is_numeric($street_number) && $street_number < 1) || !is_numeric($street_number)) {
+    if((is_numeric($street_number) && $street_number < 1) || !is_numeric($street_number) || (is_numeric($street_number) && $street_number > 1000)) {
         $msg.= "Invalid street number. <br> ";
     }
     if($building_number!= ''){
-        if(!ctype_alnum($building_number) ||  (substr($apartment_number, 0, 1) === '-') ||
-            (substr($apartment_number, 0, 1) === '0') ||  (substr($apartment_number, 0, 2) === '00')){
+        if(!ctype_alnum($building_number) ||  (is_numeric($building_number) && $building_number < 0) || (is_numeric($building_number) && $building_number > 1000)){
             $msg .= " Invalid building number format.<br> ";
         }
     }
     if($apartment_number!= ''){
-        if(!ctype_alnum($apartment_number) ||  (substr($apartment_number, 0, 1) === '-') ||
-            (substr($apartment_number, 0, 1) === '0') ||  (substr($apartment_number, 0, 2) === '00')){
+        if(!ctype_alnum($apartment_number) ||  (is_numeric($apartment_number) && $apartment_number < 0) || (is_numeric($apartment_number) && $apartment_number > 1000)){
             $msg .= " Invalid apartment number format. <br> ";
         }
     }
     if($entrance!= ''){
-        if(!ctype_alnum($entrance) || (substr($apartment_number, 0, 1) === '-') ||
-            (substr($apartment_number, 0, 1) === '0') ||  (substr($apartment_number, 0, 2) === '00')) {
+        if(!ctype_alnum($entrance) || (is_numeric($entrance) && $entrance < 0) || (is_numeric($entrance) && $entrance > 1000)) {
             $msg .= " Invalid entrance format. <br> ";
         }
     }

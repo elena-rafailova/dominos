@@ -95,10 +95,7 @@ email.addEventListener("blur", function (){
         }
     };
     var value = email.value;
-    // xhttp.open("POST", "index.php?target=user&action=userExists", true);
-    // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.open("GET", "index.php?target=user&action=userExists&email=" + value , true);
-    // xhttp.send("email="+email);
     xhttp.send();
 });
 
@@ -124,10 +121,7 @@ login_email.addEventListener("blur", function (){
         }
     };
     var value = login_email.value;
-    // xhttp.open("POST", "index.php?target=user&action=userExists", true);
-    // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.open("GET", "index.php?target=user&action=userExists&email=" + value , true);
-    // xhttp.send("email="+value);
     xhttp.send();
 });
 

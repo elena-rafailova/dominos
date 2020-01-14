@@ -53,20 +53,17 @@ function handleExceptions(Exception $exception){
   <h2 class=\"font-weight-bold text-center\">ERROR: $status </h2>
   <h3 class=\"font-weight-bold text-center\">$msg </h3>
 <div id=\"error_img\" >
-  
+
 </div>
 </div>
 <div>
 </div>
 </body>
 </html>";
+
     http_response_code($status);
     echo $html;
 
-//    $obj = new stdClass();
-//    $obj->msg = $exception->getMessage();
-//    $obj->status = $status;
-//    echo json_encode($obj);
 }
 
 if (class_exists($controllerClassName)){
