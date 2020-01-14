@@ -58,6 +58,20 @@ class UserDAO extends BaseDAO {
         return true;
     }
 
+    function checkUserById($id) {
+        $pdo = parent::getPDO();
+        $sql ="SELECT id, first_name,last_name, email, password FROM users WHERE id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array($id));
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (empty($row)) {
+            return false;
+        } else {
+            //$row = new User($row["id"], $row["first_name"], $row["last_name"], $row["email"], $row["password"]);
+            return true;
+        }
+    }
+
     function addToken($user_id,$token,$expDate)
     {
         //add token to DB table

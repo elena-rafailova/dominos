@@ -49,7 +49,6 @@ function handleExceptions(Exception $exception){
     <a class=\"navbar pull-left navbar-left\" href=\"index.php\"><img src=\"uploads/dominos_logo.svg\"></a>
      <a href=\"index.php?target=user&action=main\"><button class=\"navbar btn btn-light\">Back to main </button></a>
 </div>
-<body>
 <div class=\"container text-center center\">
   <h2 class=\"font-weight-bold text-center\">ERROR: $status </h2>
   <h3 class=\"font-weight-bold text-center\">$msg </h3>
