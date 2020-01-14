@@ -22,7 +22,7 @@ if(!isset($cities)) {
                 </div>
                 <div class="form-group  mx-auto ">
                     <label class="font-weight-bold">STREET NUMBER *</label><br>
-                    <input type="number" class="form-control" min="0" max="999" name="street_number" required /><br>
+                    <input type="number" class="form-control" onkeydown="return false" min="0" max="999" name="street_number" required /><br>
                 </div>
                 <div class="form-group  mx-auto">
                     <label class="font-weight-bold">CITY *</label><br>
@@ -40,7 +40,7 @@ if(!isset($cities)) {
                 </div>
                 <div class="form-group  mx-auto">
                     <label class="font-weight-bold">FLOOR</label><br>
-                    <input type="number" class="form-control" min="0" max="999" name="floor"/><br>
+                    <input type="number" class="form-control" onkeydown="return false" min="0" max="999" name="floor"/><br>
                 </div>
             </div>
         </div>

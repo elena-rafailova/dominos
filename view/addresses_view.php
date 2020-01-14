@@ -15,16 +15,16 @@ include_once "header.php";
                     <div class="form-group mx-auto">
                         <label class="font-weight-bold">ADDRESS NAME</label>
                         <input  id="address_name" class="form-control " type="text" name="name" placeholder="e.g: Home" maxlength="40"
-                                value=""/>
+                                title="Letters and numbers only!" value=""/>
                     </div>
                     <div class="form-group mr-2 ml-2 ">
                         <label class="font-weight-bold">STREET NAME *</label>
                         <input id="street_name" class="form-control " type="text" name="street_name" maxlength="40"
-                               value="" required/>
+                               title="Letters, . , '' and numbers only!"  value="" required/>
                     </div>
                     <div class="form-group  mr-2 ml-2 ">
                         <label class="font-weight-bold">STREET NUMBER *</label>
-                        <input id="street_number" class="form-control " type="number" name="street_number" min="0" max="999" value=""
+                        <input id="street_number" class="form-control " onkeydown="return false" type="number" name="street_number" min="0" max="999" maxlength="4" value=""
                                required/>
                     </div>
                     <div class="form-group mx-auto">
@@ -40,7 +40,7 @@ include_once "header.php";
                     </div>
                     <div class="form-group  mx-auto">
                         <label class="font-weight-bold">FLOOR</label>
-                        <input id="floor" class="form-control " type="number" name="floor" min="0" max="999" value=""/>
+                        <input id="floor" class="form-control " type="number" onkeydown="return false" name="floor" min="0" max="999" maxlength="4" value=""/>
                     </div>
                 </div>
             </div>
@@ -49,15 +49,17 @@ include_once "header.php";
                     <div class="form-group mx-auto">
                         <label class="font-weight-bold">BUILDING NUMBER</label>
                         <input id="building_number" class="form-control " type="text" name="building_number" maxlength="6"
-                               value=""/>
+                               title="Letters and numbers only!" value=""/>
                     </div>
                     <div class="form-group ml-2 mr-2">
                         <label class="font-weight-bold">APARTMENT NUMBER</label>
-                        <input id="apartment_number" class="form-control " type="text" name="apartment_number" maxlength="6" value=""/>
+                        <input id="apartment_number" class="form-control " type="text" name="apartment_number" maxlength="6"
+                               title="Letters and numbers only!" value=""/>
                     </div>
                     <div class="form-group mx-auto">
                         <label class="font-weight-bold">ENTRANCE</label>
-                        <input id="entrance" class="form-control" type="text" name="entrance" maxlength="6" value=""/>
+                        <input id="entrance" class="form-control" type="text" name="entrance" maxlength="6"
+                               title="Letters and numbers only!" value=""/>
                     </div>
                     <input id="address_id" type="hidden" name="id" value=""/>
                 </div>
@@ -65,7 +67,7 @@ include_once "header.php";
     </div>
         <div id="mod_buttons" class="text-center col-xs-12 col-md-7 ">
             <div id="change" class="col-md-12 "  >
-                <input id="change_button" type="submit" class="btn btn-outline-success " onclick="changeAddress();"
+                <input id="change_button" type="submit" class="btn btn-outline-success " onclick="submitForm('index.php?target=address&action=change')"
                        value="Change" name="change">
             </div>
             <div id="delete" class="col-md-12 " >

@@ -42,7 +42,6 @@ function handleExceptions(Exception $exception){
                 
                 
                     <link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.6.3/css/all.css\" integrity=\"sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/\" crossorigin=\"anonymous\">
-
                 </head>
                 <body>
                     <div id=\"main_header\" class=\"nav navbar\">
@@ -64,10 +63,10 @@ function handleExceptions(Exception $exception){
     http_response_code($status);
     echo $html;
 
-    $obj = new stdClass();
-    $obj->msg = $exception->getMessage();
-    $obj->status = $status;
-    echo json_encode($obj);
+//    $obj = new stdClass();
+//    $obj->msg = $exception->getMessage();
+//    $obj->status = $status;
+//    echo json_encode($obj);
 }
 
 if (class_exists($controllerClassName)){
