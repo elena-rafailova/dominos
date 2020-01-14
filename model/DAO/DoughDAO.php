@@ -24,6 +24,9 @@ class DoughDAO extends BaseDAO {
         $stmt->execute([$id]);
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row === false ) {
+            return false;
+        }
 
         return new Dough($row["id"], $row["name"], $row["price"]);
     }
@@ -37,6 +40,7 @@ class DoughDAO extends BaseDAO {
         $stmt->execute();
 
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
         $doughs = [];
 
         foreach ($rows as $row) {

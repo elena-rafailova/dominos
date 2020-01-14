@@ -33,6 +33,9 @@ class PizzaDAO extends BaseDAO {
 
         $pizzas = [];
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if (count($rows) == 0) {
+            return false;
+        }
         foreach ($rows as $row) {
             $ingredients = $this->getIngredients($row["id"]);
             $pizzas[] = new Pizza($row["id"], $row["name"],
@@ -58,22 +61,14 @@ class PizzaDAO extends BaseDAO {
 
         $ingredients = [];
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if (count($rows) == 0) {
+            return false;
+        }
         foreach ($rows as $row) {
             $ingredients[] = new Ingredient($row["id"], $row["name"], null, $row["price"]);
         }
 
         return $ingredients;
-    }
-
-    public function getPriceFromDoughAndSize($doughId = TRADITIONAL_DOUGH_ID, $sizeId = LARGE_SIZE_ID) {
-        $pdo = parent::getPDO();
-        $sql = "SELECT s.price + d.price AS sum 
-                FROM doughs AS d JOIN sizes AS s 
-                WHERE s.id = ? AND d.id = ?";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$sizeId, $doughId]);
-
-        return $stmt->fetch(PDO::FETCH_ASSOC)["sum"];
     }
 
 

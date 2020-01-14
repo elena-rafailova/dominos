@@ -68,12 +68,12 @@ class Pizza extends Product implements \JsonSerializable {
         $this->ingredients = $ingredients;
     }
 
-    public function setDough($id) {
-        $this->dough = new Dough($id);
+    public function setDough($dough) {
+        $this->dough = $dough;
     }
 
-    public function setSize($id) {
-        $this->size = new Size($id);
+    public function setSize($size) {
+        $this->size = $size;
     }
 
     public function jsonSerialize() {

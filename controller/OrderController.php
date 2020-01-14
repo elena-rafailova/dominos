@@ -2,13 +2,14 @@
 
 namespace controller;
 
+use exceptions\BadRequestException;
+use exceptions\NotFoundException;
 use model\Cart;
 use model\DAO\OrderDAO;
 use model\DAO\PizzaDAO;
 use model\Order;
 use model\Other;
 use model\Pizza;
-use model\Product;
 
 
 define("MIN_QUANTITY", 1);
@@ -26,14 +27,18 @@ class OrderController {
             $user = json_decode($_SESSION['logged_user']);
 
             if ($cart->isCartEmpty()) {
-                die();
+                throw new BadRequestException("Your cart is empty!");
             }
 
             foreach ($cart->getProducts() as $product) {
                 if ($product instanceof Pizza && $product->getModified()) {
                     $pizzaDAO = new PizzaDAO();
-                    $newPizzaId = $pizzaDAO->addNew($product->getName(), $product->getIngredients());
-                    if (isset($newPizzaId)) {
+                    try {
+                        $newPizzaId = $pizzaDAO->addNew($product->getName(), $product->getIngredients());
+                    } catch (\PDOException $e) {
+                        throw new BadRequestException("Sorry we could not process your request!");
+                    }
+                    if (isset($newPizzaId) && $newPizzaId !== false) {
                         $product->setId($newPizzaId);
                     }
                 }
@@ -58,10 +63,13 @@ class OrderController {
                     $cart->getProducts(), $comment);
 
                 $orderDAO = new OrderDAO();
-                $orderDAO->placeOrder($order);
+                try {
+                    $orderDAO->placeOrder($order);
+                } catch (\PDOException $e) {
+                    throw new BadRequestException("Sorry we could not process your request!");
+                }
                 $_SESSION["cart"] = new Cart();
                 header("Location: index.php?target=cart&action=seeCart&finish");
-                //include_once "view/finished_order_view.php";
             } else {
                 header("Location: index.php?target=cart&action=seeCart");
                 die();
@@ -83,7 +91,7 @@ class OrderController {
         }
         $user_id = json_decode($_SESSION['logged_user'])->id;
         $orderDAO = new OrderDAO();
-        $orders = $orderDAO->getOrders($user_id, $page);
+        $orders = $orderDAO->getOrders($user_id);
 
         if ($orders === false) {
             echo json_encode(["orders" => "empty"]);

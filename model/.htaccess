@@ -1,0 +1,4 @@
+# enable rewrite engine
+RewriteEngine on
+
+RedirectMatch 301 (.*) http://www.localhost/dominos/index.php

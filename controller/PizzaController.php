@@ -21,7 +21,7 @@ class PizzaController
             $pizzaDAO = new PizzaDAO();
             $pizza = $pizzaDAO->getPizza($_GET["id"]);
             if ($pizza === false) {
-                throw new NotFoundException("You are trying to reach non-existing pizza!");
+                throw new NotFoundException("Product not found!");
             }
             include_once "view/pizza_view.php";
         }
@@ -41,7 +41,6 @@ class PizzaController
         if (isset($_GET["id"])) {
             $pizzaDAO = new PizzaDAO();
             $pizza = $pizzaDAO->getPizza($_GET["id"]);
-
 
             $price = 0;
             /** @var Ingredient $ingredient */
@@ -66,10 +65,15 @@ class PizzaController
                 $pizzaDAO = new PizzaDAO();
                 $pizza = $pizzaDAO->getPizza($_GET["pizza"]);
             }
-
+            if (!isset($pizza) || $pizza === false) {
+                throw new NotFoundException("Product not found!");
+            }
 
             $ingredientDAO = new IngredientDAO();
             $ingredients = $ingredientDAO->getAll();
+            if ($ingredients === false) {
+                throw new NotFoundException("Product not found!");
+            }
 
             $result = [];
             $result["ingredients"] = [];
@@ -93,6 +97,9 @@ class PizzaController
             $filter = $_GET["filter"];
             $pizzas = $pizzaDAO->getAll($filter);
         }
+        if ($pizzas === false) {
+            throw new NotFoundException("Pizzas Not Found!");
+        }
         echo json_encode($pizzas, JSON_UNESCAPED_UNICODE);
     }
 
@@ -100,6 +107,8 @@ class PizzaController
         if (isset($_GET["id"])) {
             $doughDAO = new DoughDAO();
             echo $doughDAO->getPrice($_GET["id"]);
+        }else {
+            throw new NotFoundException("Dough not found!");
         }
     }
 
@@ -108,6 +117,8 @@ class PizzaController
             $sizeDAO = new SizeDAO();
 
             echo $sizeDAO->getPrice($_GET["id"]);
+        } else {
+            throw new NotFoundException("Size not found!");
         }
     }
 
@@ -115,6 +126,8 @@ class PizzaController
         if (isset($_GET["id"])) {
             $ingredientDAO = new IngredientDAO();
             echo $ingredientDAO->getPrice($_GET["id"]);
+        } else {
+            throw new NotFoundException("Ingredient not found!");
         }
     }
 

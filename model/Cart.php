@@ -8,6 +8,7 @@ class Cart implements \JsonSerializable {
     private $products;
     private $price = 0;
 
+
     public function __construct($products = [], $price = 0) {
         $this->products = $products;
         $this->price = $price;
@@ -27,15 +28,16 @@ class Cart implements \JsonSerializable {
     }
     
     /** @var Product $product */
-    public function addProduct($product) {
+    public function addProduct($product)
+    {
         foreach ($this->products as $original_product) {
             if (($original_product instanceof Pizza && $product instanceof Pizza &&
-                $original_product->getName() === $product->getName() &&
-                $original_product->getIngredients() == $product->getIngredients() &&
-                $original_product->getSize() == $product->getSize() &&
-                $original_product->getDough() == $product->getDough()) ||
+                    $original_product->getName() === $product->getName() &&
+                    $original_product->getIngredients() == $product->getIngredients() &&
+                    $original_product->getSize() == $product->getSize() &&
+                    $original_product->getDough() == $product->getDough()) ||
                 ($original_product instanceof Other && $product instanceof Other &&
-                $original_product == $product)
+                    $original_product == $product)
             ) {
                 $original_product_quantity = $original_product->getQuantity();
                 $original_product->setQuantity($original_product_quantity + $product->getQuantity());
@@ -48,12 +50,12 @@ class Cart implements \JsonSerializable {
     }
 
     public function decreaseQuantity($key) {
-        $this->products[$key]->subtractOneFromQuantity();
-        $this->price -= $this->products[$key]->getPrice();
-        if ($this->products[$key]->getQuantity() == 0) {
-            $this->removeProduct($this->products[$key]);
-        }
+    $this->products[$key]->subtractOneFromQuantity();
+    $this->price -= $this->products[$key]->getPrice();
+    if ($this->products[$key]->getQuantity() == 0) {
+        $this->removeProduct($this->products[$key]);
     }
+}
 
     public function increaseQuantity($key) {
         $this->products[$key]->addOneToQuantity();

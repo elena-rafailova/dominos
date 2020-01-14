@@ -13,7 +13,7 @@ class OtherController
         $otherDAO = new OtherDAO();
         $others = $otherDAO->getAll($_GET["category_id"]);
         if ($others === false) {
-            throw new NotFoundException("You are trying to reach non-existing products!");
+            throw new NotFoundException("Product not found!");
         }
          include_once "view/others_view.php";
     }
@@ -29,6 +29,9 @@ class OtherController
             $filter = $_GET["filter"];
             $otherDAO = new OtherDAO();
             $others = $otherDAO->getAll($category_id,$filter);
+            if ($others === false ) {
+                throw new NotFoundException("Product not found!");
+            }
         }
         else {
             throw new BadRequestException("The products you search for cannot be found!");

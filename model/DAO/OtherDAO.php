@@ -47,6 +47,9 @@ class OtherDAO extends BaseDAO {
             $stmt->execute([$id, $category_id]);
 
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($row == false) {
+                return false;
+            }
             $other = new Other($row["id"], $row["name"] , $row["img_url"],
                 $row["description"], $row["filter"] ,$row["others_category_id"], $row["price"]);
             return $other;

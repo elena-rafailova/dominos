@@ -30,6 +30,10 @@ class IngredientDAO extends BaseDAO {
 
         $ingredients = [];
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if (count($rows) == 0) {
+            return false;
+        }
+
         foreach ($rows as $row) {
             $ingredients[] = new Ingredient($row["id"], $row["name"], $row["category"], $row["price"]);
         }
@@ -48,6 +52,9 @@ class IngredientDAO extends BaseDAO {
         $stmt->execute([$id]);
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row === false) {
+            return false;
+        }
 
         return new Ingredient($row["id"], $row["name"], null, $row["price"]);
     }

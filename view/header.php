@@ -18,36 +18,36 @@
 
 <div class="float-right m-3">
     <div id="shopping_cart_icon" class="btn btn-default">
-        <p id="sess_var"> <?php echo json_encode($_SESSION['cart']); ?></p>
+
     </div>
 </div>
 
 <a href="index.php" class="mr-2"><img src="uploads/dominos_logo.svg" class="w-25"></a>
 
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <button class="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<nav class="navbar navbar-expand-lg navbar-light">
+    <button class="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse " id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto ">
-                <li class="nav-item">
-                    <a href="index.php?target=pizza&action=showAll" class="nav-link mr-2 border bg-light rounded">Order</a>
-                </li>
-                <li class="nav-item">
-                    <a href="index.php?target=user&action=edit" class="nav-link mr-2 border bg-light rounded">My Profile (edit)</a>
-                </li>
-                <li class="nav-item">
-                    <a href="index.php?target=address&action=show" class="nav-link  mr-2  border bg-light rounded">My Addresses</a>
-                </li>
-                <li class="nav-item">
-                    <a href="index.php?target=order&action=showOrders&page=1" class="nav-link mr-2  border bg-light rounded">My Orders</a>
-                </li>
-                <li class="nav-item">
-                    <a href="index.php?target=user&action=logout" class="nav-link  mr-2  border bg-light rounded">Logout</a>
-                </li>
-        </div>
-    </nav>
+    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto ">
+            <li class="nav-item">
+                <a href="index.php?target=pizza&action=showAll" class="nav-link mr-2 border bg-light rounded">Order</a>
+            </li>
+            <li class="nav-item">
+                <a href="index.php?target=user&action=edit" class="nav-link mr-2 border bg-light rounded">My Profile (edit)</a>
+            </li>
+            <li class="nav-item">
+                <a href="index.php?target=address&action=show" class="nav-link  mr-2  border bg-light rounded">My Addresses</a>
+            </li>
+            <li class="nav-item">
+                <a href="index.php?target=order&action=showOrders&page=1" class="nav-link mr-2  border bg-light rounded">My Orders</a>
+            </li>
+            <li class="nav-item">
+                <a href="index.php?target=user&action=logout" class="nav-link  mr-2  border bg-light rounded">Logout</a>
+            </li>
+    </div>
+</nav>
 
 
 <!--    <div class="nav navbar ">-->

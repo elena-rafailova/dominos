@@ -25,6 +25,9 @@ class SizeDAO extends BaseDAO {
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        if ($row === false ) {
+            return false;
+        }
         return new Size($row["id"], $row["name"], $row["price"], $row["slices"]);
     }
 
