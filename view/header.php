@@ -46,35 +46,21 @@
             <li class="nav-item">
                 <a href="index.php?target=user&action=logout" class="nav-link  mr-2  border bg-light rounded">Logout</a>
             </li>
+        </ul>
     </div>
 </nav>
 
 
-<!--    <div class="nav navbar ">-->
-<!--        <div class="navbar-btn navbar-right">-->
-<!--            <a href="index.php"><img src="uploads/dominos_logo.svg"></a>-->
-<!--            <a href="index.php?target=pizza&action=showAll"><input type="button" value="Order" class="btn btn-light"></a>-->
-<!--            <a href="index.php?target=user&action=edit"><button class="btn btn-light">My Profile (edit) </button></a>-->
-<!--            <a href="index.php?target=address&action=show"><button class="btn btn-light">My Addresses</button></a>-->
-<!--            <a href="index.php?target=order&action=showOrders"><button class="btn btn-light">My Orders</button></a>-->
-<!--            <a href="index.php?target=user&action=logout"><button class="btn btn-light">Logout</button></a>-->
-<!--        </div>-->
-<!--        <div class="navbar-btn navbar-right">-->
-<!--            <div id="shopping_cart_icon" class="btn btn-default">-->
-<!--                <p id="sess_var"> --><?php //echo json_encode($_SESSION['cart']); ?><!--</p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-    <div id="resId"></div>
+<div id="resId"></div>
 
 
-    <script src="view/js/map.js"></script>
-    <script src="view/js/pizzas.js"></script>
-    <script src="view/js/others.js"></script>
-    <script src="view/js/others.js"></script>
-    <script src="view/js/cart.js"></script>
-    <script src="view/js/orders.js"></script>
-    <script src="view/js/addresses.js"></script>
-    <script>checkCart();</script>
+<script src="view/js/map.js"></script>
+<script src="view/js/pizzas.js"></script>
+<script src="view/js/others.js"></script>
+<script src="view/js/others.js"></script>
+<script src="view/js/cart.js"></script>
+<script src="view/js/orders.js"></script>
+<script src="view/js/addresses.js"></script>
+<script>checkCart();</script>
 </body>
 </html>

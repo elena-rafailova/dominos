@@ -5,8 +5,10 @@ namespace controller;
 use exceptions\BadRequestException;
 use exceptions\NotFoundException;
 use model\Cart;
+use model\DAO\IngredientDAO;
 use model\DAO\OrderDAO;
 use model\DAO\PizzaDAO;
+use model\Ingredient;
 use model\Order;
 use model\Other;
 use model\Pizza;
@@ -16,6 +18,7 @@ define("MIN_QUANTITY", 1);
 define("MAX_QUANTITY", 100);
 define("STATUS_PENDING", 1);
 define("ROWS_PER_PAGE", 5);
+define("MAX_COMMENT_LENGTH", 254);
 
 
 class OrderController {
@@ -26,20 +29,33 @@ class OrderController {
             $cart = $_SESSION["cart"];
             $user = json_decode($_SESSION['logged_user']);
 
+
+
             if ($cart->isCartEmpty()) {
                 throw new BadRequestException("Your cart is empty!");
             }
 
             foreach ($cart->getProducts() as $product) {
+                if ($product->getQuantity() > MAX_QUANTITY || $product->getQuantity() < MIN_QUANTITY) {
+                    throw new BadRequestException("Invalid quantity!");
+                }
                 if ($product instanceof Pizza && $product->getModified()) {
-                    $pizzaDAO = new PizzaDAO();
-                    try {
-                        $newPizzaId = $pizzaDAO->addNew($product->getName(), $product->getIngredients());
-                    } catch (\PDOException $e) {
-                        throw new BadRequestException("Sorry we could not process your request!");
+                    $ingredients = $product->getIngredients();
+                    /** @var Ingredient $ingredient */
+                    $ingredientDAO = new IngredientDAO();
+                    foreach ($ingredients as $ingredient) {
+                        if (!$ingredientDAO->getById($ingredient->getId())) {
+                            throw new NotFoundException("Ingredient not found!");
+                        }
                     }
+
+                    $pizzaDAO = new PizzaDAO();
+                    $newPizzaId = $pizzaDAO->addNew($product->getName(), $product->getIngredients());
+
                     if (isset($newPizzaId) && $newPizzaId !== false) {
                         $product->setId($newPizzaId);
+                    } else {
+                        throw new BadRequestException("Sorry we could not process your request!");
                     }
                 }
             }
@@ -47,6 +63,9 @@ class OrderController {
             $comment = "";
             if(isset($_POST["comment"])) {
                 $comment = $_POST["comment"];
+            }
+            if (mb_strlen($comment) > MAX_COMMENT_LENGTH) {
+                $comment = mb_substr($comment, 0, MAX_COMMENT_LENGTH);
             }
 
             $payment = 1;

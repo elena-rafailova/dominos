@@ -3,16 +3,20 @@ function plus(key) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+
             var item = document.getElementById("items_quantity" + key);
-            item.value++;
+            if (item.value >= 1 && item.value <= 100) {
+                item.value++;
 
-            var cart = JSON.parse(this.responseText);
+                var cart = JSON.parse(this.responseText);
 
-            var price_for_one_item = document.getElementById("price_for_one_item" + key);
-            price_for_one_item.innerText = (parseFloat(price_for_one_item.innerText) + parseFloat(cart.products[key].price)).toFixed(2);
+                var price_for_one_item = document.getElementById("price_for_one_item" + key);
+                price_for_one_item.innerText = (parseFloat(price_for_one_item.innerText) + parseFloat(cart.products[key].price)).toFixed(2);
 
-            var price_tag = document.getElementById("price_tag");
-            price_tag.innerText = (parseFloat(price_tag.innerText) + parseFloat(cart.products[key].price)).toFixed(2);
+                var price_tag = document.getElementById("price_tag");
+                price_tag.innerText = (parseFloat(price_tag.innerText) + parseFloat(cart.products[key].price)).toFixed(2);
+
+            }
         }
     };
 
@@ -56,6 +60,7 @@ function viewCart() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+
             var cart = JSON.parse(this.responseText);
             var shopping_cart_div = document.getElementById("shopping_cart");
 
@@ -161,6 +166,7 @@ function viewCart() {
                 comment.placeholder = "Additional info...";
                 comment.setAttribute("name", "comment");
                 comment.setAttribute("class", "form-control w-50 mb-2");
+                comment.setAttribute("maxlength", "254");
                 submit_form.appendChild(comment);
 
                 var payment_container = document.createElement("div");

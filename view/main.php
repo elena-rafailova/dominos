@@ -77,8 +77,8 @@
                     <label class=" w-100 font-weight-bold" >Password:</label>
                     <input class="form-control w-50 mx-auto " type="password" name="password" placeholder="Enter password" required>
                     <br>
-                <h5><small class=" w-100"><a href="#forgot_password" data-dismiss="modal" data-toggle="modal" >
-                            Forgotten your password? Click here!</a> </small></h5>
+                    <h5><small class=" w-100"><a href="#forgot_password" data-dismiss="modal" data-toggle="modal" >
+                                Forgotten your password? Click here!</a> </small></h5>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -144,7 +144,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <input type="submit"  name="forgot_password" value="Send an email" onclick="forgotPass();"
-                        class="btn btn-primary ">
+                       class="btn btn-primary ">
             </div>
             </form>
         </div>
@@ -155,4 +155,4 @@
 <script src="view/js/userValidation.js"></script>
 
 </body>
-
+</html>

@@ -69,7 +69,7 @@ class CartController {
                 if (isset($_POST["price_for_one"]) && $_POST["price_for_one"] > 0) {
                     $price_for_one = $_POST["price_for_one"];
                 } else {
-                    throw new BadRequestException("The action could not be completed. Please try again.");
+                    throw new BadRequestException("Invalid price!");
                 }
 
                 if (isset($_POST["quantity"]) && $_POST["quantity"] >= MIN_QUANTITY && $_POST["quantity"] <= MAX_QUANTITY) {
@@ -81,7 +81,7 @@ class CartController {
                     header("Location: index.php?target=pizza&action=showAll");
                     die();
                 } else {
-                    throw new BadRequestException("The action could not be completed. Please try again.");
+                    throw new BadRequestException("Invalid quantity!");
                 }
             } else if (isset($_POST["other_id"]) && isset($_POST["category_id"])) {
                 json_decode($_SESSION['logged_user']);
@@ -95,7 +95,7 @@ class CartController {
                 if (isset($_POST["quantity"]) && $_POST["quantity"] >= MIN_QUANTITY && $_POST["quantity"] <= MAX_QUANTITY) {
                     $other->setQuantity($_POST["quantity"]);
                 } else {
-                    throw new BadRequestException("The action could not be completed. Please try again.");
+                    throw new BadRequestException("Invalid quantity!");
                 }
 //                if ($category_id == 8 && isset($_POST["drink_size"])) {
 //                    $price_for_one = $_POST["drink_size"];
@@ -107,8 +107,8 @@ class CartController {
                 $_SESSION["cart"]->addProduct($other);
                 header("Location: index.php?target=other&action=showOthers&&category_id=" . $category_id);
                 die();
-            }else {
-                throw new BadRequestException("The action could not be completed. Please try again.");
+            } else {
+                throw new BadRequestException("Invalid item!");
             }
         }
     }
@@ -135,10 +135,11 @@ class CartController {
 
     function subtractQuantity() {
         if (isset($_GET["id"])) {
+            $productId = $_GET["id"];
             if (!array_key_exists($_GET["id"], $_SESSION["cart"]->getProducts())) {
                 throw new NotFoundException("Product not found!");
             }
-            $_SESSION["cart"]->decreaseQuantity($_GET["id"]);
+            $_SESSION["cart"]->decreaseQuantity($productId);
             $_SESSION["cart"]->setProducts(array_values($_SESSION["cart"]->getProducts()));
             if ($_SESSION["cart"]->isCartEmpty()) {
                 $_SESSION["cart"] = new Cart();

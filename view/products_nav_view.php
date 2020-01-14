@@ -32,5 +32,6 @@
             <li class="nav-item">
                 <a href="index.php?target=other&action=showOthers&category_id=8" class="nav-link  mr-2 text-light border bg-primary rounded border-primary">Drinks</a>
             </li>
+        </ul>
     </div>
 </nav>

@@ -69,8 +69,10 @@ include_once "header.php";
             //getRestaurants();
             deliveryAlert();
         </script>
+
         <div id="shopping_cart" class="container mt-5">
         </div>
+
     </div>
 </div>
 <script>
