@@ -3,9 +3,13 @@
 
 namespace controller;
 
+use exceptions\AuthorizationException;
 use exceptions\BadRequestException;
+use exceptions\NotFoundException;
 use model\Address;
+use model\City;
 use model\DAO\AddressDAO;
+use model\DAO\UserDAO;
 
 class AddressController
 {
@@ -19,20 +23,50 @@ function add () {
             }
             $street_name = $_POST['street_name'];
             $street_number = $_POST['street_number'];
-            $city = $_POST['city'];
+            $city_id = $_POST['city'];
             $phone_number = $_POST['phone_number'];
             $floor = $_POST['floor'];
             $building_number = $_POST['building_number'];
             $apartment_number = $_POST['apartment_number'];
             $entrance = $_POST['entrance'];
+            $addressDAO = new AddressDAO();
+            $cities= $addressDAO->getCities();
+            $filtered =  array_filter($cities, function($city) use ($city_id) {
+                return $city->getId() == $city_id;
+            });
+            if(empty($filtered)) {
+                throw new  NotFoundException("City not found!");
+            }
+
             $msg = $this->validationOfInput($street_name, $name, $phone_number, $floor,$street_number, $building_number, $apartment_number, $entrance);
             if ($msg != '') {
                 throw new BadRequestException("$msg");
             } else {
-                $address = new Address($phone_number, $city, $name, $street_name, $street_number, $building_number, $entrance, $floor, $apartment_number);
+                $address = new Address($phone_number, $city_id, $name, $street_name, $street_number, $building_number, $entrance, $floor, $apartment_number);
                 $user_id = json_decode($_SESSION['logged_user'])->id;
+                $userDAO= new UserDAO();
+                $userExists = $userDAO->checkUserById($user_id);
+                if(!$userExists) {
+                    throw new AuthorizationException("The user doesn't exist!");
+                }
                 $addressDAO = new AddressDAO();
-                $addressDAO->add($address, $user_id);
+                $user_addresses = $addressDAO->get($user_id);
+                if($user_addresses!= false) {
+                foreach ($user_addresses as $user_address) {
+                    if($user_address->name == $name && $user_address->street_name == $street_name && $user_address->street_number == $street_number &&
+                    $user_address->city_id == $city_id && $user_address->phone_number == $phone_number && $user_address->floor == $floor &&
+                    $user_address->building_number == $building_number && $user_address->apartment_number == $apartment_number &&
+                    $user_address->entrance == $entrance) {
+                        throw new  BadRequestException("This address already exists!");
+                    }
+                }
+                }
+                try{
+                    $addressDAO->add($address, $user_id);
+                } catch(\PDOException $e) {
+                    throw new BadRequestException("Something went wrong!");
+                }
+
                 header("Location: index.php?target=address&action=show");
             }
         }
@@ -45,52 +79,86 @@ function add () {
 
 function change()
 {
-    if (isset($_POST['change'])) {
+
         if (isset($_POST['street_name']) && isset($_POST['street_number']) && isset($_POST['phone_number'])) {
-            if ($_POST['name'] != '') {
-                $name = $_POST['name'];
-            } else {
-                $name = 'Empty Title';
-            }
+//            if ($_POST['name'] != '') {
+               $name = $_POST['name'];
+//            } else {
+//                $name = 'Empty Title';
+//            }
             $street_name = $_POST['street_name'];
             $street_number = $_POST['street_number'];
-            $city = $_POST['city'];
+            $city_id = $_POST['city'];
             $phone_number = $_POST['phone_number'];
             $floor = $_POST['floor'];
             $building_number = $_POST['building_number'];
             $apartment_number = $_POST['apartment_number'];
             $entrance = $_POST['entrance'];
-            echo $street_number;
-            echo $floor;
             $msg = $this->validationOfInput($street_name, $name, $phone_number, $floor,$street_number, $building_number, $apartment_number, $entrance);
             if ($msg != '') {
-                echo $msg;
-                include_once "view/header.php";
+               throw new BadRequestException("$msg");
             } else {
                 $id = $_POST['id'];
-                $address = new Address($phone_number, $city, $name, $street_name, $street_number, $building_number, $entrance, $floor, $apartment_number);
+                $address = new Address($phone_number, $city_id, $name, $street_name, $street_number, $building_number, $entrance, $floor, $apartment_number);
                 $addressDAO = new AddressDAO();
-                $addressDAO->change($address, $id);
+                $cities = $addressDAO->getCities();
+                $filtered =  array_filter($cities, function($city) use ($city_id) {
+                    return $city->getId() == $city_id;
+                });
+                if(empty($filtered)) {
+                    throw new  NotFoundException("City not found!");
+                }
+                $user_id = json_decode($_SESSION['logged_user'])->id;
+                $user_addresses = $addressDAO->get($user_id);
+                if($user_addresses!= false) {
+                foreach ($user_addresses as $user_address) {
+                    if($user_address->name == $name && $user_address->street_name == $street_name && $user_address->street_number == $street_number &&
+                        $user_address->city_id == $city_id && $user_address->phone_number == $phone_number && $user_address->floor == $floor &&
+                        $user_address->building_number == $building_number && $user_address->apartment_number == $apartment_number &&
+                        $user_address->entrance == $entrance) {
+                        echo json_encode("Unsuccessful");
+                        die();
+                    }
+                }
+                    $addressDAO->change($address, $id);
+                    echo json_encode("Successful!");
+                } else {
+                    throw new NotFoundException("Addresses not found!");
+                }
 
-                header("Location: index.php?target=address&action=show");
             }
         }
-    }
 }
 
 function delete(){
     $addressDAO = new AddressDAO();
     if(isset($_POST['delete'])){
-        $id = $_POST['id'];
-        $addressDAO->delete($id);
-        header("Location: index.php?target=address&action=show");
+        $user_id = json_decode($_SESSION['logged_user'])->id;
+        $userDAO= new UserDAO();
+        $userExists = $userDAO->checkUserById($user_id);
+        if(!$userExists) {
+            throw new AuthorizationException("The user doesn't exist!");
+        }
+        $address_id = $_POST['id'];
+        $user_addresses = $addressDAO->get($user_id);
+        if($user_addresses!= false) {
+            foreach ($user_addresses as $user_address) {
+                print_r($user_address->id);
+                var_dump($address_id);
+                if($user_address->id == $address_id)
+                {
+                    $addressDAO->delete($address_id,$user_id);
+                    header("Location: index.php?target=address&action=show");
+                }
+            }
+        }
+       else {
+           throw new BadRequestException("Cannot delete non-existing address!");
+       }
     }
 }
 
 function show() {
-//    $user_id = json_decode($_SESSION['logged_user'])->id;
-//    $addressDAO = new AddressDAO();
-//    $addresses = $addressDAO->get($user_id);
     include_once "view/addresses_view.php";
 }
 
@@ -106,7 +174,7 @@ function validationOfInput($street_name, $name , $phone_number, $floor,$street_n
     $msg = '';
 
     $pattern  = "/^[a-zA-Z\p{Cyrillic}0-9\s\-]+$/u";
-//    $pattern1 = "/[^a-zA-Z\p{Cyrillic}]+$/";
+
     if((preg_match($pattern,$name)) !=1 ) {
         $msg .= " Invalid address name format. <br> ";
     }
@@ -116,15 +184,11 @@ function validationOfInput($street_name, $name , $phone_number, $floor,$street_n
     if((preg_match("^[0-9\s+]+$^", $phone_number)) != 1) {
         $msg .= " Invalid phone number format. <br> ";
     }
-    if((substr($floor, 0, 1) === '-') ||
-    (substr($floor, 0, 1) === '0') ||  (substr($floor, 0, 2) === '00') ||
-   !is_numeric($floor)) {
-      $msg.= "Invalid floor number.";
+    if((is_numeric($floor) && $floor < 0) || !is_numeric($floor)) {
+      $msg.= "Invalid floor number. <br>";
     }
-    if((substr($street_number, 0, 1) === '-') ||
-        (substr($street_number, 0, 1) === '0') ||  (substr($street_number, 0, 2) === '00') ||
-        !is_numeric($street_number)) {
-        $msg.= "Invalid street number.";
+    if((is_numeric($street_number) && $street_number < 1) || !is_numeric($street_number)) {
+        $msg.= "Invalid street number. <br> ";
     }
     if($building_number!= ''){
         if(!ctype_alnum($building_number) ||  (substr($apartment_number, 0, 1) === '-') ||

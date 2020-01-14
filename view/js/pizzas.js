@@ -178,6 +178,8 @@ function getPizza(id) {
             var price_for_one = document.getElementById("price_for_one");
             price_for_one.value = pizza["price"].toFixed(2);
             document.getElementById("price").innerText =  pizza["price"].toFixed(2);
+        } else {
+            alert(this.responseText);
         }
     };
 
@@ -406,13 +408,15 @@ function getPriceOfSize(size_id, price_for_one) {
 function incrementValPizza() {
     var value = parseInt(document.getElementById('quantity').value, 10);
     value = isNaN(value) ? 1 : value;
-    value++;
+    if (value < 100) {
+        value++;
 
-    var price_for_one = document.getElementById("price_for_one");
-    var price = document.getElementById("price");
-    price.innerText = (parseFloat(price_for_one.value) * value).toFixed(2);
+        var price_for_one = document.getElementById("price_for_one");
+        var price = document.getElementById("price");
+        price.innerText = (parseFloat(price_for_one.value) * value).toFixed(2);
 
-    document.getElementById('quantity').value = value;
+        document.getElementById('quantity').value = value;
+    }
 }
 
 function decrementValPizza() {

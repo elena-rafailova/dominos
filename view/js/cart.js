@@ -5,17 +5,21 @@ function plus(key) {
         if (this.readyState == 4 && this.status == 200) {
 
             var item = document.getElementById("items_quantity" + key);
-            if (item.value >= 1 && item.value <= 100) {
+
+            var response = JSON.parse(this.responseText);
+
+            if (response.error == "true") {
+                document.getElementById("quantity_warning").style.display = "block";
+            } else {
+
                 item.value++;
 
-                var cart = JSON.parse(this.responseText);
-
+                cart = response.cart;
                 var price_for_one_item = document.getElementById("price_for_one_item" + key);
                 price_for_one_item.innerText = (parseFloat(price_for_one_item.innerText) + parseFloat(cart.products[key].price)).toFixed(2);
 
                 var price_tag = document.getElementById("price_tag");
                 price_tag.innerText = (parseFloat(price_tag.innerText) + parseFloat(cart.products[key].price)).toFixed(2);
-
             }
         }
     };
@@ -106,19 +110,22 @@ function viewCart() {
                     quantity_container.appendChild(minus);
 
                     var items_quantity = document.createElement("input");
-                    items_quantity.type = "text";
+                    items_quantity.type = "number";
                     items_quantity.readOnly = true;
                     items_quantity.name = "quantities[]";
                     items_quantity.id = "items_quantity" + key;
                     items_quantity.value = items[key].quantity;
                     items_quantity.setAttribute("class", "form-control float-left w-25 ");
+                    items_quantity.setAttribute("max", "100 ");
                     quantity_container.appendChild(items_quantity);
 
 
                     var plus = document.createElement("img");
                     plus.setAttribute("class", "icons float-left");
                     plus.src = "uploads/plus.png";
-                    plus.setAttribute("onclick", "plus(" + key + ")");
+                    //if (items_quantity.value < 100) {
+                        plus.setAttribute("onclick", "plus(" + key + ")");
+                    //}
                     quantity_container.appendChild(plus);
                     product_container.appendChild(quantity_container);
 

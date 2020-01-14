@@ -62,6 +62,11 @@ include_once "header.php";
             Your shopping cart is empty!
         </p>
 
+        <p class="alert alert-warning alert-dismissible fade show mt-3" id="quantity_warning">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            Maximal quantity is 100!
+        </p>
+
         <script>
             document.getElementById("finished_order").style.display="none";
 
@@ -77,6 +82,7 @@ include_once "header.php";
 </div>
 <script>
     document.getElementById("empty_cart_warning").style.display="none";
+    document.getElementById("quantity_warning").style.display="none";
     viewCart();
     finishedOrder();
 </script>

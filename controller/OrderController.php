@@ -8,14 +8,13 @@ use model\Cart;
 use model\DAO\IngredientDAO;
 use model\DAO\OrderDAO;
 use model\DAO\PizzaDAO;
+use model\DAO\UserDAO;
 use model\Ingredient;
 use model\Order;
 use model\Other;
 use model\Pizza;
 
 
-define("MIN_QUANTITY", 1);
-define("MAX_QUANTITY", 100);
 define("STATUS_PENDING", 1);
 define("ROWS_PER_PAGE", 5);
 define("MAX_COMMENT_LENGTH", 254);
@@ -29,6 +28,10 @@ class OrderController {
             $cart = $_SESSION["cart"];
             $user = json_decode($_SESSION['logged_user']);
 
+            $userDAO = new UserDAO();
+            if (!$userDAO->checkUserById($user->id)) {
+                throw new BadRequestException("Invalid user!gi");
+            }
 
 
             if ($cart->isCartEmpty()) {
@@ -141,8 +144,10 @@ class OrderController {
 
         usort($orderArray, array("controller\\OrderController", "date_sort"));
         $maxPage = ceil(count($orderArray) / ROWS_PER_PAGE);
-        if ($page > $maxPage) $page = $maxPage;
-        if ($page < 1) $page = 1;
+        if ($page > $maxPage || $page < 1) {
+            echo json_encode(["error" => "true"]);
+            die();
+        }
         $orderArray = array_slice($orderArray, ($page-1) * ROWS_PER_PAGE, ROWS_PER_PAGE);
         $result = [];
         /** @var Order $order */
@@ -163,7 +168,7 @@ class OrderController {
                         "items" => $productsArray];
         }
         $result["max_pages"] = $maxPage;
-        echo json_encode($result);
+        echo json_encode(["error" => "false", "result" => $result]);
     }
 
 

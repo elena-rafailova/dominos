@@ -3,6 +3,9 @@
 
 namespace model;
 
+define("MIN_QUANTITY", 1);
+define("MAX_QUANTITY", 100);
+
 
 class Cart implements \JsonSerializable {
     private $products;
@@ -35,18 +38,26 @@ class Cart implements \JsonSerializable {
                     $original_product->getName() === $product->getName() &&
                     $original_product->getIngredients() == $product->getIngredients() &&
                     $original_product->getSize() == $product->getSize() &&
-                    $original_product->getDough() == $product->getDough()) ||
-                ($original_product instanceof Other && $product instanceof Other &&
-                    $original_product == $product)
+                    $original_product->getDough() == $product->getDough()
+                )
+                ||
+                (
+                    $original_product instanceof Other && $product instanceof Other &&
+                    $original_product == $product
+                )
             ) {
                 $original_product_quantity = $original_product->getQuantity();
+                if ($original_product_quantity + $product->getQuantity() > 100) {
+                    return false;
+                }
                 $original_product->setQuantity($original_product_quantity + $product->getQuantity());
                 $this->price += $product->getPrice() * $product->getQuantity();
-                return;
+                return true;
             }
         }
         $this->products[] = $product;
         $this->price += $product->getPrice() * $product->getQuantity();
+        return true;
     }
 
     public function decreaseQuantity($key) {

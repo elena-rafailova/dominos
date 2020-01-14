@@ -78,17 +78,18 @@ class AddressDAO extends BaseDAO {
         return true;
     }
 
-    function delete($id){
+    function delete($id,$user_id){
         try {
             //CHANGED FK in DB to be ON DELETE CASCADE in uha - address_id
             $pdo = parent::getPDO();
             $pdo->beginTransaction();
-            $sql = "UPDATE addresses SET phone_number = NULL,name=NULL,street_name=NULL,street_number=NULL,building_number=NULL,
+            $sql="DELETE FROM users_have_addresses WHERE address_id =? AND user_id = ? ;";
+            $stmt= $pdo->prepare($sql);
+            $stmt->execute([$id,$user_id]);
+
+            $sql2 = "UPDATE addresses SET phone_number = NULL,name=NULL,street_name=NULL,street_number=NULL,building_number=NULL,
                      entrance=NULL,floor=NULL,apartment_number=NULL WHERE id= ? ;";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([$id]);
-            $sql2="DELETE FROM users_have_addresses WHERE address_id =? ;";
-            $stmt2= $pdo->prepare($sql2);
+            $stmt2 = $pdo->prepare($sql2);
             $stmt2->execute([$id]);
 
             $pdo->commit();
@@ -116,4 +117,5 @@ class AddressDAO extends BaseDAO {
             return $cities;
         }
     }
+
 }

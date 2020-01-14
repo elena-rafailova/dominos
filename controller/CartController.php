@@ -10,8 +10,6 @@ use model\DAO\PizzaDAO;
 use model\DAO\SizeDAO;
 use function MongoDB\BSON\toJSON;
 
-define("MIN_QUANTITY", 1);
-define("MAX_QUANTITY", 100);
 define("STATUS_PENDING", 1);
 define("PAYMENT_TYPE_CASH", 1);
 
@@ -77,7 +75,9 @@ class CartController {
                     $pizza->setPrice($price_for_one);
 
 
-                    $_SESSION["cart"]->addProduct($pizza);
+                    if (!$_SESSION["cart"]->addProduct($pizza)) {
+                        throw new BadRequestException("Maximum quantity is 100!");
+                    }
                     header("Location: index.php?target=pizza&action=showAll");
                     die();
                 } else {
@@ -97,14 +97,11 @@ class CartController {
                 } else {
                     throw new BadRequestException("Invalid quantity!");
                 }
-//                if ($category_id == 8 && isset($_POST["drink_size"])) {
-//                    $price_for_one = $_POST["drink_size"];
-//                } else {
                 $price_for_one = $other->getPrice();
-//                }
                 $other->setPrice($price_for_one);
-                //$other->setPrice($price_for_one * $_POST["quantity"]);
-                $_SESSION["cart"]->addProduct($other);
+                if (!$_SESSION["cart"]->addProduct($other)) {
+                    throw new BadRequestException("Maximum quantity is 100!");
+                }
                 header("Location: index.php?target=other&action=showOthers&&category_id=" . $category_id);
                 die();
             } else {
@@ -126,8 +123,13 @@ class CartController {
             if (!array_key_exists($_GET["id"], $_SESSION["cart"]->getProducts())) {
                 throw new NotFoundException("Product not found!");
             }
+            $products = $_SESSION["cart"]->getProducts();
+            if ($products[$_GET["id"]]->getQuantity() >= 100) {
+                echo json_encode(["error" => "true"]);
+                die();
+            }
             $_SESSION["cart"]->increaseQuantity($_GET["id"]);
-            echo json_encode($_SESSION["cart"]);
+            echo json_encode(["error" => "false", "cart"=> $_SESSION["cart"]]);
         } else {
             throw new BadRequestException("Could not add to quantity!");
         }

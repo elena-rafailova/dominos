@@ -42,28 +42,32 @@ function handleExceptions(Exception $exception){
                 
                 
                     <link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.6.3/css/all.css\" integrity=\"sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/\" crossorigin=\"anonymous\">
-                
+
                 </head>
                 <body>
                     <div id=\"main_header\" class=\"nav navbar\">
-                          <a class=\"navbar pull-left navbar-left\" href=\"index.php\"><img src=\"uploads/dominos_logo.svg\"></a>
-                          <a href=\"index.php?target=user&action=main\"><button class=\"navbar btn btn-light\">Back to main </button></a>
+                        <a class=\"navbar pull-left navbar-left\" href=\"index.php\"><img src=\"uploads/dominos_logo.svg\"></a>
+                         <a href=\"index.php?target=user&action=main\"><button class=\"navbar btn btn-light\">Back to main </button></a>
                     </div>
                     <div class=\"container text-center center\">
-                          <h2 class=\"font-weight-bold text-center\">ERROR: $status </h2>
-                          <h3 class=\"font-weight-bold text-center\">$msg </h3>
+                        <h2 class=\"font-weight-bold text-center\">ERROR: $status </h2>
+                        <h3 class=\"font-weight-bold text-center\">$msg </h3>
+                        <div id=\"error_img\" >
+                          
+                        </div>
                     </div>
-                    <div id=\"error_img\" ></div>
-                  
+                    
+                    <div>
+                    </div>
                 </body>
                 </html>";
     http_response_code($status);
     echo $html;
 
-//    $obj = new stdClass();
-//    $obj->msg = $exception->getMessage();
-//    $obj->status = $status;
-//    echo json_encode($obj);
+    $obj = new stdClass();
+    $obj->msg = $exception->getMessage();
+    $obj->status = $status;
+    echo json_encode($obj);
 }
 
 if (class_exists($controllerClassName)){
