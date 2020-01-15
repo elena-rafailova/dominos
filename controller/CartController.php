@@ -71,9 +71,8 @@ class CartController {
                 }
 
                 if (isset($_POST["quantity"]) && $_POST["quantity"] >= MIN_QUANTITY && $_POST["quantity"] <= MAX_QUANTITY) {
-                    $pizza->setQuantity($_POST["quantity"]);
+                    $pizza->setQuantity(intval($_POST["quantity"]));
                     $pizza->setPrice($price_for_one);
-
 
                     if (!$_SESSION["cart"]->addProduct($pizza)) {
                         throw new BadRequestException("Maximum quantity is 100!");

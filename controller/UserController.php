@@ -222,25 +222,25 @@ class UserController
         $msg = '';
         $userDAO = new UserDAO();
 
-            if (isset($_POST['forgot_email'])) {
-                $email = $_POST['forgot_email'];
-                if (!(filter_var($email, FILTER_VALIDATE_EMAIL))) {
-                    $msg .= " Invalid email format. <br> ";
+        if (isset($_POST['forgot_email'])) {
+            $email = $_POST['forgot_email'];
+            if (!(filter_var($email, FILTER_VALIDATE_EMAIL))) {
+                $msg .= " Invalid email format. <br> ";
+            } else {
+                $user = $userDAO->checkUser($email);
+                if (!$user) {
+                    $msg .= "User with that email doesn't exist! <br>";
                 } else {
-                    $user = $userDAO->checkUser($email);
-                    if (!$user) {
-                        $msg .= "User with that email doesn't exist! <br>";
-                    } else {
-                        $user_id = $user->getId();
-                        $token = bin2hex(random_bytes(50));
-                        $expFormat = mktime(
-                            date("H") + 1, date("i"), date("s"), date("m"), date("d"), date("Y"));
-                        $expDate = date("Y-m-d H:i:s", $expFormat);
-                        $userDAO->addToken($user_id, $token, $expDate);
-                        $this->sendMail($email, $token);
-                    }
+                    $user_id = $user->getId();
+                    $token = bin2hex(random_bytes(50));
+                    $expFormat = mktime(
+                        date("H") + 1, date("i"), date("s"), date("m"), date("d"), date("Y"));
+                    $expDate = date("Y-m-d H:i:s", $expFormat);
+                    $userDAO->addToken($user_id, $token, $expDate);
+                    $this->sendMail($email, $token);
                 }
             }
+        }
 
     if($msg!= '') {
        throw new BadRequestException("$msg");

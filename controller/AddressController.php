@@ -19,7 +19,7 @@ function add () {
             if ($_POST['name'] != '') {
                 $name = $_POST['name'];
             } else {
-                $name = 'Empty Title';
+                $name = '--Empty Title--';
             }
             $street_name = $_POST['street_name'];
             $street_number = $_POST['street_number'];
@@ -38,7 +38,7 @@ function add () {
                 throw new  NotFoundException("City not found!");
             }
 
-            $msg = $this->validationOfInput($street_name, $name, $phone_number, $floor,$street_number, $building_number, $apartment_number, $entrance);
+            $msg = $this->validationOfInput($street_name, $name, $phone_number, $street_number,$floor, $building_number, $apartment_number, $entrance);
             if ($msg != '') {
                 throw new BadRequestException("$msg");
             } else {
@@ -84,7 +84,7 @@ function change()
             if ($_POST['name'] != '') {
                $name = $_POST['name'];
             } else {
-                $name = 'Empty Title';
+                $name = '--Empty Title--';
             }
             $street_name = $_POST['street_name'];
             $street_number = $_POST['street_number'];
@@ -94,7 +94,7 @@ function change()
             $building_number = $_POST['building_number'];
             $apartment_number = $_POST['apartment_number'];
             $entrance = $_POST['entrance'];
-            $msg = $this->validationOfInput($street_name, $name, $phone_number, $floor,$street_number, $building_number, $apartment_number, $entrance);
+            $msg = $this->validationOfInput($street_name, $name, $phone_number, $street_number,$floor, $building_number, $apartment_number, $entrance);
             if ($msg != '') {
                throw new BadRequestException("$msg");
             } else {
@@ -179,21 +179,21 @@ function getAddresses() {
     echo json_encode($addresses, JSON_UNESCAPED_UNICODE);
 }
 
-function validationOfInput($street_name, $name , $phone_number, $floor,$street_number, $building_number='' ,$apartment_number='' ,$entrance= '') {
+function validationOfInput($street_name, $name , $phone_number, $street_number, $floor = '',$building_number='' ,$apartment_number='' ,$entrance= '') {
     $msg = '';
 
-    $pattern  = "/^[a-zA-Z\p{Cyrillic}0-9\s\-]+$/u";
+    $pattern  = "/^([a-zA-Z\p{Cyrillic}0-9\s\-].{0,20})$/u";
 
     if((preg_match($pattern,$name)) !=1 ) {
         $msg .= " Invalid address name format. <br> ";
     }
-    if((preg_match("/^[a-zA-Z\p{Cyrillic}0-9\s\-.\"']+$/u", $street_name)) != 1) {
+    if((preg_match("/^([a-zA-Z\p{Cyrillic}0-9\s\-.\"']).{3,20}$/u", $street_name)) != 1) {
         $msg .= " Invalid street name format. <br> ";
     }
-    if((preg_match("^[0-9\s+]+$^", $phone_number)) != 1) {
+    if((preg_match("^[0-9\s+].{9,15}$^", $phone_number)) != 1) {
         $msg .= " Invalid phone number format. <br> ";
     }
-    if((is_numeric($floor) && $floor < 0) || !is_numeric($floor) || (is_numeric($floor) && $floor > 1000)) {
+    if($floor && ((is_numeric($floor) && $floor < 0) || !is_numeric($floor) || (is_numeric($floor) && $floor > 1000))) {
       $msg.= "Invalid floor number. <br>";
     }
     if((is_numeric($street_number) && $street_number < 1) || !is_numeric($street_number) || (is_numeric($street_number) && $street_number > 1000)) {
