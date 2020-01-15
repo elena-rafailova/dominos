@@ -58,26 +58,6 @@ function getPizzas(filter) {
     xhttp.send();
 }
 
-// function getTimes() {
-//     var del_time = document.getElementById("del-time");
-//     var pick_up = document.getElementById("pick-up-time");
-//     var today = new Date();
-//     var time = today.getHours() + ":" + today.getMinutes();
-//
-//     var add_minutes =  function (dt, minutes) {
-//         return new Date(dt.getTime() + minutes*60000);
-//     };
-//     var newDateObj = new Date(today.getTime());
-//     while(time <= "23:40") {
-//         newDateObj = new Date(newDateObj.getTime() + 10*60000);
-//         time = newDateObj.getHours() + ":" + ((newDateObj.getMinutes() < 10) ? "0" : "") + newDateObj.getMinutes();
-//         var option = document.createElement("option");
-//         option.innerText = time;
-//         del_time.appendChild(option);
-//         pick_up.appendChild(option);
-//     }
-// }
-
 function initializePizza() {
     var url = window.location.search.substr(1);
     url = url.split("&");
@@ -178,8 +158,6 @@ function getPizza(id) {
             var price_for_one = document.getElementById("price_for_one");
             price_for_one.value = pizza["price"].toFixed(2);
             document.getElementById("price").innerText =  pizza["price"].toFixed(2);
-        } else {
-          //  alert(this.responseText);
         }
     };
 
@@ -344,7 +322,6 @@ function removeIngrPrice(ingr_id) {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var price_for_one = document.getElementById("price_for_one");
-            //alert(price.innerText);
             var priceVal = parseFloat(price_for_one.value);
             priceVal -= parseFloat(this.responseText);
 

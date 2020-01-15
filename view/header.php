@@ -50,10 +50,6 @@
     </div>
 </nav>
 
-
-<div id="resId"></div>
-
-
 <script src="view/js/map.js"></script>
 <script src="view/js/pizzas.js"></script>
 <script src="view/js/others.js"></script>
@@ -63,5 +59,6 @@
 <script src="view/js/addresses.js"></script>
 <script src="view/js/editProfile.js"></script>
 <script>checkCart();</script>
+
 </body>
 </html>

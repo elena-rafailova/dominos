@@ -126,3 +126,27 @@ a {
     border: 2px solid #5f98ff;
     border-radius: 10px;
 }
+
+#preloader {
+    background-color: rgba(51,51,51,0.53);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform:
+    translate(-50%, -50%);
+    z-index: 1222 !important;
+    height: 100vh;
+    width: 1500px;
+}
+
+#preloader img {
+    position: absolute;
+    top:50%;
+    left:50%;
+    width: 100px;
+    padding: 10px;
+    transform:
+            translate(-50%, -50%);
+    background-color: #007bff;
+    border-radius: 50px;
+}

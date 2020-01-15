@@ -22,6 +22,10 @@
     </div>
 </div>
 
+<div id="preloader" class="float-left">
+    <img src="uploads/preloader.gif">
+</div>
+
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -154,6 +158,8 @@
 
 
 <script src="view/js/userValidation.js"></script>
-
+<script>
+    document.getElementById("preloader").style.display = "none";
+</script>
 </body>
 </html>

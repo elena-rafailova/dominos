@@ -62,11 +62,6 @@ function handleExceptions(Exception $exception){
                 </html>";
     http_response_code($status);
     echo $html;
-
-//    $obj = new stdClass();
-//    $obj->msg = $exception->getMessage();
-//    $obj->status = $status;
-//    echo json_encode($obj);
 }
 
 if (class_exists($controllerClassName)){

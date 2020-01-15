@@ -27,9 +27,6 @@ function getOthers(category_id, filter) {
                 p1.innerText = others[key].name;
                 p1.setAttribute("class", "cart-title text-uppercase");
                 card_body.appendChild(p1);
-                //
-                // var hr = document.createElement("hr");
-                // card_body.appendChild(p1);
 
                 var p2 = document.createElement("p");
                 p2.setAttribute("class", "card-text");
@@ -93,13 +90,6 @@ function getOthers(category_id, filter) {
                 minus.setAttribute("class", "icons float-left");
                 order_form.appendChild(minus);
 
-                // var minus_button = document.createElement("input");
-                // minus_button.type = "button";
-                // minus_button.id = "m" + others[key].id;
-                // minus_button.value = "-";
-                // minus_button.onclick = function () {decrementVal(this.id);};
-                // order_form.appendChild(minus_button);
-
                 var quantity_text = document.createElement("input");
                 quantity_text.type = "text";
                 quantity_text.min = "1";
@@ -118,13 +108,6 @@ function getOthers(category_id, filter) {
                 plus.onclick = function () { incrementVal(this.id); };
                 plus.setAttribute("class", "float-left ")
                 order_form.appendChild(plus);
-
-                // var plus_button = document.createElement("input");
-                // plus_button.type = "button";
-                // plus_button.id = "p" + others[key].id;
-                // plus_button.value = "+";
-                // plus_button.onclick =  function () {incrementVal(this.id);};
-                // order_form.appendChild(plus_button);
 
                 var submit = document.createElement("input");
                 submit.type = "submit";

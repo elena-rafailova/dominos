@@ -13,58 +13,55 @@ function loadOrders(page) {
             container.innerHTML = "";
 
             if (response.error == "false") {
-                var orders = response.result;
-                if (orders.orders == "empty") {
+                if (response.orders == "empty") {
                     var empty_msg = document.createElement("h6");
                     empty_msg.setAttribute("class", "font-weight-bold");
                     empty_msg.innerText = "Your order history is empty!";
                     container.appendChild(empty_msg);
                     document.getElementById("prev").disabled = true;
                     document.getElementById("next").disabled = true;
-                    return;
-                }
+                } else {
+                    var orders = response.result;
 
-                var max_page = orders.max_pages;
-                orders = orders.orders;
+                    var max_page = orders.max_pages;
+                    orders = orders.orders;
 
-                //var row = document.createElement("div");
-                //row.setAttribute("class", "row");
-                for (var key in orders) {
-                    var orderRecord = document.createElement("tr");
-                    orderRecord.setAttribute("class", "row");
+                    for (var key in orders) {
+                        var orderRecord = document.createElement("tr");
+                        orderRecord.setAttribute("class", "row");
 
-                    var date_created = document.createElement("td");
-                    date_created.setAttribute("class", "col-sm-3");
-                    date_created.innerText = orders[key].date_created;
-                    orderRecord.appendChild(date_created);
+                        var date_created = document.createElement("td");
+                        date_created.setAttribute("class", "col-sm-3");
+                        date_created.innerText = orders[key].date_created;
+                        orderRecord.appendChild(date_created);
 
-                    var items = document.createElement("td");
-                    items.setAttribute("class", "col-sm-5");
-                    items.innerHTML = orders[key].items;
-                    orderRecord.appendChild(items);
+                        var items = document.createElement("td");
+                        items.setAttribute("class", "col-sm-5");
+                        items.innerHTML = orders[key].items;
+                        orderRecord.appendChild(items);
 
-                    var price = document.createElement("td");
-                    price.setAttribute("class", "col-sm-2");
-                    price.innerText = parseFloat(orders[key].total_price).toFixed(2) + " BGN";
-                    orderRecord.appendChild(price);
+                        var price = document.createElement("td");
+                        price.setAttribute("class", "col-sm-2");
+                        price.innerText = parseFloat(orders[key].total_price).toFixed(2) + " BGN";
+                        orderRecord.appendChild(price);
 
 
-                    var status = document.createElement("td");
-                    status.setAttribute("class", "col-sm-2");
-                    status.innerText = orders[key].status;
-                    orderRecord.appendChild(status);
+                        var status = document.createElement("td");
+                        status.setAttribute("class", "col-sm-2");
+                        status.innerText = orders[key].status;
+                        orderRecord.appendChild(status);
 
-                    container.appendChild(document.createElement("hr"));
-                    container.appendChild(orderRecord);
+                        container.appendChild(document.createElement("hr"));
+                        container.appendChild(orderRecord);
 
-                    if (page <= 1) {
-                        document.getElementById("prev").disabled = true;
+                        if (page <= 1) {
+                            document.getElementById("prev").disabled = true;
+                        }
+                        if (page >= max_page) {
+                            document.getElementById("next").disabled = true;
+                        }
                     }
-                    if (page >= max_page) {
-                        document.getElementById("next").disabled = true;
-                    }
                 }
-
 
              } else {
                 document.getElementById("next").disabled = true;
