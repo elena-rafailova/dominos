@@ -61,6 +61,7 @@
 <script src="view/js/cart.js"></script>
 <script src="view/js/orders.js"></script>
 <script src="view/js/addresses.js"></script>
+<script src="view/js/editProfile.js"></script>
 <script>checkCart();</script>
 </body>
 </html>

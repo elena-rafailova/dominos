@@ -69,8 +69,8 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body text-center center">
-                <div id="user_exists"></div>
                 <form action="index.php?target=user&action=login" method="post">
+                    <div id="user_exists" class="alert alert-warning mx-auto" ></div>
                     <label class=" w-100 font-weight-bold">Email:</label>
                     <input class="form-control w-50 mx-auto" id="login_email" type="email" name="email" placeholder="Enter email" required>
                     <br>
@@ -97,26 +97,27 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body text-center center">
-                <div id="email_exists" ></div>
                 <form action="index.php?target=user&action=register" id="register_form" method="post">
+                    <div id="email_exists" class="alert alert-warning mx-auto" ></div>
+                    <div id="password_match" class="alert alert-warning mx-auto">Passwords don't match.</div>
                     <label class=" w-100 font-weight-bold">First name: * </label>
                     <input class="form-control w-50 mx-auto " id="first_name" type="text" name="first_name" placeholder="Enter first name"
-                           required pattern="[a-zA-Z\u0400-\u04ff]{3,30}" title="First name should contain only letters, at least 3!">
+                           required pattern="[a-zA-Z\u0400-\u04ff].{3,30}" title="First name should contain only letters, at least 3!">
                     <label class=" w-100 font-weight-bold">Last name: * </label>
                     <input class="form-control w-50 mx-auto" id="last_name" type="text" name="last_name" placeholder="Enter last name"
-                           required pattern="[a-zA-Z\u0400-\u04ff]{3,30}" title="Last name should contain only letters,at least 3!">
+                           required pattern="[a-zA-Z\u0400-\u04ff].{3,30}" title="Last name should contain only letters,at least 3!">
                     <label class=" w-100 font-weight-bold">Email: * </label>
                     <input class="form-control w-50 mx-auto " id="email" type="email" name="email" placeholder="Enter email"
                            required pattern="^[^@]+@[^@]+\.[^@]+$" title="Please enter a valid email address!">
                     <label class=" w-100 font-weight-bold">New password: * </label>
                     <input class="form-control w-50 mx-auto" id="password" type="password" name="password" placeholder="Enter password"
-                           required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&\*]){8,20}"
+                           required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&\*]).{8,20}"
                            title="Password should be at least 8 characters -
                 containing at least one lowercase, one uppercase letter, one digit
                 and one special character.">
                     <label class=" w-100 font-weight-bold ">Verify password: * </label>
                     <input class="form-control w-50 mx-auto " id="verify_password" type="password"  name="verify_password" placeholder="Verify password"
-                           required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&\*]){8,20}"
+                           required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&\*]).{8,20}"
                            title="Please enter the same password as above.">
             </div>
             <div class="modal-footer">

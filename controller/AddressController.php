@@ -111,22 +111,34 @@ function change()
                 $user_id = json_decode($_SESSION['logged_user'])->id;
                 $user_addresses = $addressDAO->get($user_id);
                 if($user_addresses!= false) {
+                    $isIdentical = false;
                 foreach ($user_addresses as $user_address) {
                     if($user_address->name == $name && $user_address->street_name == $street_name && $user_address->street_number == $street_number &&
                         $user_address->city_id == $city_id && $user_address->phone_number == $phone_number && $user_address->floor == $floor &&
                         $user_address->building_number == $building_number && $user_address->apartment_number == $apartment_number &&
                         $user_address->entrance == $entrance) {
-                        header("Location: index.php?target=address&action=show");
+                        $isIdentical=true;
+                        break;
+                    } else {
+                        $isIdentical=false;
                     }
                 }
-                    $addressDAO->change($address, $id);
+                if($isIdentical) {
                     header("Location: index.php?target=address&action=show");
+                } else {
+                    $addressDAO->change($address, $id);
+                    header("Location: index.php?target=address&action=changeSuccess");
+                }
                 } else {
                     throw new NotFoundException("Addresses not found!");
                 }
 
             }
         }
+}
+
+function changeSuccess() {
+    include_once "view/change_address_view.php";
 }
 
 function delete(){
@@ -142,8 +154,6 @@ function delete(){
         $user_addresses = $addressDAO->get($user_id);
         if($user_addresses!= false) {
             foreach ($user_addresses as $user_address) {
-                print_r($user_address->id);
-                var_dump($address_id);
                 if($user_address->id == $address_id)
                 {
                     $addressDAO->delete($address_id,$user_id);

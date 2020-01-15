@@ -80,7 +80,6 @@ class AddressDAO extends BaseDAO {
 
     function delete($id,$user_id){
         try {
-            //CHANGED FK in DB to be ON DELETE CASCADE in uha - address_id
             $pdo = parent::getPDO();
             $pdo->beginTransaction();
             $sql="DELETE FROM users_have_addresses WHERE address_id =? AND user_id = ? ;";

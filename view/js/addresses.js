@@ -125,40 +125,4 @@ function viewAddresses() {
 }
 
 
-// function changeAddress() {
-//     var name=document.getElementById("address_name").value;
-//     var street_name = document.getElementById("street_name").value;
-//     var street_number = document.getElementById("street_number").value;
-//     var city = document.getElementById("city_select").value;
-//     var floor=document.getElementById("floor").value;
-//     var phone_number=document.getElementById("phone_number").value;
-//     var building_number=document.getElementById("building_number").value;
-//     var apartment_number=document.getElementById("apartment_number").value;
-//     var entrance = document.getElementById("entrance").value;
-//     var address_id = document.getElementById("address_id").value;
-//
-//     var dataString = 'name=' + name + '&street_name=' + street_name + '&street_number=' + street_number + '&city=' + city
-//         + '&floor=' + floor + '&phone_number=' + phone_number + '&building_number=' + building_number
-//         + '&apartment_number=' + apartment_number + '&entrance=' + entrance + '&id=' + address_id;
-//
-//     var xhttp = new XMLHttpRequest();
-//     xhttp.onreadystatechange = function() {
-//         if (this.readyState == 4 && this.status == 200) {
-//             var info = this.responseText;
-//             alert(info);
-//             info = JSON.parse(info);
-//
-//             if(info === 'Success') {
-//                 alert("Address changed successfully!");
-//             } else if(info === 'Fail') {
-//
-//             } else  {
-//                 alert("You've entered incorrect data. Please try again!");
-//             }
-//         }
-//     };
-//     xhttp.open("POST", "index.php?target=address&action=change", true);
-//     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-//     xhttp.send(dataString);
-//
-// }
+

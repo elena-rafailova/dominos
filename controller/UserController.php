@@ -93,6 +93,9 @@ class UserController
        function editView() {
         include_once "view/edit_view.php";
     }
+    function editSuccess() {
+        include_once "view/change_profile_view.php";
+    }
 
     function edit()
     {
@@ -114,7 +117,7 @@ class UserController
                         $user = new User($logged_user->id,$_POST["first_name"], $_POST["last_name"], $email, $password);
                         $userDAO->editUser($user);
                         $_SESSION['logged_user'] = json_encode($user);
-                       header("Location: index.php?target=user&action=editView");
+                       header("Location: index.php?target=user&action=editSuccess");
                     }
                         }
                     } else {
@@ -125,7 +128,6 @@ class UserController
                     $_POST['email'] == $logged_user->email) {
                         header("Location: index.php?target=user&action=editView");
                     } else{
-                    echo $logged_user->first_name. " ".$logged_user->last_name." ".$logged_user->email. " ";
                         $msg = $this->validationOfInput($_POST['first_name'], $_POST['last_name'], $_POST['email']);
                         if ($msg != '') {
                             throw new BadRequestException("$msg");
@@ -134,7 +136,7 @@ class UserController
                             $user = new User($logged_user->id,$_POST["first_name"], $_POST["last_name"], $email, $password);
                             $userDAO->editUser($user);
                             $_SESSION['logged_user'] = json_encode($user);
-                            header("Location: index.php?target=user&action=editView");
+                            header("Location: index.php?target=user&action=editSuccess");
                         }
                     }
                 }
@@ -153,10 +155,6 @@ class UserController
     {
         $pattern  = '/^[a-zA-Z\p{Cyrillic}\s\-]+$/u';
         $msg = '';
-//        if (!(ctype_alpha($first_name)) || !(ctype_alpha($last_name))
-//            || !(preg_match("/^[a-zA-Z\p{Cyrillic}\s]+$/u",$first_name)) || !(preg_match("/^[a-zA-Z\p{Cyrillic}\s]+$/u",$last_name)) ) {
-//            $msg .= " Invalid name format. It should contain only letters. <br> ";
-//        }
         if(!preg_match ($pattern, $first_name) || !preg_match ($pattern, $last_name)) {
             $msg .= " Invalid name format. It should contain only letters. <br> ";
         }
@@ -222,9 +220,8 @@ class UserController
     function forgotPassword()
     {
         $msg = '';
-        //include_once "view/forgot_password_view.php";
         $userDAO = new UserDAO();
-//        if (isset($_POST['forgot_password'])) {
+
             if (isset($_POST['forgot_email'])) {
                 $email = $_POST['forgot_email'];
                 if (!(filter_var($email, FILTER_VALIDATE_EMAIL))) {
@@ -244,7 +241,7 @@ class UserController
                     }
                 }
             }
-//        }
+
     if($msg!= '') {
        throw new BadRequestException("$msg");
     }

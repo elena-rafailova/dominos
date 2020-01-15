@@ -67,7 +67,6 @@ class UserDAO extends BaseDAO {
         if (empty($row)) {
             return false;
         } else {
-            //$row = new User($row["id"], $row["first_name"], $row["last_name"], $row["email"], $row["password"]);
             return true;
         }
     }

@@ -8,14 +8,23 @@ document.addEventListener("DOMContentLoaded", function() {
     var email = document.getElementById("email");
     var verify_password_input = document.getElementById("verify_password");
 
-    var checkPassword = function(str)
-    {
-
-        var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
-        return re.test(str);
-    };
-
     var myForm = document.getElementById("register_form");
+
+    document.getElementById("password_match").style.display = "none";
+
+    var password = document.getElementById("password");
+    var verify_password = document.getElementById("verify_password");
+    verify_password.addEventListener("keyup", function () {
+        if(password.value === verify_password.value ) {
+            document.getElementById("password_match").style.display = "none";
+            password.setCustomValidity(password.validity.patternMismatch ? password.title : "");
+        }
+        else {
+            document.getElementById("password_match").style.display = "block";
+        }
+    });
+
+
     
     if(!RegExp.escape) {
         RegExp.escape = function(s) {
@@ -53,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function() {
             email.setCustomValidity(this.validity.patternMismatch ? email.title : "");
         }, false);
 
+
         password_input.addEventListener("blur", function(e) {
             this.setCustomValidity(this.validity.patternMismatch ? password_input.title : "");
             if(this.checkValidity()) {
@@ -87,9 +97,9 @@ email.addEventListener("blur", function (){
             if(validation === "exists") {
                 email_exists.style.display="block";
                 email_exists.innerText = "User with that email already exists!";
-                email_exists.style.color = "red";
                 register_button.disabled = true;
             } else {
+                email_exists.style.display="none";
                 register_button.disabled = false;
             }
         }
@@ -113,9 +123,9 @@ login_email.addEventListener("blur", function (){
             if(validation === "doesn't") {
                 user_exists.style.display="block";
                 user_exists.innerText = "User with that email doesn't exist!";
-                user_exists.style.color = "red";
                 login_button.disabled = true;
             } else {
+                user_exists.style.display="none";
                 login_button.disabled = false;
             }
         }
