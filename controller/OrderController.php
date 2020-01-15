@@ -116,7 +116,7 @@ class OrderController {
         $orders = $orderDAO->getOrders($user_id);
 
         if ($orders === false) {
-            echo json_encode(["orders" => "empty"]);
+            echo json_encode(["error" => "false", "orders" => "empty"]);
             die();
         }
         $orderArray = [];

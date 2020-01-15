@@ -90,9 +90,12 @@ class UserController
          }
     }
 
+       function editView() {
+        include_once "view/edit_view.php";
+    }
+
     function edit()
     {
-        include_once "view/edit_view.php";
         $userDAO = new UserDAO();
         if (isset($_POST['edit'])) {
         $logged_user= json_decode($_SESSION['logged_user']);
@@ -111,7 +114,7 @@ class UserController
                         $user = new User($logged_user->id,$_POST["first_name"], $_POST["last_name"], $email, $password);
                         $userDAO->editUser($user);
                         $_SESSION['logged_user'] = json_encode($user);
-                       header("Location: index.php?target=user&action=edit");
+                       header("Location: index.php?target=user&action=editView");
                     }
                         }
                     } else {
@@ -120,7 +123,7 @@ class UserController
                 } elseif($_POST["first_name"] == $logged_user->first_name &&
                     $_POST['last_name'] == $logged_user->last_name &&
                     $_POST['email'] == $logged_user->email) {
-                        header("Location: index.php?target=user&action=edit");
+                        header("Location: index.php?target=user&action=editView");
                     } else{
                     echo $logged_user->first_name. " ".$logged_user->last_name." ".$logged_user->email. " ";
                         $msg = $this->validationOfInput($_POST['first_name'], $_POST['last_name'], $_POST['email']);
@@ -131,7 +134,7 @@ class UserController
                             $user = new User($logged_user->id,$_POST["first_name"], $_POST["last_name"], $email, $password);
                             $userDAO->editUser($user);
                             $_SESSION['logged_user'] = json_encode($user);
-                            header("Location: index.php?target=user&action=edit");
+                            header("Location: index.php?target=user&action=editView");
                         }
                     }
                 }

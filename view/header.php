@@ -35,7 +35,7 @@
                 <a href="index.php?target=pizza&action=showAll" class="nav-link mr-2 border bg-light rounded">Order</a>
             </li>
             <li class="nav-item">
-                <a href="index.php?target=user&action=edit" class="nav-link mr-2 border bg-light rounded">My Profile (edit)</a>
+                <a href="index.php?target=user&action=editView" class="nav-link mr-2 border bg-light rounded">My Profile (edit)</a>
             </li>
             <li class="nav-item">
                 <a href="index.php?target=address&action=show" class="nav-link  mr-2  border bg-light rounded">My Addresses</a>
@@ -50,10 +50,6 @@
     </div>
 </nav>
 
-
-<div id="resId"></div>
-
-
 <script src="view/js/map.js"></script>
 <script src="view/js/pizzas.js"></script>
 <script src="view/js/others.js"></script>
@@ -61,6 +57,8 @@
 <script src="view/js/cart.js"></script>
 <script src="view/js/orders.js"></script>
 <script src="view/js/addresses.js"></script>
-<script>checkCart();</script>
+<script>
+    checkCart();
+</script>
 </body>
 </html>

@@ -127,10 +127,12 @@ login_email.addEventListener("blur", function (){
 
 
 function forgotPass() {
+    document.getElementById("preloader").style.display = "block";
     var forgot_email = document.getElementById("forgot_email");
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("preloader").style.display = "none";
             alert("An email has been sent to you with a link to reset your password.\n" +
                 "Please check the email that you provided.");
         }
@@ -142,4 +144,5 @@ function forgotPass() {
     // xhttp.send();
 
 }
+
 
